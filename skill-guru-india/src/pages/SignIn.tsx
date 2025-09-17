@@ -71,6 +71,7 @@ const SignIn = () => {
       if (!res.ok) throw new Error(`Backend error: ${res.statusText}`);
       const data = await res.json();
       console.log("Backend response:", data);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       alert(data.message);
       navigate("/profile"); // redirect after Google login

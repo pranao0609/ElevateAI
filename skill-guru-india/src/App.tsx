@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Chatbot from "./components/Chatbot";
 import Profile from "./pages/Profile";
 import Dashboard from "@/components/Dashboard";
+import Community from "./pages/Community";
 import Onboarding  from "./pages/Onboarding";
 
 const queryClient = new QueryClient();
@@ -35,6 +36,7 @@ const App = () => (
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/community" element={<Community/>} />
            <Route path="/onboarding" element={<Onboarding />} />
           
 

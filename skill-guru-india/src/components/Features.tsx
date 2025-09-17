@@ -16,106 +16,247 @@ import {
 const Features = () => {
   const features = [
     {
-      icon: <Brain className="h-8 w-8 text-primary" />,
+      icon: "psychology",
       title: "AI Career Matching",
       description: "Get personalized career recommendations based on your skills, interests, and market trends using advanced AI algorithms.",
-      gradient: "gradient-primary",
+      color: "blue",
+      bgGradient: "from-blue-500 to-blue-600"
     },
     {
-      icon: <Target className="h-8 w-8 text-success" />,
-      title: "Skills Gap Analysis",
+      icon: "gps_fixed",
+      title: "Skills Gap Analysis", 
       description: "Identify skill gaps and get targeted learning recommendations to bridge the gap between your current abilities and dream job.",
-      gradient: "gradient-success",
+      color: "green",
+      bgGradient: "from-green-500 to-green-600"
     },
     {
-      icon: <FileText className="h-8 w-8 text-warning" />,
+      icon: "description",
       title: "Smart Resume Builder",
       description: "Create ATS-optimized resumes with AI-powered content suggestions tailored for specific job roles and industries.",
-      gradient: "bg-gradient-to-br from-warning to-orange-400",
+      color: "yellow",
+      bgGradient: "from-yellow-500 to-orange-500"
     },
     {
-      icon: <Users className="h-8 w-8 text-primary" />,
+      icon: "people",
       title: "Expert Mentorship",
       description: "Connect with industry professionals and mentors for personalized guidance and career advice through 1:1 sessions.",
-      gradient: "gradient-primary",
+      color: "purple",
+      bgGradient: "from-purple-500 to-purple-600"
     },
     {
-      icon: <TrendingUp className="h-8 w-8 text-success" />,
+      icon: "trending_up",
       title: "Job Market Insights",
       description: "Stay updated with real-time job market trends, salary insights, and demand forecasting for different career paths.",
-      gradient: "gradient-success",
+      color: "indigo",
+      bgGradient: "from-indigo-500 to-indigo-600"
     },
     {
-      icon: <Bell className="h-8 w-8 text-warning" />,
+      icon: "notifications_active",
       title: "Smart Job Alerts",
       description: "Receive personalized job notifications from top platforms like Naukri, LinkedIn, and Indeed based on your profile.",
-      gradient: "bg-gradient-to-br from-warning to-orange-400",
+      color: "red",
+      bgGradient: "from-red-500 to-pink-500"
     },
   ];
 
   return (
-    <section className="py-20 bg-background">
-      <div className="container px-4">
-        {/* Header */}
-        <div className="text-center space-y-4 mb-16">
-          <div className="inline-flex items-center space-x-2 bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium">
-            <Sparkles className="h-4 w-4" />
-            <span>Powered by AI</span>
-          </div>
-          <h2 className="text-3xl lg:text-5xl font-bold text-foreground">
-            Everything You Need to
-            <span className="block text-primary">Accelerate Your Career</span>
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            From career discovery to landing your dream job, our comprehensive platform 
-            provides all the tools and guidance you need for career success.
-          </p>
-        </div>
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <Card key={index} className="group hover:shadow-lg transition-smooth border-border/50 hover:border-primary/20">
-              <CardHeader className="space-y-4">
-                <div className={`w-16 h-16 rounded-xl ${feature.gradient} flex items-center justify-center group-hover:scale-110 transition-bounce`}>
-                  {feature.icon}
-                </div>
-                <div>
-                  <CardTitle className="text-xl font-semibold group-hover:text-primary transition-smooth">
-                    {feature.title}
-                  </CardTitle>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <CardDescription className="text-muted-foreground leading-relaxed">
-                  {feature.description}
-                </CardDescription>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center space-y-6 bg-gradient-card rounded-2xl p-8 border">
-          <h3 className="text-2xl font-bold text-foreground">
-            Ready to Transform Your Career Journey?
-          </h3>
-          <p className="text-muted-foreground">
-            Join thousands of students and professionals who are already using AI to accelerate their careers.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button size="lg" className="gradient-primary group">
-              Start Free Trial
-              <ArrowRight className="ml-2 h-4 w-4 transition-smooth group-hover:translate-x-1" />
-            </Button>
-            <Button size="lg" variant="outline">
-              <BookOpen className="mr-2 h-4 w-4" />
-              Learn More
-            </Button>
+      <section className="py-24 bg-gradient-to-br from-gray-50 via-blue-50 to-white relative overflow-hidden">
+        {/* Google-style Background Elements */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-10 w-64 h-64 rounded-full bg-gradient-to-br from-blue-400/10 to-green-400/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-purple-400/8 to-yellow-400/8 blur-3xl" />
+          
+          {/* Google-style geometric pattern */}
+          <div className="absolute top-20 right-1/3 opacity-5">
+            <div className="grid grid-cols-4 gap-4">
+              {[...Array(16)].map((_, i) => (
+                <div
+                  key={i}
+                  className={`w-3 h-3 rounded-full ${
+                    i % 4 === 0 ? 'bg-blue-500' :
+                    i % 4 === 1 ? 'bg-green-500' :
+                    i % 4 === 2 ? 'bg-red-500' : 'bg-yellow-500'
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+
+        <div className="container px-6 lg:px-8 relative z-10">
+          {/* Google Material Header */}
+          <div className="text-center space-y-6 mb-20">
+            {/* Google-style Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
+              <span className="material-icons text-base">auto_awesome</span>
+              <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                Powered by Google AI
+              </span>
+            </div>
+
+            <h2 
+              className="text-4xl lg:text-6xl font-normal text-gray-900 leading-tight max-w-4xl mx-auto"
+              style={{ fontFamily: 'Google Sans, sans-serif' }}
+            >
+              Everything You Need to
+              <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-medium mt-2">
+                Accelerate Your Career
+              </span>
+            </h2>
+
+            <p 
+              className="text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              From career discovery to landing your dream job, our comprehensive platform 
+              provides all the tools and guidance you need for <span className="font-medium text-blue-600">career success</span>.
+            </p>
+          </div>
+
+          {/* Google Material Design Cards Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+            {features.map((feature, index) => (
+              <Card 
+                key={index} 
+                className="group relative overflow-hidden bg-white hover:shadow-2xl transition-all duration-500 border-0 rounded-3xl transform hover:-translate-y-2"
+                style={{
+                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                }}
+              >
+                {/* Hover gradient overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.bgGradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+                
+                <CardHeader className="space-y-6 p-8">
+                  {/* Google Material Icon Container */}
+                  <div className={`relative w-16 h-16 rounded-2xl bg-gradient-to-br ${feature.bgGradient} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg`}>
+                    <span 
+                      className="material-icons text-2xl text-white"
+                      style={{ 
+                        textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                      }}
+                    >
+                      {feature.icon}
+                    </span>
+                    
+                    {/* Google-style glow effect */}
+                    <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.bgGradient} opacity-20 blur-xl group-hover:opacity-40 transition-opacity duration-300`} />
+                  </div>
+
+                  <div>
+                    <CardTitle 
+                      className="text-2xl font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      {feature.title}
+                    </CardTitle>
+                  </div>
+                </CardHeader>
+
+                <CardContent className="px-8 pb-8">
+                  <CardDescription 
+                    className="text-gray-600 leading-relaxed text-base"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    {feature.description}
+                  </CardDescription>
+                </CardContent>
+
+                {/* Google Material ripple effect on hover */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-10 -skew-x-12 transform translate-x-full group-hover:translate-x-[-200%] transition-transform duration-1000" />
+              </Card>
+            ))}
+          </div>
+
+          {/* Google Material Bottom CTA Section */}
+          <div className="relative overflow-hidden bg-white rounded-3xl p-12 lg:p-16 text-center space-y-8 shadow-xl border border-gray-100">
+            {/* Background gradient */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-green-50 opacity-50" />
+            
+            {/* Content */}
+            <div className="relative z-10">
+              <div className="flex justify-center mb-6">
+                <div className="flex items-center gap-3 px-4 py-2 bg-blue-100 rounded-full">
+                  <span className="material-icons text-blue-600">rocket_launch</span>
+                  <span 
+                    className="text-sm font-medium text-blue-700"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Ready to Get Started?
+                  </span>
+                </div>
+              </div>
+
+              <h3 
+                className="text-3xl lg:text-4xl font-medium text-gray-900 mb-4"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Transform Your Career Journey Today
+              </h3>
+
+              <p 
+                className="text-xl text-gray-600 max-w-2xl mx-auto mb-10"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Join thousands of students and professionals who are already using AI to 
+                <span className="font-medium text-blue-600"> accelerate their careers</span>.
+              </p>
+
+              {/* Google Material Action Buttons */}
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button 
+                  size="lg" 
+                  className="group h-14 px-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  <span className="material-icons mr-3">play_arrow</span>
+                  Start Free Trial
+                  <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </Button>
+
+                <Button 
+                  size="lg" 
+                  variant="outline"
+                  className="h-14 px-10 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-blue-300 hover:text-blue-600 rounded-full transition-all duration-300"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  <span className="material-icons mr-3">menu_book</span>
+                  Learn More
+                </Button>
+              </div>
+
+              {/* Google-style trust indicators */}
+              <div className="flex justify-center items-center gap-8 mt-12 pt-8 border-t border-gray-200">
+                <div className="flex items-center gap-2 text-gray-500">
+                  <span className="material-icons text-green-500">verified</span>
+                  <span className="text-sm font-medium">Trusted by 50K+ students</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-500">
+                  <span className="material-icons text-blue-500">security</span>
+                  <span className="text-sm font-medium">Enterprise-grade security</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Decorative elements */}
+            <div className="absolute top-4 right-4 w-20 h-20 rounded-full bg-gradient-to-br from-yellow-400/20 to-orange-400/20 blur-2xl" />
+            <div className="absolute bottom-4 left-4 w-16 h-16 rounded-full bg-gradient-to-br from-green-400/20 to-blue-400/20 blur-2xl" />
+          </div>
+        </div>
+      </section>
+    </>
   );
 };
 
