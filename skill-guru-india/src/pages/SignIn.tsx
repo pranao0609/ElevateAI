@@ -7,7 +7,6 @@ import { Separator } from "@/components/ui/separator";
 import { Eye, EyeOff, Mail } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { signInWithGoogle } from "@/services/firebase";
 import ForgotPasswordDialog from "@/components/ForgotPasswordDialog";
 
@@ -201,7 +200,7 @@ const SignIn = () => {
           </CardFooter>
         </Card>
       </main>
-      <Footer />
+  
     </>
   );
 };

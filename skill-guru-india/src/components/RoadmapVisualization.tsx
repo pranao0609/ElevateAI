@@ -12,21 +12,21 @@ import {
   Zap
 } from 'lucide-react';
 
-// Mock shadcn/ui components
+// Mock shadcn/ui components with Google Material Design 3 styling
 const Card: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <div className={`border rounded-lg shadow-sm bg-white ${className}`}>{children}</div>
+  <div className={`border-0 rounded-3xl shadow-lg bg-white ${className}`}>{children}</div>
 );
 
 const CardHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="p-4 border-b">{children}</div>
+  <div className="p-8 border-b border-gray-100">{children}</div>
 );
 
 const CardTitle: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <h2 className={`text-lg font-semibold ${className}`}>{children}</h2>
+  <h2 className={`text-2xl font-medium ${className}`} style={{ fontFamily: 'Google Sans, sans-serif' }}>{children}</h2>
 );
 
 const CardContent: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <div className={`p-4 ${className}`}>{children}</div>
+  <div className={`p-8 ${className}`}>{children}</div>
 );
 
 const Button: React.FC<{
@@ -36,19 +36,20 @@ const Button: React.FC<{
   children: React.ReactNode;
   className?: string;
 }> = ({ variant = 'default', size = 'default', onClick, children, className }) => {
-  const baseStyle = "inline-flex items-center justify-center rounded-md font-medium";
+  const baseStyle = "inline-flex items-center justify-center rounded-full font-medium transition-all duration-200";
   const variantStyles = {
-    ghost: "text-gray-600 hover:bg-gray-100",
-    default: "bg-blue-600 text-white hover:bg-blue-700"
+    ghost: "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
+    default: "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg"
   };
   const sizeStyles = {
-    sm: "px-2 py-1 text-sm",
-    default: "px-4 py-2"
+    sm: "px-3 py-2 text-sm h-8",
+    default: "px-6 py-3 text-base h-12"
   };
   return (
     <button
       onClick={onClick}
       className={`${baseStyle} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      style={{ fontFamily: 'Google Sans, sans-serif' }}
     >
       {children}
     </button>
@@ -61,18 +62,19 @@ const Badge: React.FC<{
   className?: string;
 }> = ({ variant = 'outline', children, className }) => {
   const variantStyles = {
-    outline: "border border-gray-300 text-gray-700",
-    secondary: "bg-gray-200 text-gray-800",
-    destructive: "bg-red-100 text-red-800"
+    outline: "border border-gray-300 text-gray-700 bg-white",
+    secondary: "bg-gray-100 text-gray-800 border border-gray-200",
+    destructive: "bg-red-100 text-red-800 border border-red-200"
   };
   return (
-    <span className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${variantStyles[variant]} ${className}`}>
+    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${variantStyles[variant]} ${className}`}
+          style={{ fontFamily: 'Roboto, sans-serif' }}>
       {children}
     </span>
   );
 };
 
-// TypeScript interfaces
+// TypeScript interfaces (unchanged)
 interface Resource {
   name: string;
   url: string;
@@ -134,7 +136,6 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
     const nodeLevels: { [key: string]: number } = {};
     const visited: Set<string> = new Set();
     
-    // Assign levels based on connections (simple topological sort)
     const assignLevels = (nodeId: string, level: number) => {
       if (visited.has(nodeId)) return;
       visited.add(nodeId);
@@ -145,10 +146,8 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
       }
     };
     
-    // Start with the 'start' node
     assignLevels('start', 0);
     
-    // Group nodes by level
     const levels: { [key: number]: RoadmapNode[] } = {};
     nodes.forEach(node => {
       const level = nodeLevels[node.id] || 0;
@@ -156,17 +155,15 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
       levels[level].push(node);
     });
     
-    // Assign positions
-    const nodeWidth = 300; // Width per node (including padding)
-    const nodeHeight = 150; // Height per node (including padding)
+    const nodeWidth = 320;
+    const nodeHeight = 200;
     const updatedNodes = nodes.map(node => {
       const level = nodeLevels[node.id] || 0;
       const nodesInLevel = levels[level].length;
       const indexInLevel = levels[level].findIndex(n => n.id === node.id);
       
-      // Center nodes horizontally, spread them across the level
       const totalWidth = nodesInLevel * nodeWidth;
-      const startX = (window.innerWidth - totalWidth) / 2; // Center the level
+      const startX = (window.innerWidth - totalWidth) / 2;
       const x = startX + indexInLevel * nodeWidth;
       const y = level * nodeHeight;
       
@@ -177,10 +174,8 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
   };
 
   const updatedNodes = calculateNodePositions(roadmapData.roadmap.nodes);
-
-  // Calculate container height based on max level
-  const maxLevel = Math.max(...Object.values(updatedNodes).map(n => n.position.y)) + 150;
-  const containerHeight = Math.max(maxLevel, 1300);
+  const maxLevel = Math.max(...Object.values(updatedNodes).map(n => n.position.y)) + 200;
+  const containerHeight = Math.max(maxLevel, 1400);
 
   const getNodeIcon = (node: RoadmapNode) => {
     const isCompleted = completedNodes.has(node.id);
@@ -188,20 +183,20 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
     
     switch (node.type) {
       case 'start':
-        return <Star className="h-6 w-6 text-green-500" />;
+        return <span className="material-icons text-2xl text-green-500">play_circle</span>;
       case 'success':
-        return <Trophy className="h-6 w-6 text-yellow-500" />;
+        return <span className="material-icons text-2xl text-yellow-500">emoji_events</span>;
       case 'milestone':
-        return <Target className="h-6 w-6 text-purple-500" />;
+        return <span className="material-icons text-2xl text-purple-500">flag</span>;
       case 'choice':
-        return <Zap className="h-6 w-6 text-orange-500" />;
+        return <span className="material-icons text-2xl text-orange-500">alt_route</span>;
       default:
         if (isCompleted) {
-          return <CheckCircle className="h-6 w-6 text-green-500" />;
+          return <span className="material-icons text-2xl text-green-500">check_circle</span>;
         } else if (isUnlocked) {
-          return <Circle className="h-6 w-6 text-blue-500" />;
+          return <span className="material-icons text-2xl text-blue-500">radio_button_unchecked</span>;
         } else {
-          return <Lock className="h-6 w-6 text-gray-400" />;
+          return <span className="material-icons text-2xl text-gray-400">lock</span>;
         }
     }
   };
@@ -210,14 +205,14 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
     const isCompleted = completedNodes.has(node.id);
     const isUnlocked = isCompleted || node.status === 'current';
     
-    let baseStyle = "relative p-4 rounded-lg border-2 cursor-pointer transition-all duration-200 hover:shadow-lg min-w-[200px] max-w-[250px]";
+    let baseStyle = "relative p-6 rounded-3xl border-0 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 min-w-[280px] max-w-[300px] shadow-lg";
     
     if (isCompleted) {
-      return `${baseStyle} bg-green-50 border-green-200 hover:border-green-300`;
+      return `${baseStyle} bg-gradient-to-br from-green-50 to-green-100 ring-2 ring-green-200`;
     } else if (isUnlocked) {
-      return `${baseStyle} bg-blue-50 border-blue-200 hover:border-blue-300`;
+      return `${baseStyle} bg-gradient-to-br from-blue-50 to-blue-100 ring-2 ring-blue-200`;
     } else {
-      return `${baseStyle} bg-gray-50 border-gray-200 opacity-60 cursor-not-allowed`;
+      return `${baseStyle} bg-gray-50 ring-2 ring-gray-200 opacity-60 cursor-not-allowed`;
     }
   };
 
@@ -234,228 +229,409 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
   const { user_profile, career_outlook, roadmap } = roadmapData;
 
   return (
-    <div className="w-full max-w-7xl mx-auto p-6 space-y-8">
-      {/* Header */}
-      <div className="text-center space-y-4">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-          {roadmap.title}
-        </h1>
-        <p className="text-lg text-gray-600">{roadmap.description}</p>
-        <div className="flex justify-center items-center space-x-8 text-sm">
-          <div className="flex items-center space-x-2">
-            <Clock className="h-4 w-4 text-blue-600" />
-            <span>Duration: {user_profile.estimated_duration}</span>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Target className="h-4 w-4 text-green-500" />
-            <span>Difficulty: {career_outlook.difficulty_level}</span>
-          </div>
-        </div>
-      </div>
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
 
-      {/* Roadmap Visualization */}
-      <div className="relative">
-        {/* Connection Lines */}
-        <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1, height: `${containerHeight}px` }}>
-          {updatedNodes.map((node) =>
-            node.connections.map((connectionId) => {
-              const targetNode = updatedNodes.find(n => n.id === connectionId);
-              if (!targetNode) return null;
-              
-              return (
-                <line
-                  key={`${node.id}-${connectionId}`}
-                  x1={node.position.x + 125}
-                  y1={node.position.y + 60}
-                  x2={targetNode.position.x + 125}
-                  y2={targetNode.position.y + 20}
-                  stroke="#cbd5e1"
-                  strokeWidth="2"
-                  strokeDasharray="5,5"
-                />
-              );
-            })
-          )}
-        </svg>
+      <div className="w-full max-w-8xl mx-auto p-8 space-y-12 bg-gradient-to-br from-gray-50 via-blue-50 to-white min-h-screen">
+        {/* Google Material Header */}
+        <div className="text-center space-y-8 relative overflow-hidden">
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-10 w-64 h-64 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+            <div className="absolute bottom-1/4 right-10 w-64 h-64 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
+          </div>
 
-        {/* Roadmap Nodes */}
-        <div className="relative" style={{ height: `${containerHeight}px`, zIndex: 2 }}>
-          {updatedNodes.map((node) => (
-            <div
-              key={node.id}
-              className="absolute"
-              style={{
-                left: `${node.position.x}px`,
-                top: `${node.position.y}px`,
-              }}
+          <div className="relative z-10">
+            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm mb-8">
+              <span className="material-icons text-base">route</span>
+              <span style={{ fontFamily: 'Google Sans, sans-serif' }}>Learning Pathway</span>
+            </div>
+
+            <h1 
+              className="text-5xl lg:text-7xl font-normal text-gray-900 leading-tight mb-6"
+              style={{ fontFamily: 'Google Sans, sans-serif' }}
             >
-              <div
-                className={getNodeStyle(node)}
-                onClick={() => setSelectedNode(node)}
-              >
-                <div className="flex items-center justify-between mb-2">
-                  {getNodeIcon(node)}
-                  {node.type !== 'start' && node.type !== 'success' && (
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleNodeCompletion(node.id);
-                      }}
-                    >
-                      {completedNodes.has(node.id) ? '✓' : '○'}
-                    </Button>
-                  )}
-                </div>
-                
-                <h3 className="font-semibold text-sm mb-1">{node.title}</h3>
-                <p className="text-xs text-gray-600 mb-2">{node.description}</p>
-                
-                {node.duration && (
-                  <Badge variant="outline" className="text-xs">
-                    {node.duration}
-                  </Badge>
-                )}
-                
-                {node.type === 'required' && (
-                  <Badge variant="destructive" className="text-xs ml-1">
-                    Required
-                  </Badge>
-                )}
-                
-                {node.type === 'optional' && (
-                  <Badge variant="secondary" className="text-xs ml-1">
-                    Optional
-                  </Badge>
-                )}
+              {roadmap.title}
+            </h1>
+            
+            <p 
+              className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              {roadmap.description}
+            </p>
+
+            <div className="flex justify-center items-center space-x-12 text-base">
+              <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-full shadow-sm">
+                <span className="material-icons text-blue-600 text-lg">schedule</span>
+                <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+                  Duration: <span className="font-medium">{user_profile.estimated_duration}</span>
+                </span>
+              </div>
+              <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-full shadow-sm">
+                <span className="material-icons text-green-500 text-lg">trending_up</span>
+                <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+                  Level: <span className="font-medium">{career_outlook.difficulty_level}</span>
+                </span>
               </div>
             </div>
-          ))}
+          </div>
         </div>
-      </div>
 
-      {/* Node Details Modal/Panel */}
-      {selectedNode && (
-        <Card className="mt-8 border-l-4 border-l-blue-600">
-          <CardHeader>
-            <div className="flex items-center justify-between">
-              <CardTitle className="flex items-center">
-                {getNodeIcon(selectedNode)}
-                <span className="ml-3">{selectedNode.title}</span>
-              </CardTitle>
-              <Button variant="ghost" onClick={() => setSelectedNode(null)}>
-                ×
-              </Button>
-            </div>
-            <p className="text-gray-600">{selectedNode.description}</p>
-          </CardHeader>
-          
-          <CardContent className="space-y-6">
-            {selectedNode.skills && (
-              <div>
-                <h4 className="font-semibold mb-3 flex items-center">
-                  <BookOpen className="h-4 w-4 mr-2 text-blue-600" />
-                  Skills to Learn
-                </h4>
-                <div className="flex flex-wrap gap-2">
-                  {selectedNode.skills.map((skill, index) => (
-                    <Badge key={index} variant="secondary">{skill}</Badge>
-                  ))}
-                </div>
-              </div>
+        {/* Google Learning Path Roadmap Visualization */}
+        <div className="relative bg-white rounded-3xl shadow-lg overflow-hidden">
+          {/* Connection Lines with Google-style gradients */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1, height: `${containerHeight}px` }}>
+            {updatedNodes.map((node) =>
+              node.connections.map((connectionId) => {
+                const targetNode = updatedNodes.find(n => n.id === connectionId);
+                if (!targetNode) return null;
+                
+                return (
+                  <defs key={`${node.id}-${connectionId}-defs`}>
+                    <linearGradient id={`gradient-${node.id}-${connectionId}`} x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
+                    </linearGradient>
+                    <line
+                      key={`${node.id}-${connectionId}`}
+                      x1={node.position.x + 150}
+                      y1={node.position.y + 90}
+                      x2={targetNode.position.x + 150}
+                      y2={targetNode.position.y + 30}
+                      stroke={`url(#gradient-${node.id}-${connectionId})`}
+                      strokeWidth="3"
+                      strokeDasharray="8,4"
+                      strokeLinecap="round"
+                    />
+                  </defs>
+                );
+              })
             )}
+          </svg>
 
-            {selectedNode.resources && (
-              <div>
-                <h4 className="font-semibold mb-3">Learning Resources</h4>
-                <div className="space-y-2">
-                  {selectedNode.resources.map((resource, index) => (
-                    <div key={index} className="flex items-center justify-between bg-gray-50 rounded p-3">
-                      <div>
-                        <div className="font-medium">{resource.name}</div>
-                        <Badge variant="outline" className="text-xs">{resource.type}</Badge>
-                      </div>
-                      <Button variant="ghost" size="sm" onClick={() => window.open(resource.url, '_blank')}>
-                        <ExternalLink className="h-4 w-4" />
+          {/* Roadmap Nodes */}
+          <div className="relative p-12" style={{ height: `${containerHeight}px`, zIndex: 2 }}>
+            {updatedNodes.map((node) => (
+              <div
+                key={node.id}
+                className="absolute"
+                style={{
+                  left: `${node.position.x}px`,
+                  top: `${node.position.y}px`,
+                }}
+              >
+                <div
+                  className={getNodeStyle(node)}
+                  onClick={() => setSelectedNode(node)}
+                >
+                  <div className="flex items-center justify-between mb-4">
+                    {getNodeIcon(node)}
+                    {node.type !== 'start' && node.type !== 'success' && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          toggleNodeCompletion(node.id);
+                        }}
+                        className="w-8 h-8 rounded-full hover:bg-white/50"
+                      >
+                        {completedNodes.has(node.id) ? 
+                          <span className="material-icons text-green-600 text-lg">check</span> : 
+                          <span className="material-icons text-gray-400 text-lg">radio_button_unchecked</span>
+                        }
                       </Button>
-                    </div>
-                  ))}
+                    )}
+                  </div>
+                  
+                  <h3 
+                    className="font-medium text-lg mb-2 text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    {node.title}
+                  </h3>
+                  <p 
+                    className="text-sm text-gray-600 mb-4 leading-relaxed"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    {node.description}
+                  </p>
+                  
+                  <div className="flex flex-wrap gap-2">
+                    {node.duration && (
+                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
+                        <span className="material-icons mr-1 text-xs">schedule</span>
+                        {node.duration}
+                      </Badge>
+                    )}
+                    
+                    {node.type === 'required' && (
+                      <Badge variant="destructive">
+                        <span className="material-icons mr-1 text-xs">priority_high</span>
+                        Required
+                      </Badge>
+                    )}
+                    
+                    {node.type === 'optional' && (
+                      <Badge variant="secondary">
+                        <span className="material-icons mr-1 text-xs">more_horiz</span>
+                        Optional
+                      </Badge>
+                    )}
+                  </div>
                 </div>
               </div>
-            )}
+            ))}
+          </div>
+        </div>
 
-            {selectedNode.specializations && (
-              <div>
-                <h4 className="font-semibold mb-3">Choose Your Specialization</h4>
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                  {selectedNode.specializations.map((spec, index) => (
-                    <Card key={index} className="p-4">
-                      <h5 className="font-semibold mb-2">{spec.name}</h5>
-                      <div className="space-y-2">
-                        {spec.skills.map((skill, skillIndex) => (
-                          <Badge key={skillIndex} variant="outline" className="text-xs mr-1">
-                            {skill}
+        {/* Google-style Node Details Panel */}
+        {selectedNode && (
+          <Card className="border-l-4 border-l-blue-500 bg-gradient-to-br from-white to-blue-50">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="flex items-center space-x-3">
+                  {getNodeIcon(selectedNode)}
+                  <span>{selectedNode.title}</span>
+                </CardTitle>
+                <Button 
+                  variant="ghost" 
+                  onClick={() => setSelectedNode(null)}
+                  className="w-10 h-10 rounded-full hover:bg-red-50 hover:text-red-600"
+                >
+                  <span className="material-icons">close</span>
+                </Button>
+              </div>
+              <p 
+                className="text-gray-600 leading-relaxed mt-4"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                {selectedNode.description}
+              </p>
+            </CardHeader>
+            
+            <CardContent className="space-y-8">
+              {selectedNode.skills && (
+                <div>
+                  <h4 
+                    className="font-medium mb-4 flex items-center text-lg"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-blue-600">psychology</span>
+                    Skills to Learn
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {selectedNode.skills.map((skill, index) => (
+                      <Badge key={index} variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedNode.resources && (
+                <div>
+                  <h4 
+                    className="font-medium mb-4 flex items-center text-lg"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-green-600">library_books</span>
+                    Learning Resources
+                  </h4>
+                  <div className="space-y-3">
+                    {selectedNode.resources.map((resource, index) => (
+                      <div key={index} className="flex items-center justify-between bg-white rounded-2xl p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
+                        <div>
+                          <div 
+                            className="font-medium text-gray-900 mb-1"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            {resource.name}
+                          </div>
+                          <Badge variant="outline" className="bg-gray-50">
+                            {resource.type}
                           </Badge>
-                        ))}
+                        </div>
+                        <Button 
+                          variant="ghost" 
+                          size="sm" 
+                          onClick={() => window.open(resource.url, '_blank')}
+                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
+                        >
+                          <span className="material-icons">open_in_new</span>
+                        </Button>
                       </div>
-                    </Card>
-                  ))}
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedNode.specializations && (
+                <div>
+                  <h4 
+                    className="font-medium mb-4 flex items-center text-lg"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-purple-600">tune</span>
+                    Choose Your Specialization
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    {selectedNode.specializations.map((spec, index) => (
+                      <Card key={index} className="p-6 hover:shadow-lg transition-shadow duration-200">
+                        <h5 
+                          className="font-medium mb-3 text-gray-900"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          {spec.name}
+                        </h5>
+                        <div className="space-y-2">
+                          {spec.skills.map((skill, skillIndex) => (
+                            <Badge key={skillIndex} variant="outline" className="text-xs mr-1 mb-1">
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {selectedNode.project_ideas && (
+                <div>
+                  <h4 
+                    className="font-medium mb-4 flex items-center text-lg"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-yellow-600">lightbulb</span>
+                    Project Ideas
+                  </h4>
+                  <ul className="space-y-2">
+                    {selectedNode.project_ideas.map((project, index) => (
+                      <li key={index} className="flex items-start space-x-2">
+                        <span className="material-icons text-green-500 text-base mt-0.5">check_circle_outline</span>
+                        <span 
+                          className="text-gray-700"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          {project}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {selectedNode.next_steps && (
+                <div>
+                  <h4 
+                    className="font-medium mb-4 flex items-center text-lg"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-orange-600">trending_up</span>
+                    Next Steps
+                  </h4>
+                  <ul className="space-y-2">
+                    {selectedNode.next_steps.map((step, index) => (
+                      <li key={index} className="flex items-start space-x-2">
+                        <span className="material-icons text-blue-500 text-base mt-0.5">arrow_forward</span>
+                        <span 
+                          className="text-gray-700"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          {step}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Google-style Progress Summary */}
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-0">
+          <CardContent className="p-8">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+              <div className="space-y-3">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="material-icons text-white text-2xl">task_alt</span>
+                </div>
+                <div 
+                  className="text-3xl font-bold text-blue-600"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  {completedNodes.size}/{roadmap.nodes.length}
+                </div>
+                <div 
+                  className="text-gray-600"
+                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                >
+                  Steps Completed
                 </div>
               </div>
-            )}
-
-            {selectedNode.project_ideas && (
-              <div>
-                <h4 className="font-semibold mb-3">Project Ideas</h4>
-                <ul className="list-disc list-inside space-y-1">
-                  {selectedNode.project_ideas.map((project, index) => (
-                    <li key={index} className="text-sm">{project}</li>
-                  ))}
-                </ul>
+              <div className="space-y-3">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="material-icons text-white text-2xl">trending_up</span>
+                </div>
+                <div 
+                  className="text-3xl font-bold text-green-500"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  {Math.round((completedNodes.size / roadmap.nodes.length) * 100)}%
+                </div>
+                <div 
+                  className="text-gray-600"
+                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                >
+                  Progress
+                </div>
               </div>
-            )}
-
-            {selectedNode.next_steps && (
-              <div>
-                <h4 className="font-semibold mb-3">Next Steps</h4>
-                <ul className="list-disc list-inside space-y-1">
-                  {selectedNode.next_steps.map((step, index) => (
-                    <li key={index} className="text-sm">{step}</li>
-                  ))}
-                </ul>
+              <div className="space-y-3">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
+                  <span className="material-icons text-white text-2xl">payments</span>
+                </div>
+                <div 
+                  className="text-3xl font-bold text-yellow-600"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  {career_outlook.average_salary_entry_level}
+                </div>
+                <div 
+                  className="text-gray-600"
+                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                >
+                  Expected Salary
+                </div>
               </div>
-            )}
+            </div>
           </CardContent>
         </Card>
-      )}
 
-      {/* Progress Summary */}
-      <Card className="bg-gradient-to-r from-blue-50 to-blue-100">
-        <CardContent className="p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-            <div>
-              <div className="text-2xl font-bold text-blue-600">
-                {completedNodes.size}/{roadmap.nodes.length}
-              </div>
-              <div className="text-sm text-gray-600">Nodes Completed</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-green-500">
-                {Math.round((completedNodes.size / roadmap.nodes.length) * 100)}%
-              </div>
-              <div className="text-sm text-gray-600">Progress</div>
-            </div>
-            <div>
-              <div className="text-2xl font-bold text-yellow-500">
-                {career_outlook.average_salary_entry_level}
-              </div>
-              <div className="text-sm text-gray-600">Expected Salary</div>
-            </div>
+        {/* Google-style Help Text */}
+        <div className="text-center">
+          <div className="inline-flex items-center space-x-2 text-sm text-gray-500 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <span className="material-icons text-blue-500 text-sm">info</span>
+            <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+              Click on any step to view detailed learning resources and requirements
+            </span>
           </div>
-        </CardContent>
-      </Card>
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

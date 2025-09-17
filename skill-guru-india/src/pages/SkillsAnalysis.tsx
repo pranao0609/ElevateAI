@@ -5,7 +5,6 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { 
   Brain,
   Target,
@@ -109,15 +108,29 @@ const SkillsAnalysis = () => {
     improvementStreak: 5
   });
 
-  // Badge definitions
+  // Google Material Icon mapping for badges
+  const materialIconMap = {
+    Brain: "psychology",
+    Trophy: "emoji_events",
+    Star: "star",
+    Flame: "local_fire_department",
+    Bolt: "bolt",
+    Rocket: "rocket_launch",
+    Users: "people",
+    Shield: "security",
+    Crown: "workspace_premium",
+    Gem: "diamond"
+  };
+
+  // Badge definitions with Google Material styling
   const badgeDefinitions = [
     {
       id: 'first_assessment',
       title: 'First Steps',
       description: 'Complete your first skills assessment',
-      icon: Brain,
+      icon: "psychology",
       color: 'bg-blue-500',
-      gradient: 'from-blue-400 to-blue-600',
+      gradient: 'from-blue-500 to-blue-600',
       xpReward: 50,
       rarity: 'common',
       category: 'milestone',
@@ -127,9 +140,9 @@ const SkillsAnalysis = () => {
       id: 'skill_master',
       title: 'Skill Master',
       description: 'Achieve 90% or higher in any skill category',
-      icon: Trophy,
+      icon: "emoji_events",
       color: 'bg-yellow-500',
-      gradient: 'from-yellow-400 to-orange-500',
+      gradient: 'from-yellow-500 to-orange-500',
       xpReward: 200,
       rarity: 'rare',
       category: 'achievement',
@@ -139,9 +152,9 @@ const SkillsAnalysis = () => {
       id: 'perfectionist',
       title: 'Perfectionist',
       description: 'Score 100% on any assessment',
-      icon: Star,
+      icon: "star",
       color: 'bg-purple-500',
-      gradient: 'from-purple-400 to-pink-500',
+      gradient: 'from-purple-500 to-pink-500',
       xpReward: 300,
       rarity: 'epic',
       category: 'achievement',
@@ -151,9 +164,9 @@ const SkillsAnalysis = () => {
       id: 'streak_warrior',
       title: 'Streak Warrior',
       description: 'Complete assessments for 7 consecutive days',
-      icon: Flame,
+      icon: "local_fire_department",
       color: 'bg-red-500',
-      gradient: 'from-red-400 to-orange-500',
+      gradient: 'from-red-500 to-orange-500',
       xpReward: 150,
       rarity: 'uncommon',
       category: 'engagement',
@@ -163,9 +176,9 @@ const SkillsAnalysis = () => {
       id: 'rapid_learner',
       title: 'Rapid Learner',
       description: 'Improve 5 skills in a single session',
-      icon: Bolt,
+      icon: "bolt",
       color: 'bg-yellow-400',
-      gradient: 'from-yellow-300 to-yellow-500',
+      gradient: 'from-yellow-400 to-yellow-500',
       xpReward: 175,
       rarity: 'uncommon',
       category: 'progress',
@@ -175,9 +188,9 @@ const SkillsAnalysis = () => {
       id: 'tech_guru',
       title: 'Tech Guru',
       description: 'Master all technical skills (80%+ average)',
-      icon: Rocket,
+      icon: "rocket_launch",
       color: 'bg-green-500',
-      gradient: 'from-green-400 to-blue-500',
+      gradient: 'from-green-500 to-blue-500',
       xpReward: 250,
       rarity: 'rare',
       category: 'mastery',
@@ -190,9 +203,9 @@ const SkillsAnalysis = () => {
       id: 'communication_ace',
       title: 'Communication Ace',
       description: 'Excel in all soft skills (85%+ average)',
-      icon: Users,
+      icon: "people",
       color: 'bg-pink-500',
-      gradient: 'from-pink-400 to-red-500',
+      gradient: 'from-pink-500 to-red-500',
       xpReward: 250,
       rarity: 'rare',
       category: 'mastery',
@@ -205,9 +218,9 @@ const SkillsAnalysis = () => {
       id: 'industry_expert',
       title: 'Industry Expert',
       description: 'Demonstrate deep industry knowledge (90%+ average)',
-      icon: Shield,
+      icon: "security",
       color: 'bg-indigo-500',
-      gradient: 'from-indigo-400 to-purple-500',
+      gradient: 'from-indigo-500 to-purple-500',
       xpReward: 300,
       rarity: 'epic',
       category: 'mastery',
@@ -220,7 +233,7 @@ const SkillsAnalysis = () => {
       id: 'all_rounder',
       title: 'All-Rounder',
       description: 'Score 75%+ in all skill categories',
-      icon: Crown,
+      icon: "workspace_premium",
       color: 'bg-gradient-to-r from-yellow-400 to-orange-500',
       gradient: 'from-yellow-400 via-orange-500 to-red-500',
       xpReward: 400,
@@ -232,9 +245,9 @@ const SkillsAnalysis = () => {
       id: 'xp_collector',
       title: 'XP Collector',
       description: 'Earn 1000+ experience points',
-      icon: Gem,
+      icon: "diamond",
       color: 'bg-cyan-500',
-      gradient: 'from-cyan-400 to-blue-500',
+      gradient: 'from-cyan-500 to-blue-500',
       xpReward: 100,
       rarity: 'uncommon',
       category: 'progression',
@@ -291,7 +304,7 @@ const SkillsAnalysis = () => {
       skillsGained: ["Python", "Django", "Flask", "API Development"],
       difficulty: "Intermediate",
       rating: 4.8,
-      gradient: "gradient-primary"
+      gradient: "from-blue-500 to-blue-600"
     },
     {
       title: "AWS Cloud Fundamentals",
@@ -302,7 +315,7 @@ const SkillsAnalysis = () => {
       skillsGained: ["AWS", "EC2", "S3", "Lambda", "RDS"],
       difficulty: "Beginner",
       rating: 4.9,
-      gradient: "bg-gradient-to-br from-warning to-orange-400"
+      gradient: "from-yellow-500 to-orange-500"
     },
     {
       title: "Advanced TypeScript",
@@ -313,47 +326,58 @@ const SkillsAnalysis = () => {
       skillsGained: ["TypeScript", "Advanced Types", "Generics", "Decorators"],
       difficulty: "Advanced",
       rating: 4.7,
-      gradient: "gradient-success"
+      gradient: "from-green-500 to-green-600"
     }
   ];
 
-  // Badge Components
+  // Google Material Badge Components
   const BadgeCard = ({ badge, earned = false, showAnimation = false }) => {
-    const Icon = badge.icon;
-    
     return (
-      <div className={`relative p-4 rounded-xl border-2 transition-all duration-300 ${
+      <div className={`relative p-6 rounded-3xl border-2 transition-all duration-300 ${
         earned 
           ? 'border-yellow-300 bg-gradient-to-br from-yellow-50 to-orange-50 shadow-lg scale-105' 
           : 'border-gray-200 bg-gray-50 opacity-60'
       } ${showAnimation ? 'animate-bounce' : ''}`}>
         
-        <div className={`w-16 h-16 mx-auto mb-3 rounded-full flex items-center justify-center ${
+        <div className={`w-16 h-16 mx-auto mb-4 rounded-2xl flex items-center justify-center ${
           earned ? `bg-gradient-to-br ${badge.gradient}` : 'bg-gray-300'
         } shadow-lg`}>
-          <Icon className={`h-8 w-8 ${earned ? 'text-white' : 'text-gray-500'}`} />
+          <span 
+            className={`material-icons text-2xl ${earned ? 'text-white' : 'text-gray-500'}`}
+          >
+            {badge.icon}
+          </span>
         </div>
 
         <div className="text-center">
-          <h3 className={`font-bold text-sm mb-1 ${earned ? 'text-gray-800' : 'text-gray-500'}`}>
+          <h3 
+            className={`font-medium text-lg mb-2 ${earned ? 'text-gray-800' : 'text-gray-500'}`}
+            style={{ fontFamily: 'Google Sans, sans-serif' }}
+          >
             {badge.title}
           </h3>
-          <p className={`text-xs mb-2 ${earned ? 'text-gray-600' : 'text-gray-400'}`}>
+          <p 
+            className={`text-sm mb-4 ${earned ? 'text-gray-600' : 'text-gray-400'} leading-relaxed`}
+            style={{ fontFamily: 'Roboto, sans-serif' }}
+          >
             {badge.description}
           </p>
           
-          <div className="space-y-1">
+          <div className="space-y-2">
             <Badge 
               variant={earned ? 'default' : 'secondary'} 
-              className={`text-xs ${getRarityColor(badge.rarity)}`}
+              className={`text-xs font-medium rounded-full px-3 py-1 ${getRarityColor(badge.rarity)}`}
             >
               {badge.rarity.toUpperCase()}
             </Badge>
             
             {earned && (
-              <div className="flex items-center justify-center space-x-1">
-                <Sparkles className="h-3 w-3 text-yellow-500" />
-                <span className="text-xs font-semibold text-yellow-600">
+              <div className="flex items-center justify-center space-x-2">
+                <span className="material-icons text-yellow-500 text-lg">auto_awesome</span>
+                <span 
+                  className="text-sm font-semibold text-yellow-600"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
                   +{badge.xpReward} XP
                 </span>
               </div>
@@ -361,16 +385,16 @@ const SkillsAnalysis = () => {
           </div>
         </div>
 
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-3 right-3">
           {earned ? (
-            <CheckCircle className="h-5 w-5 text-green-500" />
+            <span className="material-icons text-green-500 text-xl">check_circle</span>
           ) : (
-            <Lock className="h-4 w-4 text-gray-400" />
+            <span className="material-icons text-gray-400 text-lg">lock</span>
           )}
         </div>
 
         {earned && badge.rarity === 'legendary' && (
-          <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-20 animate-pulse" />
+          <div className="absolute inset-0 rounded-3xl bg-gradient-to-r from-yellow-400 via-orange-500 to-red-500 opacity-20 animate-pulse" />
         )}
       </div>
     );
@@ -384,31 +408,50 @@ const SkillsAnalysis = () => {
       return () => clearTimeout(timer);
     }, [onClose]);
 
-    const Icon = badge.icon;
-
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm">
-        <div className="bg-white rounded-2xl p-8 max-w-md mx-4 text-center animate-bounce">
-          <div className="mb-4">
-            <Sparkles className="h-8 w-8 text-yellow-500 mx-auto mb-2 animate-spin" />
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Badge Unlocked!</h2>
+        <div className="bg-white rounded-3xl p-10 max-w-md mx-4 text-center animate-bounce shadow-2xl">
+          <div className="mb-6">
+            <span className="material-icons text-yellow-500 text-5xl mb-4 block animate-spin">auto_awesome</span>
+            <h2 
+              className="text-3xl font-medium text-gray-800 mb-2"
+              style={{ fontFamily: 'Google Sans, sans-serif' }}
+            >
+              Badge Unlocked!
+            </h2>
           </div>
           
-          <div className={`w-24 h-24 mx-auto mb-4 rounded-full flex items-center justify-center bg-gradient-to-br ${badge.gradient} shadow-xl`}>
-            <Icon className="h-12 w-12 text-white" />
+          <div className={`w-24 h-24 mx-auto mb-6 rounded-2xl flex items-center justify-center bg-gradient-to-br ${badge.gradient} shadow-xl`}>
+            <span className="material-icons text-white text-3xl">{badge.icon}</span>
           </div>
           
-          <h3 className="text-xl font-bold text-gray-800 mb-2">{badge.title}</h3>
-          <p className="text-gray-600 mb-4">{badge.description}</p>
+          <h3 
+            className="text-2xl font-medium text-gray-800 mb-3"
+            style={{ fontFamily: 'Google Sans, sans-serif' }}
+          >
+            {badge.title}
+          </h3>
+          <p 
+            className="text-gray-600 mb-6 leading-relaxed"
+            style={{ fontFamily: 'Roboto, sans-serif' }}
+          >
+            {badge.description}
+          </p>
           
-          <div className="flex items-center justify-center space-x-2">
-            <Gem className="h-5 w-5 text-yellow-500" />
-            <span className="text-lg font-bold text-yellow-600">+{badge.xpReward} XP</span>
+          <div className="flex items-center justify-center space-x-2 mb-6">
+            <span className="material-icons text-yellow-500 text-xl">diamond</span>
+            <span 
+              className="text-xl font-bold text-yellow-600"
+              style={{ fontFamily: 'Google Sans, sans-serif' }}
+            >
+              +{badge.xpReward} XP
+            </span>
           </div>
           
           <Button 
             onClick={onClose}
-            className="mt-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white"
+            className="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-white rounded-full px-8 py-3 font-medium"
+            style={{ fontFamily: 'Google Sans, sans-serif' }}
           >
             Awesome!
           </Button>
@@ -422,21 +465,34 @@ const SkillsAnalysis = () => {
     const xpProgress = (currentXP % 300) / 300 * 100;
     
     return (
-      <div className="bg-white rounded-lg p-4 border">
-        <div className="flex items-center justify-between mb-2">
+      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm">
+        <div className="flex items-center justify-between mb-3">
           <div className="flex items-center space-x-2">
-            <Crown className="h-5 w-5 text-yellow-500" />
-            <span className="font-bold text-gray-800">Level {level}</span>
+            <span className="material-icons text-yellow-500 text-xl">workspace_premium</span>
+            <span 
+              className="font-medium text-gray-800 text-lg"
+              style={{ fontFamily: 'Google Sans, sans-serif' }}
+            >
+              Level {level}
+            </span>
           </div>
-          <span className="text-sm text-gray-600">{currentXP} XP</span>
+          <span 
+            className="text-sm text-gray-600"
+            style={{ fontFamily: 'Roboto, sans-serif' }}
+          >
+            {currentXP} XP
+          </span>
         </div>
-        <div className="w-full bg-gray-200 rounded-full h-3">
+        <div className="w-full bg-gray-200 rounded-full h-3 mb-2">
           <div 
             className="bg-gradient-to-r from-blue-500 to-purple-500 h-3 rounded-full transition-all duration-1000 ease-out"
             style={{ width: `${xpProgress}%` }}
           />
         </div>
-        <div className="text-xs text-gray-500 mt-1 text-center">
+        <div 
+          className="text-xs text-gray-500 text-center"
+          style={{ fontFamily: 'Roboto, sans-serif' }}
+        >
           {Math.round((300 - (currentXP % 300)))} XP to Level {level + 1}
         </div>
       </div>
@@ -459,29 +515,29 @@ const SkillsAnalysis = () => {
 
   const chartData = prepareChartData();
 
-  // Chart.js data configurations
+  // Chart.js data configurations with Google colors
   const getRadarData = () => ({
     labels: chartData.map(skill => skill.name),
     datasets: [
       {
         label: 'Your Level',
         data: chartData.map(skill => skill.level),
-        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 2,
-        pointBackgroundColor: 'rgba(54, 162, 235, 1)',
+        backgroundColor: 'rgba(26, 115, 232, 0.2)',
+        borderColor: '#1A73E8',
+        borderWidth: 3,
+        pointBackgroundColor: '#1A73E8',
         pointBorderColor: '#fff',
         pointHoverBackgroundColor: '#fff',
-        pointHoverBorderColor: 'rgba(54, 162, 235, 1)'
+        pointHoverBorderColor: '#1A73E8'
       },
       {
         label: 'Industry Average',
         data: chartData.map(() => 75),
-        backgroundColor: 'rgba(255, 99, 132, 0.1)',
-        borderColor: 'rgba(255, 99, 132, 1)',
+        backgroundColor: 'rgba(52, 168, 83, 0.1)',
+        borderColor: '#34A853',
         borderWidth: 2,
         borderDash: [5, 5],
-        pointBackgroundColor: 'rgba(255, 99, 132, 1)',
+        pointBackgroundColor: '#34A853',
         pointBorderColor: '#fff'
       }
     ]
@@ -495,20 +551,20 @@ const SkillsAnalysis = () => {
         data: chartData.map(skill => skill.level),
         backgroundColor: chartData.map(skill => {
           switch(skill.status) {
-            case 'strong': return 'rgba(34, 197, 94, 0.8)';
-            case 'good': return 'rgba(59, 130, 246, 0.8)';
-            case 'gap': return 'rgba(245, 158, 11, 0.8)';
-            case 'critical': return 'rgba(239, 68, 68, 0.8)';
-            default: return 'rgba(156, 163, 175, 0.8)';
+            case 'strong': return '#34A853';
+            case 'good': return '#1A73E8';
+            case 'gap': return '#FBBC04';
+            case 'critical': return '#EA4335';
+            default: return '#9AA0A6';
           }
         }),
         borderColor: chartData.map(skill => {
           switch(skill.status) {
-            case 'strong': return 'rgba(34, 197, 94, 1)';
-            case 'good': return 'rgba(59, 130, 246, 1)';
-            case 'gap': return 'rgba(245, 158, 11, 1)';
-            case 'critical': return 'rgba(239, 68, 68, 1)';
-            default: return 'rgba(156, 163, 175, 1)';
+            case 'strong': return '#137333';
+            case 'good': return '#1557B0';
+            case 'gap': return '#E8710A';
+            case 'critical': return '#C5221F';
+            default: return '#80868B';
           }
         }),
         borderWidth: 2,
@@ -531,18 +587,8 @@ const SkillsAnalysis = () => {
       datasets: [
         {
           data: [statusCounts.strong, statusCounts.good, statusCounts.gap, statusCounts.critical],
-          backgroundColor: [
-            'rgba(34, 197, 94, 0.8)',
-            'rgba(59, 130, 246, 0.8)', 
-            'rgba(245, 158, 11, 0.8)',
-            'rgba(239, 68, 68, 0.8)'
-          ],
-          borderColor: [
-            'rgba(34, 197, 94, 1)',
-            'rgba(59, 130, 246, 1)',
-            'rgba(245, 158, 11, 1)', 
-            'rgba(239, 68, 68, 1)'
-          ],
+          backgroundColor: ['#34A853', '#1A73E8', '#FBBC04', '#EA4335'],
+          borderColor: ['#137333', '#1557B0', '#E8710A', '#C5221F'],
           borderWidth: 2,
           hoverOffset: 4
         }
@@ -557,11 +603,11 @@ const SkillsAnalysis = () => {
         label: 'Improvement Trend',
         data: chartData.map(skill => skill.improvement),
         fill: true,
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
+        backgroundColor: 'rgba(26, 115, 232, 0.2)',
+        borderColor: '#1A73E8',
         borderWidth: 3,
         pointBackgroundColor: chartData.map(skill => 
-          skill.improvement > 0 ? 'rgba(34, 197, 94, 1)' : 'rgba(239, 68, 68, 1)'
+          skill.improvement > 0 ? '#34A853' : '#EA4335'
         ),
         pointBorderColor: '#fff',
         pointBorderWidth: 2,
@@ -571,7 +617,7 @@ const SkillsAnalysis = () => {
     ]
   });
 
-  // Chart options
+  // Google Material Chart options
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
@@ -580,17 +626,27 @@ const SkillsAnalysis = () => {
         position: 'top' as const,
         labels: {
           usePointStyle: true,
-          padding: 20
+          padding: 20,
+          font: {
+            family: 'Google Sans, sans-serif',
+            size: 12
+          }
         }
       },
       tooltip: {
-        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        backgroundColor: 'rgba(32, 33, 36, 0.9)',
         titleColor: 'white',
         bodyColor: 'white',
         borderColor: 'rgba(255, 255, 255, 0.1)',
         borderWidth: 1,
-        cornerRadius: 8,
-        displayColors: true
+        cornerRadius: 12,
+        displayColors: true,
+        titleFont: {
+          family: 'Google Sans, sans-serif'
+        },
+        bodyFont: {
+          family: 'Roboto, sans-serif'
+        }
       }
     },
     scales: {
@@ -599,11 +655,21 @@ const SkillsAnalysis = () => {
         max: 100,
         grid: {
           color: 'rgba(0, 0, 0, 0.1)'
+        },
+        ticks: {
+          font: {
+            family: 'Roboto, sans-serif'
+          }
         }
       },
       x: {
         grid: {
           display: false
+        },
+        ticks: {
+          font: {
+            family: 'Roboto, sans-serif'
+          }
         }
       }
     }
@@ -614,7 +680,12 @@ const SkillsAnalysis = () => {
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'top' as const
+        position: 'top' as const,
+        labels: {
+          font: {
+            family: 'Google Sans, sans-serif'
+          }
+        }
       }
     },
     scales: {
@@ -622,7 +693,10 @@ const SkillsAnalysis = () => {
         beginAtZero: true,
         max: 100,
         ticks: {
-          stepSize: 20
+          stepSize: 20,
+          font: {
+            family: 'Roboto, sans-serif'
+          }
         },
         grid: {
           color: 'rgba(0, 0, 0, 0.1)'
@@ -631,8 +705,8 @@ const SkillsAnalysis = () => {
     }
   };
 
-  // Progress Circle Component
-  const ProgressCircle = ({ percentage, size = 120, strokeWidth = 8, color = "#3b82f6" }) => {
+  // Progress Circle Component with Google styling
+  const ProgressCircle = ({ percentage, size = 120, strokeWidth = 8, color = "#1A73E8" }) => {
     const radius = (size - strokeWidth) / 2;
     const circumference = radius * 2 * Math.PI;
     const offset = circumference - (percentage / 100) * circumference;
@@ -667,7 +741,12 @@ const SkillsAnalysis = () => {
           />
         </svg>
         <div className="absolute inset-0 flex items-center justify-center">
-          <span className="text-2xl font-bold text-gray-700">{percentage}%</span>
+          <span 
+            className="text-2xl font-bold text-gray-700"
+            style={{ fontFamily: 'Google Sans, sans-serif' }}
+          >
+            {percentage}%
+          </span>
         </div>
       </div>
     );
@@ -676,12 +755,12 @@ const SkillsAnalysis = () => {
   // Helper functions
   const getRarityColor = (rarity) => {
     switch(rarity) {
-      case 'common': return 'bg-gray-100 text-gray-700';
-      case 'uncommon': return 'bg-green-100 text-green-700';
-      case 'rare': return 'bg-blue-100 text-blue-700';
-      case 'epic': return 'bg-purple-100 text-purple-700';
-      case 'legendary': return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white';
-      default: return 'bg-gray-100 text-gray-700';
+      case 'common': return 'bg-gray-100 text-gray-700 border-gray-200';
+      case 'uncommon': return 'bg-green-100 text-green-700 border-green-200';
+      case 'rare': return 'bg-blue-100 text-blue-700 border-blue-200';
+      case 'epic': return 'bg-purple-100 text-purple-700 border-purple-200';
+      case 'legendary': return 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white border-yellow-400';
+      default: return 'bg-gray-100 text-gray-700 border-gray-200';
     }
   };
 
@@ -763,581 +842,885 @@ const SkillsAnalysis = () => {
 
   const getStatusColor = (status) => {
     switch (status) {
-      case "strong": return "text-success";
-      case "good": return "text-primary";
-      case "gap": return "text-warning";
-      case "critical": return "text-destructive";
-      default: return "text-muted-foreground";
+      case "strong": return "text-green-600";
+      case "good": return "text-blue-600";
+      case "gap": return "text-yellow-600";
+      case "critical": return "text-red-600";
+      default: return "text-gray-500";
     }
   };
 
   const getStatusBadge = (status) => {
     switch (status) {
-      case "strong": return <Badge className="bg-success/10 text-success border-success/20">Strong</Badge>;
-      case "good": return <Badge className="bg-primary/10 text-primary border-primary/20">Good</Badge>;
-      case "gap": return <Badge className="bg-warning/10 text-warning border-warning/20">Gap</Badge>;
-      case "critical": return <Badge className="bg-destructive/10 text-destructive border-destructive/20">Critical</Badge>;
+      case "strong": return <Badge className="bg-green-100 text-green-700 border-green-200 rounded-full">Strong</Badge>;
+      case "good": return <Badge className="bg-blue-100 text-blue-700 border-blue-200 rounded-full">Good</Badge>;
+      case "gap": return <Badge className="bg-yellow-100 text-yellow-700 border-yellow-200 rounded-full">Gap</Badge>;
+      case "critical": return <Badge className="bg-red-100 text-red-700 border-red-200 rounded-full">Critical</Badge>;
       default: return null;
     }
   };
 
   const getTrendIcon = (trend) => {
     switch (trend) {
-      case "up": return <TrendingUp className="h-4 w-4 text-success" />;
-      case "down": return <TrendingUp className="h-4 w-4 text-destructive rotate-180" />;
-      case "stable": return <div className="w-4 h-4 rounded-full bg-muted-foreground/50" />;
+      case "up": return <span className="material-icons text-green-600 text-lg">trending_up</span>;
+      case "down": return <span className="material-icons text-red-600 text-lg">trending_down</span>;
+      case "stable": return <span className="material-icons text-gray-500 text-lg">trending_flat</span>;
       default: return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-background">
-      <Header />
-      
-      {/* Badge Unlock Animation */}
-      {showBadgeAnimation && newlyEarnedBadge && (
-        <BadgeUnlockAnimation 
-          badge={newlyEarnedBadge}
-          onClose={() => {
-            setShowBadgeAnimation(false);
-            setNewlyEarnedBadge(null);
-          }}
-        />
-      )}
-      
-      <main className="pt-8">
-        {/* Hero Section */}
-        <section className="py-16 bg-gradient-hero">
-          <div className="container px-4">
-            <div className="text-center space-y-6 max-w-4xl mx-auto">
-              <div className="inline-flex items-center space-x-2 bg-primary-foreground/10 text-primary-foreground px-4 py-2 rounded-full text-sm font-medium">
-                <Brain className="h-4 w-4" />
-                <span>AI Skills Assessment</span>
-              </div>
-              <h1 className="text-4xl lg:text-6xl font-bold text-primary-foreground leading-tight">
-                Analyze & Improve
-                <span className="block gradient-text bg-gradient-to-r from-yellow-300 to-orange-300 bg-clip-text text-transparent">
-                  Your Skills
-                </span>
-              </h1>
-              <p className="text-lg lg:text-xl text-primary-foreground/90 max-w-2xl mx-auto">
-                Get detailed insights into your skill levels, identify gaps, and receive 
-                personalized learning recommendations to accelerate your career growth.
-              </p>
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
+
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white">
+        <Header />
+        
+        {/* Badge Unlock Animation */}
+        {showBadgeAnimation && newlyEarnedBadge && (
+          <BadgeUnlockAnimation 
+            badge={newlyEarnedBadge}
+            onClose={() => {
+              setShowBadgeAnimation(false);
+              setNewlyEarnedBadge(null);
+            }}
+          />
+        )}
+        
+        <main className="pt-8">
+          {/* Google Material Hero Section */}
+          <section className="py-20 lg:py-28 relative overflow-hidden">
+            {/* Google-style Background Elements */}
+            <div className="absolute inset-0 overflow-hidden pointer-events-none">
+              <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+              <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
               
-              {/* XP Progress Bar */}
-              <div className="max-w-md mx-auto mt-8">
-                <XPProgressBar currentXP={userStats.totalXP} level={userStats.level} />
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Skills Analysis */}
-        <section className="py-20 bg-background">
-          <div className="container px-4">
-            <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
-              <div className="text-center">
-                <TabsList className="grid w-full max-w-lg mx-auto grid-cols-4">
-                  <TabsTrigger value="overview">Overview</TabsTrigger>
-                  <TabsTrigger value="detailed">Detailed</TabsTrigger>
-                  <TabsTrigger value="badges">Badges</TabsTrigger>
-                  <TabsTrigger value="learning">Learning</TabsTrigger>
-                </TabsList>
-              </div>
-
-              {/* Overview Tab */}
-              <TabsContent value="overview" className="space-y-8">
-                <div className="text-center space-y-4 mb-12">
-                  <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Your Skills Overview
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    {!hasCompletedQuiz 
-                      ? "Take our AI-powered assessment to analyze your skills across different categories."
-                      : "Based on your AI assessment, here's your comprehensive skills analysis."
-                    }
-                  </p>
-                </div>
-
-                {/* Quiz section - before/after */}
-                {!hasCompletedQuiz ? (
-                  <Card className="max-w-2xl mx-auto">
-                    <CardHeader className="text-center">
-                      <div className="w-16 h-16 mx-auto mb-4 bg-primary/10 rounded-full flex items-center justify-center">
-                        <Brain className="h-8 w-8 text-primary" />
-                      </div>
-                      <CardTitle className="text-2xl">Skills Assessment</CardTitle>
-                      <CardDescription>
-                        Take our comprehensive AI-powered quiz to evaluate your skills and get personalized insights
-                      </CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6 text-center">
-                      <div className="space-y-4">
-                        <div className="flex items-center justify-center space-x-6 text-sm text-muted-foreground">
-                          <div className="flex items-center space-x-2">
-                            <Clock className="h-4 w-4" />
-                            <span>15-20 minutes</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <FileText className="h-4 w-4" />
-                            <span>50+ questions</span>
-                          </div>
-                          <div className="flex items-center space-x-2">
-                            <Target className="h-4 w-4" />
-                            <span>All skill areas</span>
-                          </div>
-                        </div>
-                        
-                        <div className="bg-muted/50 rounded-lg p-4 space-y-2">
-                          <h4 className="font-semibold text-sm">Assessment Includes:</h4>
-                          <div className="flex flex-wrap justify-center gap-2">
-                            <Badge variant="secondary" className="text-xs">Technical Skills</Badge>
-                            <Badge variant="secondary" className="text-xs">Soft Skills</Badge>
-                            <Badge variant="secondary" className="text-xs">Industry Knowledge</Badge>
-                            <Badge variant="secondary" className="text-xs">Problem Solving</Badge>
-                          </div>
-                        </div>
-                      </div>
-
-                      <Button 
-                        size="lg" 
-                        className="w-full max-w-xs mx-auto gradient-primary"
-                        onClick={handleStartQuiz}
-                        disabled={isQuizLoading}
-                      >
-                        {isQuizLoading ? (
-                          <>
-                            <RefreshCw className="mr-2 h-5 w-5 animate-spin" />
-                            Preparing Quiz...
-                          </>
-                        ) : (
-                          <>
-                            <Brain className="mr-2 h-5 w-5" />
-                            Take Skills Quiz
-                          </>
-                        )}
-                      </Button>
-
-                      <p className="text-xs text-muted-foreground">
-                        Your responses will be analyzed by our ML model to provide accurate skill assessments
-                      </p>
-                    </CardContent>
-                  </Card>
-                ) : (
-                  <>
-                    {/* Quiz completed - show results */}
-                    <Card className="max-w-2xl mx-auto">
-                      <CardHeader className="text-center">
-                        <div className="w-16 h-16 mx-auto mb-4 bg-success/10 rounded-full flex items-center justify-center">
-                          <CheckCircle className="h-8 w-8 text-success" />
-                        </div>
-                        <CardTitle className="text-2xl">Assessment Complete!</CardTitle>
-                        <CardDescription>
-                          Your comprehensive skill assessment across all categories
-                        </CardDescription>
-                      </CardHeader>
-                      <CardContent className="space-y-6">
-                        <div className="text-center">
-                          <div className="text-6xl font-bold text-primary mb-2">
-                            {skillsScore}
-                          </div>
-                          <div className="text-lg text-muted-foreground">out of 100</div>
-                          <Badge 
-                            className={`mt-2 ${
-                              skillsScore >= 80 ? 'bg-success/10 text-success border-success/20' :
-                              skillsScore >= 60 ? 'bg-primary/10 text-primary border-primary/20' :
-                              skillsScore >= 40 ? 'bg-warning/10 text-warning border-warning/20' :
-                              'bg-destructive/10 text-destructive border-destructive/20'
-                            }`}
-                          >
-                            {skillsScore >= 80 ? 'Expert Level' :
-                             skillsScore >= 60 ? 'Advanced' :
-                             skillsScore >= 40 ? 'Intermediate' : 'Beginner'}
-                          </Badge>
-                        </div>
-
-                        <Progress value={skillsScore} className="h-4" />
-                        
-                        <div className="grid grid-cols-3 gap-4 text-center">
-                          <div>
-                            <div className="text-2xl font-bold text-success">{strongSkillsCount}</div>
-                            <div className="text-sm text-muted-foreground">Strong Skills</div>
-                          </div>
-                          <div>
-                            <div className="text-2xl font-bold text-warning">{skillGapsCount}</div>
-                            <div className="text-sm text-muted-foreground">Skill Gaps</div>
-                          </div>
-                          <div>
-                            <div className="text-2xl font-bold text-destructive">{criticalAreasCount}</div>
-                            <div className="text-sm text-muted-foreground">Critical Areas</div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                          <Button 
-                            variant="outline" 
-                            className="flex-1"
-                            onClick={handleRetakeQuiz}
-                          >
-                            <RefreshCw className="mr-2 h-4 w-4" />
-                            Retake Assessment
-                          </Button>
-                          <Button 
-                            className="flex-1 gradient-success"
-                            onClick={() => setActiveTab('learning')}
-                          >
-                            <BookOpen className="mr-2 h-4 w-4" />
-                            View Learning Path
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
-
-                    {/* Category Overview */}
-                    <div className="grid md:grid-cols-3 gap-6">
-                      {skillCategories.map((category, index) => (
-                        <Card key={index} className="hover:shadow-lg transition-smooth">
-                          <CardHeader>
-                            <CardTitle className="flex items-center space-x-2">
-                              <Target className="h-5 w-5 text-primary" />
-                              <span>{category.name}</span>
-                            </CardTitle>
-                          </CardHeader>
-                          <CardContent className="space-y-4">
-                            <div className="text-center">
-                              <ProgressCircle 
-                                percentage={category.overall} 
-                                size={100} 
-                                color={
-                                  category.overall >= 80 ? '#22c55e' :
-                                  category.overall >= 60 ? '#3b82f6' :
-                                  '#f59e0b'
-                                }
-                              />
-                            </div>
-                            <div className="space-y-2">
-                              {category.skills.slice(0, 3).map((skill, skillIndex) => (
-                                <div key={skillIndex} className="flex justify-between items-center text-sm">
-                                  <span>{skill.name}</span>
-                                  <div className="flex items-center space-x-2">
-                                    <span className={getStatusColor(skill.status)}>{skill.level}%</span>
-                                    {getTrendIcon(skill.trend)}
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                            <Button 
-                              size="sm" 
-                              variant="outline" 
-                              className="w-full"
-                              onClick={() => handleCategoryQuiz(category.name)}
-                            >
-                              <Brain className="h-4 w-4 mr-2" />
-                              Retake {category.name}
-                            </Button>
-                          </CardContent>
-                        </Card>
-                      ))}
-                    </div>
-                  </>
-                )}
-              </TabsContent>
-
-              {/* Detailed Tab */}
-              <TabsContent value="detailed" className="space-y-8">
-                <div className="text-center space-y-4 mb-12">
-                  <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Advanced Skills Analytics
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Interactive data visualizations showing comprehensive analysis of your skills.
-                  </p>
-                </div>
-
-                {/* Control Panel */}
-                <Card className="mb-8">
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <BarChart3 className="h-5 w-5 text-primary" />
-                      Visualization Controls
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="flex flex-wrap gap-4 items-center">
-                      <div className="flex items-center gap-2">
-                        <Filter className="h-4 w-4 text-muted-foreground" />
-                        <select 
-                          value={selectedCategory}
-                          onChange={(e) => setSelectedCategory(e.target.value)}
-                          className="px-3 py-1 rounded-md border bg-background text-sm"
-                        >
-                          <option value="all">All Categories</option>
-                          {skillCategories.map(cat => (
-                            <option key={cat.name} value={cat.name}>{cat.name}</option>
-                          ))}
-                        </select>
-                      </div>
-
-                      <div className="flex items-center gap-2">
-                        <Activity className="h-4 w-4 text-muted-foreground" />
-                        <div className="flex gap-1">
-                          {[
-                            { type: 'radar', icon: Target, label: 'Radar' },
-                            { type: 'bar', icon: BarChart3, label: 'Bar Chart' },
-                            { type: 'pie', icon: PieChart, label: 'Distribution' },
-                            { type: 'line', icon: TrendingUp, label: 'Trends' }
-                          ].map(({ type, icon: Icon, label }) => (
-                            <Button
-                              key={type}
-                              size="sm"
-                              variant={chartType === type ? "default" : "outline"}
-                              onClick={() => setChartType(type)}
-                              className="text-xs"
-                            >
-                              <Icon className="h-3 w-3 mr-1" />
-                              {label}
-                            </Button>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-
-                {/* Main Chart */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Skills Analysis - {chartType.charAt(0).toUpperCase() + chartType.slice(1)} View</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div style={{ height: '400px' }}>
-                      {chartData.length > 0 ? (
-                        <>
-                          {chartType === 'radar' && <Radar data={getRadarData()} options={radarOptions} />}
-                          {chartType === 'bar' && <Bar data={getBarData()} options={chartOptions} />}
-                          {chartType === 'pie' && <Pie data={getPieData()} options={{ responsive: true, maintainAspectRatio: false }} />}
-                          {chartType === 'line' && <Line data={getLineData()} options={chartOptions} />}
-                        </>
-                      ) : (
-                        <div className="flex items-center justify-center h-full">
-                          <p className="text-muted-foreground">No data available</p>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              {/* Badges Tab */}
-              <TabsContent value="badges" className="space-y-8">
-                <div className="text-center space-y-4 mb-12">
-                  <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Achievement Badges
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    Unlock badges by completing assessments, improving skills, and reaching milestones. 
-                    Each badge rewards you with XP to level up your profile!
-                  </p>
-                </div>
-
-                {/* Stats Dashboard */}
-                <div className="grid md:grid-cols-4 gap-6 mb-8">
-                  <Card>
-                    <CardContent className="p-6 text-center">
-                      <Trophy className="h-8 w-8 text-yellow-500 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-foreground">{userBadges.length}</div>
-                      <div className="text-sm text-muted-foreground">Badges Earned</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-6 text-center">
-                      <Sparkles className="h-8 w-8 text-purple-500 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-foreground">{userStats.totalXP}</div>
-                      <div className="text-sm text-muted-foreground">Total XP</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-6 text-center">
-                      <Crown className="h-8 w-8 text-blue-500 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-foreground">{userStats.level}</div>
-                      <div className="text-sm text-muted-foreground">Current Level</div>
-                    </CardContent>
-                  </Card>
-                  <Card>
-                    <CardContent className="p-6 text-center">
-                      <Flame className="h-8 w-8 text-red-500 mx-auto mb-2" />
-                      <div className="text-2xl font-bold text-foreground">{userStats.currentStreak}</div>
-                      <div className="text-sm text-muted-foreground">Day Streak</div>
-                    </CardContent>
-                  </Card>
-                </div>
-
-                {/* Badge Categories */}
-                <div className="space-y-8">
-                  {['milestone', 'achievement', 'mastery', 'engagement', 'progression'].map(category => (
-                    <div key={category}>
-                      <h3 className="text-xl font-semibold text-foreground mb-4 capitalize flex items-center">
-                        <Award className="h-5 w-5 mr-2 text-primary" />
-                        {category} Badges
-                      </h3>
-                      <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-6">
-                        {badgeDefinitions
-                          .filter(badge => badge.category === category)
-                          .map(badge => {
-                            const earned = userBadges.some(earned => earned.id === badge.id);
-                            return (
-                              <BadgeCard 
-                                key={badge.id} 
-                                badge={badge} 
-                                earned={earned}
-                              />
-                            );
-                          })
-                        }
-                      </div>
-                    </div>
+              {/* Google-style geometric pattern */}
+              <div className="absolute top-20 right-1/3 opacity-5">
+                <div className="grid grid-cols-4 gap-4">
+                  {[...Array(16)].map((_, i) => (
+                    <div
+                      key={i}
+                      className={`w-3 h-3 rounded-full ${
+                        i % 4 === 0 ? 'bg-blue-500' :
+                        i % 4 === 1 ? 'bg-green-500' :
+                        i % 4 === 2 ? 'bg-red-500' : 'bg-yellow-500'
+                      }`}
+                    />
                   ))}
                 </div>
+              </div>
+            </div>
 
-                {/* Progress Towards Next Badges */}
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center gap-2">
-                      <Target className="h-5 w-5 text-primary" />
-                      Progress Towards Next Badges
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      {badgeDefinitions
-                        .filter(badge => !userBadges.some(earned => earned.id === badge.id))
-                        .slice(0, 3)
-                        .map(badge => (
-                          <div key={badge.id} className="flex items-center justify-between p-4 border rounded-lg">
-                            <div className="flex items-center space-x-3">
-                              <badge.icon className={`h-6 w-6 text-gray-400`} />
-                              <div>
-                                <div className="font-medium">{badge.title}</div>
-                                <div className="text-sm text-muted-foreground">{badge.description}</div>
-                              </div>
-                            </div>
-                            <Badge variant="outline" className={getRarityColor(badge.rarity)}>
-                              {badge.rarity}
-                            </Badge>
-                          </div>
-                        ))
-                      }
-                    </div>
-                  </CardContent>
-                </Card>
-              </TabsContent>
-
-              {/* Learning Paths Tab */}
-              <TabsContent value="learning" className="space-y-8">
-                <div className="text-center space-y-4 mb-12">
-                  <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-                    Personalized Learning Paths
-                  </h2>
-                  <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                    AI-curated learning paths designed specifically to address your skill gaps and career goals.
-                  </p>
+            <div className="container px-6 lg:px-8 relative z-10">
+              <div className="text-center space-y-8 max-w-4xl mx-auto">
+                {/* Google-style Badge */}
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
+                  <span className="material-icons text-base">psychology</span>
+                  <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                    AI Skills Assessment
+                  </span>
                 </div>
 
-                <div className="grid lg:grid-cols-2 gap-8">
-                  {learningPaths.map((path, index) => (
-                    <Card key={index} className="group hover:shadow-xl transition-smooth">
-                      <CardHeader className="space-y-4">
-                        <div className="flex items-start justify-between">
-                          <div className={`w-12 h-12 rounded-lg ${path.gradient} flex items-center justify-center group-hover:scale-110 transition-bounce`}>
-                            <BookOpen className="h-6 w-6 text-primary-foreground" />
-                          </div>
-                          <Badge variant={path.priority === "High" ? "destructive" : "secondary"}>
-                            {path.priority} Priority
-                          </Badge>
+                <h1 
+                  className="text-5xl lg:text-7xl font-normal text-gray-900 leading-tight"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  Analyze & Improve
+                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-medium mt-2">
+                    Your Skills
+                  </span>
+                </h1>
+
+                <p 
+                  className="text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                >
+                  Get detailed insights into your skill levels, identify gaps, and receive 
+                  personalized learning recommendations powered by <span className="font-medium text-blue-600">Google AI</span>.
+                </p>
+                
+                {/* XP Progress Bar */}
+                <div className="max-w-md mx-auto mt-8">
+                  <XPProgressBar currentXP={userStats.totalXP} level={userStats.level} />
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* Skills Analysis */}
+          <section className="py-20 bg-white">
+            <div className="container px-6 lg:px-8">
+              <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
+                <div className="text-center">
+                  <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 bg-gray-100 p-1 rounded-full">
+                    <TabsTrigger 
+                      value="overview"
+                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Overview
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="detailed"
+                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Detailed
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="badges"
+                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Badges
+                    </TabsTrigger>
+                    <TabsTrigger 
+                      value="learning"
+                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Learning
+                    </TabsTrigger>
+                  </TabsList>
+                </div>
+
+                {/* Overview Tab */}
+                <TabsContent value="overview" className="space-y-8">
+                  <div className="text-center space-y-6 mb-16">
+                    <h2 
+                      className="text-4xl lg:text-5xl font-normal text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Your Skills Overview
+                    </h2>
+                    <p 
+                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {!hasCompletedQuiz 
+                        ? "Take our AI-powered assessment to analyze your skills across different categories."
+                        : "Based on your AI assessment, here's your comprehensive skills analysis."
+                      }
+                    </p>
+                  </div>
+
+                  {/* Quiz section - before/after */}
+                  {!hasCompletedQuiz ? (
+                    <Card className="max-w-3xl mx-auto border-0 rounded-3xl shadow-lg">
+                      <CardHeader className="text-center p-10">
+                        <div className="w-20 h-20 mx-auto mb-6 bg-blue-50 rounded-2xl flex items-center justify-center">
+                          <span className="material-icons text-blue-600 text-3xl">psychology</span>
                         </div>
-                        
-                        <div>
-                          <CardTitle className="group-hover:text-primary transition-smooth">
-                            {path.title}
-                          </CardTitle>
-                          <CardDescription className="mt-2">
-                            {path.description}
-                          </CardDescription>
-                        </div>
+                        <CardTitle 
+                          className="text-3xl font-medium text-gray-900 mb-3"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          Skills Assessment
+                        </CardTitle>
+                        <CardDescription 
+                          className="text-lg text-gray-600 leading-relaxed"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Take our comprehensive AI-powered quiz to evaluate your skills and get personalized insights
+                        </CardDescription>
                       </CardHeader>
-
-                      <CardContent className="space-y-6">
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Clock className="h-4 w-4 text-muted-foreground" />
-                            <span>{path.duration}</span>
+                      <CardContent className="space-y-8 text-center p-10 pt-0">
+                        <div className="space-y-6">
+                          <div className="flex items-center justify-center space-x-8 text-gray-600">
+                            <div className="flex items-center space-x-2">
+                              <span className="material-icons text-blue-600">schedule</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>15-20 minutes</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <span className="material-icons text-green-600">quiz</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>50+ questions</span>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <span className="material-icons text-purple-600">gps_fixed</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>All skill areas</span>
+                            </div>
                           </div>
-                          <div className="flex items-center space-x-2 text-sm">
-                            <FileText className="h-4 w-4 text-muted-foreground" />
-                            <span>{path.modules} Modules</span>
-                          </div>
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Zap className="h-4 w-4 text-muted-foreground" />
-                            <span>{path.difficulty}</span>
-                          </div>
-                          <div className="flex items-center space-x-2 text-sm">
-                            <Star className="h-4 w-4 text-warning" />
-                            <span>{path.rating}/5.0</span>
+                          
+                          <div className="bg-gray-50 rounded-2xl p-6 space-y-3">
+                            <h4 
+                              className="font-medium text-gray-900"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              Assessment Includes:
+                            </h4>
+                            <div className="flex flex-wrap justify-center gap-2">
+                              <Badge variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200 rounded-full px-3 py-1">Technical Skills</Badge>
+                              <Badge variant="secondary" className="bg-green-100 text-green-700 border-green-200 rounded-full px-3 py-1">Soft Skills</Badge>
+                              <Badge variant="secondary" className="bg-purple-100 text-purple-700 border-purple-200 rounded-full px-3 py-1">Industry Knowledge</Badge>
+                              <Badge variant="secondary" className="bg-orange-100 text-orange-700 border-orange-200 rounded-full px-3 py-1">Problem Solving</Badge>
+                            </div>
                           </div>
                         </div>
 
-                        <div className="space-y-3">
-                          <h4 className="text-sm font-semibold">Skills You'll Gain</h4>
-                          <div className="flex flex-wrap gap-2">
-                            {path.skillsGained.map((skill, skillIndex) => (
-                              <Badge key={skillIndex} variant="secondary" className="text-xs">
-                                {skill}
-                              </Badge>
+                        <Button 
+                          size="lg" 
+                          className="w-full max-w-xs mx-auto h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                          onClick={handleStartQuiz}
+                          disabled={isQuizLoading}
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          {isQuizLoading ? (
+                            <>
+                              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+                              Preparing Quiz...
+                            </>
+                          ) : (
+                            <>
+                              <span className="material-icons mr-3">psychology</span>
+                              Take Skills Quiz
+                            </>
+                          )}
+                        </Button>
+
+                        <p 
+                          className="text-sm text-gray-500"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Your responses will be analyzed by our ML model to provide accurate skill assessments
+                        </p>
+                      </CardContent>
+                    </Card>
+                  ) : (
+                    <>
+                      {/* Quiz completed - show results */}
+                      <Card className="max-w-3xl mx-auto border-0 rounded-3xl shadow-lg">
+                        <CardHeader className="text-center p-10">
+                          <div className="w-20 h-20 mx-auto mb-6 bg-green-50 rounded-2xl flex items-center justify-center">
+                            <span className="material-icons text-green-600 text-3xl">check_circle</span>
+                          </div>
+                          <CardTitle 
+                            className="text-3xl font-medium text-gray-900 mb-3"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            Assessment Complete!
+                          </CardTitle>
+                          <CardDescription 
+                            className="text-lg text-gray-600"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            Your comprehensive skill assessment across all categories
+                          </CardDescription>
+                        </CardHeader>
+                        <CardContent className="space-y-8 p-10 pt-0">
+                          <div className="text-center">
+                            <div 
+                              className="text-6xl font-bold text-blue-600 mb-2"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              {skillsScore}
+                            </div>
+                            <div 
+                              className="text-lg text-gray-500 mb-4"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              out of 100
+                            </div>
+                            <Badge 
+                              className={`rounded-full px-4 py-2 font-medium ${
+                                skillsScore >= 80 ? 'bg-green-100 text-green-700 border-green-200' :
+                                skillsScore >= 60 ? 'bg-blue-100 text-blue-700 border-blue-200' :
+                                skillsScore >= 40 ? 'bg-yellow-100 text-yellow-700 border-yellow-200' :
+                                'bg-red-100 text-red-700 border-red-200'
+                              }`}
+                            >
+                              {skillsScore >= 80 ? 'Expert Level' :
+                               skillsScore >= 60 ? 'Advanced' :
+                               skillsScore >= 40 ? 'Intermediate' : 'Beginner'}
+                            </Badge>
+                          </div>
+
+                          {/* Custom Google-style progress bar */}
+                          <div className="relative">
+                            <div className="w-full bg-gray-200 rounded-full h-4">
+                              <div 
+                                className="bg-gradient-to-r from-blue-500 to-blue-600 h-4 rounded-full transition-all duration-1000 ease-out relative overflow-hidden"
+                                style={{ width: `${skillsScore}%` }}
+                              >
+                                <div className="absolute inset-0 bg-white/20 animate-pulse" />
+                              </div>
+                            </div>
+                          </div>
+                          
+                          <div className="grid grid-cols-3 gap-6 text-center">
+                            <div className="p-4 bg-green-50 rounded-2xl border border-green-200">
+                              <div 
+                                className="text-3xl font-bold text-green-600 mb-1"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {strongSkillsCount}
+                              </div>
+                              <div 
+                                className="text-sm text-gray-600"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                Strong Skills
+                              </div>
+                            </div>
+                            <div className="p-4 bg-yellow-50 rounded-2xl border border-yellow-200">
+                              <div 
+                                className="text-3xl font-bold text-yellow-600 mb-1"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {skillGapsCount}
+                              </div>
+                              <div 
+                                className="text-sm text-gray-600"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                Skill Gaps
+                              </div>
+                            </div>
+                            <div className="p-4 bg-red-50 rounded-2xl border border-red-200">
+                              <div 
+                                className="text-3xl font-bold text-red-600 mb-1"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {criticalAreasCount}
+                              </div>
+                              <div 
+                                className="text-sm text-gray-600"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                Critical Areas
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                            <Button 
+                              variant="outline" 
+                              className="flex-1 h-12 rounded-full border-2 border-gray-300 hover:bg-gray-50"
+                              onClick={handleRetakeQuiz}
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              <span className="material-icons mr-2">refresh</span>
+                              Retake Assessment
+                            </Button>
+                            <Button 
+                              className="flex-1 h-12 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full shadow-lg"
+                              onClick={() => setActiveTab('learning')}
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              <span className="material-icons mr-2">menu_book</span>
+                              View Learning Path
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+
+                      {/* Category Overview */}
+                      <div className="grid md:grid-cols-3 gap-8">
+                        {skillCategories.map((category, index) => (
+                          <Card key={index} className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-500">
+                            <CardHeader className="p-8">
+                              <CardTitle 
+                                className="flex items-center space-x-3 text-xl font-medium text-gray-900"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                <span className="material-icons text-blue-600">gps_fixed</span>
+                                <span>{category.name}</span>
+                              </CardTitle>
+                            </CardHeader>
+                            <CardContent className="space-y-6 p-8 pt-0">
+                              <div className="text-center">
+                                <ProgressCircle 
+                                  percentage={category.overall} 
+                                  size={120} 
+                                  color={
+                                    category.overall >= 80 ? '#34A853' :
+                                    category.overall >= 60 ? '#1A73E8' :
+                                    '#FBBC04'
+                                  }
+                                />
+                              </div>
+                              <div className="space-y-3">
+                                {category.skills.slice(0, 3).map((skill, skillIndex) => (
+                                  <div key={skillIndex} className="flex justify-between items-center p-3 bg-gray-50 rounded-xl">
+                                    <span 
+                                      className="text-sm font-medium text-gray-700"
+                                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                                    >
+                                      {skill.name}
+                                    </span>
+                                    <div className="flex items-center space-x-2">
+                                      <span 
+                                        className={`text-sm font-semibold ${getStatusColor(skill.status)}`}
+                                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                                      >
+                                        {skill.level}%
+                                      </span>
+                                      {getTrendIcon(skill.trend)}
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="w-full h-10 rounded-full border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600"
+                                onClick={() => handleCategoryQuiz(category.name)}
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                <span className="material-icons mr-2 text-base">psychology</span>
+                                Retake {category.name}
+                              </Button>
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </>
+                  )}
+                </TabsContent>
+
+                {/* Detailed Tab */}
+                <TabsContent value="detailed" className="space-y-8">
+                  <div className="text-center space-y-6 mb-16">
+                    <h2 
+                      className="text-4xl lg:text-5xl font-normal text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Advanced Skills Analytics
+                    </h2>
+                    <p 
+                      className="text-xl text-gray-600 max-w-3xl mx-auto"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      Interactive data visualizations showing comprehensive analysis of your skills.
+                    </p>
+                  </div>
+
+                  {/* Control Panel */}
+                  <Card className="mb-8 border-0 rounded-3xl shadow-lg">
+                    <CardHeader className="p-8">
+                      <CardTitle 
+                        className="flex items-center gap-3 text-2xl font-medium text-gray-900"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        <span className="material-icons text-blue-600">bar_chart</span>
+                        Visualization Controls
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-8 pt-0">
+                      <div className="flex flex-wrap gap-6 items-center">
+                        <div className="flex items-center gap-3">
+                          <span className="material-icons text-gray-500">filter_alt</span>
+                          <select 
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                            className="px-4 py-2 rounded-full border border-gray-300 bg-white text-sm font-medium focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            <option value="all">All Categories</option>
+                            {skillCategories.map(cat => (
+                              <option key={cat.name} value={cat.name}>{cat.name}</option>
+                            ))}
+                          </select>
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                          <span className="material-icons text-gray-500">show_chart</span>
+                          <div className="flex gap-2">
+                            {[
+                              { type: 'radar', icon: 'gps_fixed', label: 'Radar' },
+                              { type: 'bar', icon: 'bar_chart', label: 'Bar Chart' },
+                              { type: 'pie', icon: 'pie_chart', label: 'Distribution' },
+                              { type: 'line', icon: 'trending_up', label: 'Trends' }
+                            ].map(({ type, icon, label }) => (
+                              <Button
+                                key={type}
+                                size="sm"
+                                variant={chartType === type ? "default" : "outline"}
+                                onClick={() => setChartType(type)}
+                                className={`text-sm rounded-full px-4 py-2 font-medium transition-all duration-200 ${
+                                  chartType === type 
+                                    ? 'bg-blue-600 text-white shadow-lg' 
+                                    : 'border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600'
+                                }`}
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                <span className="material-icons mr-1 text-sm">{icon}</span>
+                                {label}
+                              </Button>
                             ))}
                           </div>
                         </div>
+                      </div>
+                    </CardContent>
+                  </Card>
 
-                        <div className="flex space-x-3">
-                          <Button className="flex-1 gradient-primary group">
-                            Start Learning
-                            <ArrowRight className="ml-2 h-4 w-4 transition-smooth group-hover:translate-x-1" />
-                          </Button>
-                          <Button variant="outline" size="icon">
-                            <PlayCircle className="h-4 w-4" />
-                          </Button>
+                  {/* Main Chart */}
+                  <Card className="border-0 rounded-3xl shadow-lg">
+                    <CardHeader className="p-8">
+                      <CardTitle 
+                        className="text-2xl font-medium text-gray-900"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        Skills Analysis - {chartType.charAt(0).toUpperCase() + chartType.slice(1)} View
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-8 pt-0">
+                      <div style={{ height: '500px' }} className="bg-gray-50 rounded-2xl p-6">
+                        {chartData.length > 0 ? (
+                          <>
+                            {chartType === 'radar' && <Radar data={getRadarData()} options={radarOptions} />}
+                            {chartType === 'bar' && <Bar data={getBarData()} options={chartOptions} />}
+                            {chartType === 'pie' && <Pie data={getPieData()} options={{ responsive: true, maintainAspectRatio: false }} />}
+                            {chartType === 'line' && <Line data={getLineData()} options={chartOptions} />}
+                          </>
+                        ) : (
+                          <div className="flex items-center justify-center h-full">
+                            <p 
+                              className="text-gray-500 text-lg"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              No data available
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Badges Tab */}
+                <TabsContent value="badges" className="space-y-8">
+                  <div className="text-center space-y-6 mb-16">
+                    <h2 
+                      className="text-4xl lg:text-5xl font-normal text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Achievement Badges
+                    </h2>
+                    <p 
+                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      Unlock badges by completing assessments, improving skills, and reaching milestones. 
+                      Each badge rewards you with <span className="font-medium text-blue-600">XP to level up</span> your profile!
+                    </p>
+                  </div>
+
+                  {/* Stats Dashboard */}
+                  <div className="grid md:grid-cols-4 gap-6 mb-12">
+                    <Card className="border-0 rounded-3xl shadow-lg bg-white">
+                      <CardContent className="p-8 text-center">
+                        <span className="material-icons text-yellow-500 text-4xl mb-3 block">emoji_events</span>
+                        <div 
+                          className="text-3xl font-bold text-gray-900 mb-1"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          {userBadges.length}
+                        </div>
+                        <div 
+                          className="text-sm text-gray-600"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Badges Earned
                         </div>
                       </CardContent>
                     </Card>
-                  ))}
-                </div>
-
-                <div className="text-center space-y-6 bg-gradient-card rounded-2xl p-8 border">
-                  <h3 className="text-2xl font-bold text-foreground">
-                    Ready to Bridge Your Skill Gaps?
-                  </h3>
-                  <p className="text-muted-foreground max-w-xl mx-auto">
-                    Take action on your skill development with our personalized learning paths and expert guidance.
-                  </p>
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button size="lg" className="gradient-success">
-                      <CheckCircle className="mr-2 h-5 w-5" />
-                      Create Learning Plan
-                    </Button>
-                    <Button size="lg" variant="outline">
-                      <Users className="mr-2 h-5 w-5" />
-                      Get Expert Guidance
-                    </Button>
+                    <Card className="border-0 rounded-3xl shadow-lg bg-white">
+                      <CardContent className="p-8 text-center">
+                        <span className="material-icons text-purple-500 text-4xl mb-3 block">auto_awesome</span>
+                        <div 
+                          className="text-3xl font-bold text-gray-900 mb-1"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          {userStats.totalXP}
+                        </div>
+                        <div 
+                          className="text-sm text-gray-600"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Total XP
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card className="border-0 rounded-3xl shadow-lg bg-white">
+                      <CardContent className="p-8 text-center">
+                        <span className="material-icons text-blue-500 text-4xl mb-3 block">workspace_premium</span>
+                        <div 
+                          className="text-3xl font-bold text-gray-900 mb-1"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          {userStats.level}
+                        </div>
+                        <div 
+                          className="text-sm text-gray-600"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Current Level
+                        </div>
+                      </CardContent>
+                    </Card>
+                    <Card className="border-0 rounded-3xl shadow-lg bg-white">
+                      <CardContent className="p-8 text-center">
+                        <span className="material-icons text-red-500 text-4xl mb-3 block">local_fire_department</span>
+                        <div 
+                          className="text-3xl font-bold text-gray-900 mb-1"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          {userStats.currentStreak}
+                        </div>
+                        <div 
+                          className="text-sm text-gray-600"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Day Streak
+                        </div>
+                      </CardContent>
+                    </Card>
                   </div>
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-        </section>
-      </main>
 
-      <Footer />
-    </div>
+                  {/* Badge Categories */}
+                  <div className="space-y-12">
+                    {['milestone', 'achievement', 'mastery', 'engagement', 'progression'].map(category => (
+                      <div key={category}>
+                        <h3 
+                          className="text-2xl font-medium text-gray-900 mb-8 capitalize flex items-center"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons mr-3 text-blue-600">military_tech</span>
+                          {category} Badges
+                        </h3>
+                        <div className="grid md:grid-cols-3 lg:grid-cols-4 gap-8">
+                          {badgeDefinitions
+                            .filter(badge => badge.category === category)
+                            .map(badge => {
+                              const earned = userBadges.some(earned => earned.id === badge.id);
+                              return (
+                                <BadgeCard 
+                                  key={badge.id} 
+                                  badge={badge} 
+                                  earned={earned}
+                                />
+                              );
+                            })
+                          }
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Progress Towards Next Badges */}
+                  <Card className="border-0 rounded-3xl shadow-lg">
+                    <CardHeader className="p-8">
+                      <CardTitle 
+                        className="flex items-center gap-3 text-2xl font-medium text-gray-900"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        <span className="material-icons text-blue-600">gps_fixed</span>
+                        Progress Towards Next Badges
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-8 pt-0">
+                      <div className="space-y-4">
+                        {badgeDefinitions
+                          .filter(badge => !userBadges.some(earned => earned.id === badge.id))
+                          .slice(0, 3)
+                          .map(badge => (
+                            <div key={badge.id} className="flex items-center justify-between p-6 border border-gray-200 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors duration-200">
+                              <div className="flex items-center space-x-4">
+                                <span className="material-icons text-gray-400 text-2xl">{badge.icon}</span>
+                                <div>
+                                  <div 
+                                    className="font-medium text-gray-900 text-lg"
+                                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                                  >
+                                    {badge.title}
+                                  </div>
+                                  <div 
+                                    className="text-sm text-gray-600 mt-1"
+                                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                                  >
+                                    {badge.description}
+                                  </div>
+                                </div>
+                              </div>
+                              <Badge variant="outline" className={getRarityColor(badge.rarity)}>
+                                {badge.rarity}
+                              </Badge>
+                            </div>
+                          ))
+                        }
+                      </div>
+                    </CardContent>
+                  </Card>
+                </TabsContent>
+
+                {/* Learning Paths Tab */}
+                <TabsContent value="learning" className="space-y-8">
+                  <div className="text-center space-y-6 mb-16">
+                    <h2 
+                      className="text-4xl lg:text-5xl font-normal text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Personalized Learning Paths
+                    </h2>
+                    <p 
+                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      AI-curated learning paths designed specifically to address your skill gaps and 
+                      <span className="font-medium text-blue-600"> career goals</span>.
+                    </p>
+                  </div>
+
+                  <div className="grid lg:grid-cols-2 gap-8">
+                    {learningPaths.map((path, index) => (
+                      <Card key={index} className="group border-0 rounded-3xl shadow-lg bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                        <CardHeader className="space-y-6 p-8">
+                          <div className="flex items-start justify-between">
+                            <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${path.gradient} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg`}>
+                              <span className="material-icons text-white text-2xl">menu_book</span>
+                            </div>
+                            <Badge 
+                              variant={path.priority === "High" ? "destructive" : "secondary"}
+                              className={`rounded-full px-3 py-1 font-medium ${
+                                path.priority === "High" 
+                                  ? 'bg-red-100 text-red-700 border-red-200' 
+                                  : 'bg-gray-100 text-gray-700 border-gray-200'
+                              }`}
+                            >
+                              {path.priority} Priority
+                            </Badge>
+                          </div>
+                          
+                          <div>
+                            <CardTitle 
+                              className="text-2xl font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-3"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              {path.title}
+                            </CardTitle>
+                            <CardDescription 
+                              className="text-gray-600 text-base leading-relaxed"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              {path.description}
+                            </CardDescription>
+                          </div>
+                        </CardHeader>
+
+                        <CardContent className="space-y-8 p-8 pt-0">
+                          <div className="grid grid-cols-2 gap-4">
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <span className="material-icons text-blue-600">schedule</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>{path.duration}</span>
+                            </div>
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <span className="material-icons text-green-600">library_books</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>{path.modules} Modules</span>
+                            </div>
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <span className="material-icons text-purple-600">bolt</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>{path.difficulty}</span>
+                            </div>
+                            <div className="flex items-center space-x-2 text-sm text-gray-600">
+                              <span className="material-icons text-yellow-600">star</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>{path.rating}/5.0</span>
+                            </div>
+                          </div>
+
+                          <div className="space-y-4">
+                            <h4 
+                              className="text-lg font-medium text-gray-900"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              Skills You'll Gain
+                            </h4>
+                            <div className="flex flex-wrap gap-2">
+                              {path.skillsGained.map((skill, skillIndex) => (
+                                <Badge 
+                                  key={skillIndex} 
+                                  variant="secondary" 
+                                  className="bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-3 py-1 text-xs font-medium"
+                                >
+                                  {skill}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="flex space-x-4">
+                            <Button 
+                              className={`flex-1 h-12 bg-gradient-to-r ${path.gradient} hover:shadow-lg text-white rounded-full shadow-md transition-all duration-300 group`}
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              <span className="material-icons mr-3">play_arrow</span>
+                              Start Learning
+                              <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                            </Button>
+                            <Button 
+                              variant="outline" 
+                              size="icon"
+                              className="h-12 w-12 rounded-full border-2 border-gray-300 hover:bg-gray-50 transition-all duration-300"
+                            >
+                              <span className="material-icons">play_circle</span>
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+
+                  <div className="text-center space-y-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-12 border border-blue-100">
+                    <h3 
+                      className="text-3xl font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Ready to Bridge Your Skill Gaps?
+                    </h3>
+                    <p 
+                      className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      Take action on your skill development with our personalized learning paths and 
+                      <span className="font-medium text-blue-600"> expert guidance</span>.
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button 
+                        size="lg" 
+                        className="h-12 px-8 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        <span className="material-icons mr-3">check_circle</span>
+                        Create Learning Plan
+                      </Button>
+                      <Button 
+                        size="lg" 
+                        variant="outline"
+                        className="h-12 px-8 border-2 border-gray-300 hover:bg-white hover:border-blue-300 hover:text-blue-600 rounded-full transition-all duration-300"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        <span className="material-icons mr-3">people</span>
+                        Get Expert Guidance
+                      </Button>
+                    </div>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </div>
+          </section>
+        </main>
+      </div>
+    </>
   );
 };
 

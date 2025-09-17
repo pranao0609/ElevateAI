@@ -4,6 +4,7 @@ import Features from "@/components/Features";
 import Footer from "@/components/Footer";
 import JoinCommunityButton from "../components/JoinCommunityButton";
 
+
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">

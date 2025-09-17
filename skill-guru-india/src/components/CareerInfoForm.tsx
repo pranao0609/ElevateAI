@@ -68,187 +68,340 @@ export const CareerInfoForm = ({ onNext, onBack }: CareerInfoFormProps) => {
                      formData.yearsOfExperience && formData.interests.length > 0;
 
   return (
-    <Layout 
-      showProgress 
-      currentStep={2} 
-      totalSteps={4}
-      stepLabels={["Personal Info", "Career Info", "Documents", "Dashboard"]}
-    >
-      <div className="max-w-2xl mx-auto">
-        <ProgressIndicator 
-          currentStep={2} 
-          totalSteps={3} 
-          stepLabels={["Personal Info", "Career Info", "Documents"]}
-        />
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
 
-        <Card className="material-card">
-          <CardHeader className="text-center">
-            <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Briefcase className="w-8 h-8 text-success" />
+      <Layout 
+        showProgress 
+        currentStep={2} 
+        totalSteps={4}
+        stepLabels={["Personal Info", "Career Info", "Documents", "Dashboard"]}
+      >
+        <div className="max-w-3xl mx-auto">
+          {/* Google Material Progress Indicator */}
+          <div className="mb-12">
+            <div className="flex items-center justify-center mb-8">
+              <div className="flex items-center space-x-4">
+                {["Personal Info", "Career Info", "Documents"].map((label, index) => {
+                  const stepNumber = index + 1;
+                  const isActive = stepNumber === 2;
+                  const isCompleted = stepNumber < 2;
+
+                  return (
+                    <div key={index} className="flex items-center">
+                      <div className="flex flex-col items-center">
+                        <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
+                          isCompleted 
+                            ? 'bg-gradient-to-br from-green-500 to-green-600 shadow-lg' 
+                            : isActive 
+                              ? 'bg-gradient-to-br from-blue-600 to-blue-700 shadow-lg ring-4 ring-blue-100' 
+                              : 'bg-gray-200 border-2 border-gray-300'
+                        }`}>
+                          {isCompleted ? (
+                            <span className="material-icons text-white text-lg">check</span>
+                          ) : (
+                            <span className={`font-medium ${
+                              isActive ? 'text-white' : 'text-gray-500'
+                            }`} style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                              {stepNumber}
+                            </span>
+                          )}
+                        </div>
+                        <span className={`mt-2 text-sm font-medium ${
+                          isActive ? 'text-blue-600' : isCompleted ? 'text-green-600' : 'text-gray-500'
+                        }`} style={{ fontFamily: 'Roboto, sans-serif' }}>
+                          {label}
+                        </span>
+                      </div>
+                      {index < 2 && (
+                        <div className={`w-20 h-0.5 mx-6 transition-all duration-300 ${
+                          stepNumber < 2 ? 'bg-green-400' : 'bg-gray-300'
+                        }`} />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
-            <CardTitle className="text-2xl font-semibold">Career Information</CardTitle>
-            <CardDescription className="text-muted-foreground">
-              Tell us about your educational background and career interests to get personalized recommendations.
-            </CardDescription>
-          </CardHeader>
+          </div>
 
-          <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="educationLevel" className="text-sm font-medium">Education Level / Grade *</Label>
-                <div className="relative">
-                  <GraduationCap className="absolute left-3 top-3 h-4 w-4 text-muted-foreground z-10" />
-                  <Select onValueChange={(value) => handleInputChange("educationLevel", value)} required>
-                    <SelectTrigger className="pl-10 h-12">
-                      <SelectValue placeholder="Select your education level" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="high-school">High School</SelectItem>
-                      <SelectItem value="associate">Associate Degree</SelectItem>
-                      <SelectItem value="bachelor">Bachelor's Degree</SelectItem>
-                      <SelectItem value="master">Master's Degree</SelectItem>
-                      <SelectItem value="phd">PhD</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
+          {/* Google Forms-inspired Card */}
+          <Card className="border-0 rounded-3xl shadow-lg bg-white overflow-hidden">
+            <CardHeader className="text-center p-12 bg-gradient-to-br from-blue-50 to-purple-50 border-b border-gray-100">
+              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                <span className="material-icons text-white text-3xl">work</span>
               </div>
+              <CardTitle 
+                className="text-3xl font-medium text-gray-900 mb-4"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Career Information
+              </CardTitle>
+              <CardDescription 
+                className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Tell us about your educational background and career interests to get 
+                <span className="font-medium text-blue-600"> personalized recommendations</span>.
+              </CardDescription>
+            </CardHeader>
 
-              <div className="space-y-2">
-                <Label htmlFor="fieldOfStudy" className="text-sm font-medium">Branch / Field of Study *</Label>
-                <div className="relative">
-                  <BookOpen className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="fieldOfStudy"
-                    type="text"
-                    placeholder="e.g., Computer Science, Business Administration"
-                    className="pl-10 h-12"
-                    value={formData.fieldOfStudy}
-                    onChange={(e) => handleInputChange("fieldOfStudy", e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="yearsOfExperience" className="text-sm font-medium">Years of Experience *</Label>
-                <div className="relative">
-                  <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground z-10" />
-                  <Select onValueChange={(value) => handleInputChange("yearsOfExperience", value)} required>
-                    <SelectTrigger className="pl-10 h-12">
-                      <SelectValue placeholder="Select years of experience" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="0">Fresh Graduate / No Experience</SelectItem>
-                      <SelectItem value="1-2">1-2 years</SelectItem>
-                      <SelectItem value="3-5">3-5 years</SelectItem>
-                      <SelectItem value="6-10">6-10 years</SelectItem>
-                      <SelectItem value="10+">10+ years</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                <div className="space-y-2">
-                  <Label className="text-sm font-medium flex items-center">
-                    <Heart className="w-4 h-4 mr-2" />
-                    Interests & Career Areas *
+            <CardContent className="p-12">
+              <form onSubmit={handleSubmit} className="space-y-8">
+                {/* Education Level */}
+                <div className="space-y-3">
+                  <Label 
+                    htmlFor="educationLevel" 
+                    className="text-lg font-medium text-gray-900 flex items-center"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-blue-600">school</span>
+                    Education Level / Grade *
                   </Label>
-                  <p className="text-xs text-muted-foreground">
-                    Select or add your areas of interest to help us provide better recommendations.
-                  </p>
+                  <div className="relative">
+                    <Select onValueChange={(value) => handleInputChange("educationLevel", value)} required>
+                      <SelectTrigger className="h-14 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm text-lg">
+                        <SelectValue 
+                          placeholder="Select your education level"
+                          className="text-gray-500"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border-2 border-gray-200 shadow-lg">
+                        <SelectItem value="high-school" className="py-3 px-4 text-base">High School</SelectItem>
+                        <SelectItem value="associate" className="py-3 px-4 text-base">Associate Degree</SelectItem>
+                        <SelectItem value="bachelor" className="py-3 px-4 text-base">Bachelor's Degree</SelectItem>
+                        <SelectItem value="master" className="py-3 px-4 text-base">Master's Degree</SelectItem>
+                        <SelectItem value="phd" className="py-3 px-4 text-base">PhD</SelectItem>
+                        <SelectItem value="other" className="py-3 px-4 text-base">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
 
-                {/* Interest tags */}
-                {formData.interests.length > 0 && (
-                  <div className="flex flex-wrap gap-2 p-3 bg-muted/30 rounded-lg">
-                    {formData.interests.map((interest) => (
-                      <Badge key={interest} variant="secondary" className="text-xs">
-                        {interest}
-                        <button
-                          type="button"
-                          onClick={() => removeInterest(interest)}
-                          className="ml-1 hover:text-error"
-                        >
-                          <X className="w-3 h-3" />
-                        </button>
-                      </Badge>
-                    ))}
+                {/* Field of Study */}
+                <div className="space-y-3">
+                  <Label 
+                    htmlFor="fieldOfStudy" 
+                    className="text-lg font-medium text-gray-900 flex items-center"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-green-600">menu_book</span>
+                    Branch / Field of Study *
+                  </Label>
+                  <div className="relative">
+                    <Input
+                      id="fieldOfStudy"
+                      type="text"
+                      placeholder="e.g., Computer Science, Business Administration"
+                      className="h-14 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm text-lg px-6"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                      value={formData.fieldOfStudy}
+                      onChange={(e) => handleInputChange("fieldOfStudy", e.target.value)}
+                      required
+                    />
                   </div>
-                )}
+                </div>
 
-                {/* Add interest input */}
-                <div className="flex gap-2">
-                  <Input
-                    type="text"
-                    placeholder="Add an interest..."
-                    value={newInterest}
-                    onChange={(e) => setNewInterest(e.target.value)}
-                    onKeyPress={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        addInterest(newInterest);
-                      }
-                    }}
-                    className="flex-1 h-10"
-                  />
+                {/* Years of Experience */}
+                <div className="space-y-3">
+                  <Label 
+                    htmlFor="yearsOfExperience" 
+                    className="text-lg font-medium text-gray-900 flex items-center"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-purple-600">work_history</span>
+                    Years of Experience *
+                  </Label>
+                  <div className="relative">
+                    <Select onValueChange={(value) => handleInputChange("yearsOfExperience", value)} required>
+                      <SelectTrigger className="h-14 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm text-lg">
+                        <SelectValue 
+                          placeholder="Select years of experience"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-2xl border-2 border-gray-200 shadow-lg">
+                        <SelectItem value="0" className="py-3 px-4 text-base">Fresh Graduate / No Experience</SelectItem>
+                        <SelectItem value="1-2" className="py-3 px-4 text-base">1-2 years</SelectItem>
+                        <SelectItem value="3-5" className="py-3 px-4 text-base">3-5 years</SelectItem>
+                        <SelectItem value="6-10" className="py-3 px-4 text-base">6-10 years</SelectItem>
+                        <SelectItem value="10+" className="py-3 px-4 text-base">10+ years</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                </div>
+
+                {/* Interests & Career Areas */}
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <Label 
+                      className="text-lg font-medium text-gray-900 flex items-center"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <span className="material-icons mr-2 text-red-500">favorite</span>
+                      Interests & Career Areas *
+                    </Label>
+                    <p 
+                      className="text-gray-600 leading-relaxed"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      Select or add your areas of interest to help us provide better recommendations.
+                    </p>
+                  </div>
+
+                  {/* Current Interest Tags */}
+                  {formData.interests.length > 0 && (
+                    <div className="p-6 bg-gray-50 rounded-2xl border border-gray-200">
+                      <h4 
+                        className="text-sm font-medium text-gray-700 mb-3"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        Your Interests ({formData.interests.length})
+                      </h4>
+                      <div className="flex flex-wrap gap-3">
+                        {formData.interests.map((interest) => (
+                          <Badge 
+                            key={interest} 
+                            className="bg-blue-100 text-blue-700 border border-blue-200 rounded-full px-4 py-2 text-sm font-medium hover:bg-blue-200 transition-colors duration-200 group"
+                          >
+                            {interest}
+                            <button
+                              type="button"
+                              onClick={() => removeInterest(interest)}
+                              className="ml-2 hover:text-red-600 transition-colors duration-200"
+                            >
+                              <span className="material-icons text-sm">close</span>
+                            </button>
+                          </Badge>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Add New Interest */}
+                  <div className="space-y-4">
+                    <h4 
+                      className="text-base font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Add Interest
+                    </h4>
+                    <div className="flex gap-3">
+                      <Input
+                        type="text"
+                        placeholder="Type your interest..."
+                        value={newInterest}
+                        onChange={(e) => setNewInterest(e.target.value)}
+                        onKeyPress={(e) => {
+                          if (e.key === "Enter") {
+                            e.preventDefault();
+                            addInterest(newInterest);
+                          }
+                        }}
+                        className="flex-1 h-12 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm px-4"
+                        style={{ fontFamily: 'Roboto, sans-serif' }}
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => addInterest(newInterest)}
+                        disabled={!newInterest.trim()}
+                        className="h-12 px-6 rounded-2xl border-2 border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        <span className="material-icons mr-2">add</span>
+                        Add
+                      </Button>
+                    </div>
+                  </div>
+
+                  {/* Suggested Interests */}
+                  <div className="space-y-4">
+                    <h4 
+                      className="text-base font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Popular Interests
+                    </h4>
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+                      {interestOptions
+                        .filter(option => !formData.interests.includes(option))
+                        .slice(0, 12)
+                        .map((interest) => (
+                          <Button
+                            key={interest}
+                            type="button"
+                            variant="outline"
+                            onClick={() => addInterest(interest)}
+                            className="h-12 rounded-2xl border-2 border-gray-200 text-gray-700 hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 text-sm"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            <span className="material-icons mr-2 text-sm">add_circle_outline</span>
+                            {interest}
+                          </Button>
+                        ))}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Form Actions */}
+                <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-100">
                   <Button
                     type="button"
                     variant="outline"
-                    onClick={() => addInterest(newInterest)}
-                    disabled={!newInterest.trim()}
-                    className="h-10"
+                    onClick={onBack}
+                    className="flex-1 h-14 rounded-2xl border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 text-lg"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
-                    Add
+                    <span className="material-icons mr-2">arrow_back</span>
+                    Back
+                  </Button>
+                  <Button
+                    type="submit"
+                    className="flex-1 h-14 rounded-2xl bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white shadow-lg hover:shadow-xl transition-all duration-300 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    disabled={!isFormValid || isLoading}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
+                        Saving...
+                      </>
+                    ) : (
+                      <>
+                        Continue
+                        <span className="material-icons ml-2">arrow_forward</span>
+                      </>
+                    )}
                   </Button>
                 </div>
+              </form>
+            </CardContent>
+          </Card>
 
-                {/* Predefined interests */}
-                <div className="space-y-2">
-                  <Label className="text-xs text-muted-foreground">Popular interests:</Label>
-                  <div className="flex flex-wrap gap-2">
-                    {interestOptions
-                      .filter(option => !formData.interests.includes(option))
-                      .slice(0, 8)
-                      .map((interest) => (
-                        <Button
-                          key={interest}
-                          type="button"
-                          variant="outline"
-                          size="sm"
-                          onClick={() => addInterest(interest)}
-                          className="h-8 text-xs"
-                        >
-                          + {interest}
-                        </Button>
-                      ))}
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-3 pt-6">
-                <Button
-                  type="button"
-                  variant="outline"
-                  onClick={onBack}
-                  className="flex-1 h-12"
-                >
-                  Back
-                </Button>
-                <Button
-                  type="submit"
-                  className="flex-1 h-12"
-                  disabled={!isFormValid || isLoading}
-                >
-                  {isLoading ? "Saving..." : "Continue"}
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </form>
-          </CardContent>
-        </Card>
-      </div>
-    </Layout>
+          {/* Google-style Help Text */}
+          <div className="text-center mt-8">
+            <p 
+              className="text-gray-500 text-sm"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              <span className="material-icons mr-1 text-sm">info</span>
+              Your information is secure and will only be used to provide personalized career recommendations.
+            </p>
+          </div>
+        </div>
+      </Layout>
+    </>
   );
 };

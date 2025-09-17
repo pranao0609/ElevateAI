@@ -8,7 +8,6 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Eye, EyeOff, Mail, User } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { signInWithGoogle } from "@/services/firebase";
 
 const SignUp = () => {
@@ -273,7 +272,6 @@ const SignUp = () => {
           </CardFooter>
         </Card>
       </main>
-      <Footer />
     </>
   );
 };

@@ -833,7 +833,6 @@ const Community: React.FC = () => {
         
       </main>
 
-      <Footer />
     </div>
   );
 };
