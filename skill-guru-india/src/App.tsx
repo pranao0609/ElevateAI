@@ -14,6 +14,7 @@ import NotFound from "./pages/NotFound";
 import Chatbot from "./components/Chatbot";
 import Profile from "./pages/Profile";
 import Dashboard from "@/components/Dashboard";
+import Onboarding  from "./pages/Onboarding";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/dashboard" element={<Dashboard />} />
+           <Route path="/onboarding" element={<Onboarding />} />
           
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
