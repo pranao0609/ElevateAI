@@ -1,9 +1,11 @@
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CareerRoadmapModal from "./CareerRoadmapModal";
 import { 
   Code, 
   Palette, 
@@ -18,96 +20,101 @@ import {
   Star,
   ArrowRight,
   Target,
-  Award
+  Award,
+  Map
 } from "lucide-react";
 
-const CareerPaths = () => {
-  const careerPaths = [
-    {
-      title: "Full Stack Developer",
-      description: "Build complete web applications from frontend to backend",
-      icon: <Code className="h-8 w-8 text-primary" />,
-      match: 94,
-      salary: "₹6-15 LPA",
-      growth: "High",
-      demand: "Very High",
-      skills: ["React", "Node.js", "JavaScript", "MongoDB", "Python"],
-      companies: ["TCS", "Infosys", "Flipkart", "Swiggy", "Zomato"],
-      gradient: "gradient-primary"
-    },
-    {
-      title: "UI/UX Designer",
-      description: "Create intuitive and beautiful user experiences",
-      icon: <Palette className="h-8 w-8 text-success" />,
-      match: 87,
-      salary: "₹4-12 LPA",
-      growth: "High",
-      demand: "High",
-      skills: ["Figma", "Adobe XD", "User Research", "Prototyping", "Design Systems"],
-      companies: ["Byju's", "PhonePe", "Paytm", "Ola", "Myntra"],
-      gradient: "gradient-success"
-    },
-    {
-      title: "Data Scientist",
-      description: "Extract insights from data to drive business decisions",
-      icon: <BarChart3 className="h-8 w-8 text-warning" />,
-      match: 78,
-      salary: "₹8-20 LPA",
-      growth: "Very High",
-      demand: "Very High",
-      skills: ["Python", "Machine Learning", "SQL", "Statistics", "Tableau"],
-      companies: ["Google", "Microsoft", "Amazon", "Flipkart", "Jio"],
-      gradient: "bg-gradient-to-br from-warning to-orange-400"
-    },
-    {
-      title: "Cybersecurity Analyst",
-      description: "Protect organizations from digital threats and attacks",
-      icon: <Shield className="h-8 w-8 text-destructive" />,
-      match: 72,
-      salary: "₹5-18 LPA",
-      growth: "Very High",
-      demand: "High",
-      skills: ["Network Security", "Ethical Hacking", "Risk Assessment", "CISSP", "Penetration Testing"],
-      companies: ["IBM", "Accenture", "Deloitte", "KPMG", "EY"],
-      gradient: "bg-gradient-to-br from-destructive to-red-400"
-    },
-    {
-      title: "Mobile App Developer",
-      description: "Create mobile applications for iOS and Android platforms",
-      icon: <Smartphone className="h-8 w-8 text-primary" />,
-      match: 85,
-      salary: "₹4-14 LPA",
-      growth: "High",
-      demand: "High",
-      skills: ["React Native", "Flutter", "Swift", "Kotlin", "Firebase"],
-      companies: ["WhatsApp", "Instagram", "Uber", "Ola", "Paytm"],
-      gradient: "gradient-primary"
-    },
-    {
-      title: "DevOps Engineer",
-      description: "Bridge development and operations for faster deployments",
-      icon: <Database className="h-8 w-8 text-success" />,
-      match: 81,
-      salary: "₹7-16 LPA",
-      growth: "Very High",
-      demand: "Very High",
-      skills: ["Docker", "Kubernetes", "AWS", "Jenkins", "Terraform"],
-      companies: ["Amazon", "Microsoft", "Google", "Atlassian", "Red Hat"],
-      gradient: "gradient-success"
-    }
-  ];
+interface CareerPath {
+  title: string;
+  description: string;
+  icon: string;
+  match: number;
+  salary: string;
+  growth: string;
+  demand: string;
+  skills: string[];
+  companies: string[];
+  gradient: string;
+}
 
-  const matchColors = {
-    high: "text-success",
-    medium: "text-warning", 
-    low: "text-destructive"
+const CareerPaths = () => {
+  const [careerPaths, setCareerPaths] = useState<CareerPath[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedCareer, setSelectedCareer] = useState<CareerPath | null>(null);
+  const [showRoadmap, setShowRoadmap] = useState(false);
+  const [roadmapData, setRoadmapData] = useState(null);
+  const [loadingRoadmap, setLoadingRoadmap] = useState(false);
+
+  // Icon mapping
+  const iconMap = {
+    Code: <Code className="h-8 w-8 text-primary" />,
+    Palette: <Palette className="h-8 w-8 text-success" />,
+    BarChart3: <BarChart3 className="h-8 w-8 text-warning" />,
+    Shield: <Shield className="h-8 w-8 text-destructive" />,
+    Smartphone: <Smartphone className="h-8 w-8 text-primary" />,
+    Database: <Database className="h-8 w-8 text-success" />,
+    Brain: <Brain className="h-8 w-8 text-purple-500" />
+  };
+
+  useEffect(() => {
+    fetchCareerPaths();
+  }, []);
+
+  const fetchCareerPaths = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/career-paths');
+      const data = await response.json();
+      setCareerPaths(data.career_paths || []);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching career paths:', error);
+      setLoading(false);
+    }
+  };
+
+  const generateRoadmap = async (career: CareerPath) => {
+    setLoadingRoadmap(true);
+    setSelectedCareer(career);
+    
+    try {
+      const response = await fetch('http://localhost:8000/api/generate-career-roadmap', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: "Test User", // You can make this dynamic
+          career_goal: career.title,
+          experience_level: "Fresher"
+        })
+      });
+      
+      const data = await response.json();
+      setRoadmapData(data);
+      setShowRoadmap(true);
+      setLoadingRoadmap(false);
+    } catch (error) {
+      console.error('Error generating roadmap:', error);
+      setLoadingRoadmap(false);
+    }
   };
 
   const getMatchColor = (match: number) => {
-    if (match >= 85) return matchColors.high;
-    if (match >= 70) return matchColors.medium;
-    return matchColors.low;
+    if (match >= 85) return "text-success";
+    if (match >= 70) return "text-warning";
+    return "text-destructive";
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center space-y-4">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+          <p className="text-muted-foreground">Loading career paths...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -144,8 +151,7 @@ const CareerPaths = () => {
                 Recommended Career Paths
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Based on your profile and current market trends, here are the career paths 
-                with the highest potential for success and growth.
+                Click "Get AI Roadmap" to see a detailed learning plan generated by our ML model.
               </p>
             </div>
 
@@ -155,7 +161,7 @@ const CareerPaths = () => {
                   <CardHeader className="space-y-4">
                     <div className="flex items-start justify-between">
                       <div className={`w-16 h-16 rounded-xl ${career.gradient} flex items-center justify-center group-hover:scale-110 transition-bounce`}>
-                        {career.icon}
+                        {iconMap[career.icon] || <Code className="h-8 w-8 text-primary" />}
                       </div>
                       <div className="text-right">
                         <div className={`text-2xl font-bold ${getMatchColor(career.match)}`}>
@@ -238,9 +244,23 @@ const CareerPaths = () => {
 
                     {/* Action Buttons */}
                     <div className="flex space-x-3 pt-4">
-                      <Button className="flex-1 gradient-primary group">
-                        Explore Path
-                        <ArrowRight className="ml-2 h-4 w-4 transition-smooth group-hover:translate-x-1" />
+                      <Button 
+                        className="flex-1 gradient-primary group"
+                        onClick={() => generateRoadmap(career)}
+                        disabled={loadingRoadmap}
+                      >
+                        {loadingRoadmap && selectedCareer?.title === career.title ? (
+                          <>
+                            <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+                            Generating...
+                          </>
+                        ) : (
+                          <>
+                            <Map className="mr-2 h-4 w-4" />
+                            Get AI Roadmap
+                            <ArrowRight className="ml-2 h-4 w-4 transition-smooth group-hover:translate-x-1" />
+                          </>
+                        )}
                       </Button>
                       <Button variant="outline" size="icon">
                         <Star className="h-4 w-4" />
@@ -250,32 +270,21 @@ const CareerPaths = () => {
                 </Card>
               ))}
             </div>
-
-            {/* Bottom CTA */}
-            <div className="text-center mt-16 space-y-6 bg-gradient-card rounded-2xl p-8 border">
-              <h3 className="text-2xl font-bold text-foreground">
-                Can't Find Your Ideal Career Path?
-              </h3>
-              <p className="text-muted-foreground max-w-xl mx-auto">
-                Take our comprehensive AI assessment to discover personalized career recommendations 
-                based on your unique profile and aspirations.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button size="lg" className="gradient-primary">
-                  <Brain className="mr-2 h-5 w-5" />
-                  Take AI Career Assessment
-                </Button>
-                <Button size="lg" variant="outline">
-                  <Users className="mr-2 h-5 w-5" />
-                  Talk to Career Counselor
-                </Button>
-              </div>
-            </div>
           </div>
         </section>
       </main>
 
       <Footer />
+
+      {/* Career Roadmap Modal */}
+      {showRoadmap && roadmapData && (
+        <CareerRoadmapModal 
+          isOpen={showRoadmap}
+          onClose={() => setShowRoadmap(false)}
+          roadmapData={roadmapData}
+          careerTitle={selectedCareer?.title || ""}
+        />
+      )}
     </div>
   );
 };
