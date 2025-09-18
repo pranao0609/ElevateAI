@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import { 
   Brain, 
   Target, 
@@ -216,25 +217,37 @@ const Features = () => {
 
               {/* Google Material Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Button 
-                  size="lg" 
+                <Button
+                  asChild
+                  size="lg"
                   className="group h-14 px-10 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1"
                   style={{ fontFamily: 'Google Sans, sans-serif' }}
                 >
-                  <span className="material-icons mr-3">play_arrow</span>
-                  Start Free Trial
-                  <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <Link to="/sign-up">
+                    <span className="material-icons mr-3">play_arrow</span>
+                    Start Free Trial
+                    <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
                 </Button>
 
-                <Button 
+                <Button               
                   size="lg" 
                   variant="outline"
                   className="h-14 px-10 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-blue-300 hover:text-blue-600 rounded-full transition-all duration-300"
                   style={{ fontFamily: 'Google Sans, sans-serif' }}
                 >
-                  <span className="material-icons mr-3">menu_book</span>
+                <span className="material-icons mr-3">menu_book</span>
+                <a 
+                  href="https://en.wikipedia.org/wiki/StudentAdvisor" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block text-inherit no-underline"
+                >
                   Learn More
+                </a>
                 </Button>
+            
+              
               </div>
 
               {/* Google-style trust indicators */}

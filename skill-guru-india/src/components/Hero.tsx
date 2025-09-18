@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Target, TrendingUp, Users, Zap, School } from "lucide-react";
+import { Link } from "react-router-dom";
 import heroImage from "@/assets/hero-image.jpg";
 
 const Hero = () => {
@@ -92,14 +93,17 @@ const Hero = () => {
 
               {/* Google Material Design CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button 
-                  size="lg" 
+                <Button
+                  asChild
+                  size="lg"
                   className="group h-14 px-8 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-0.5"
                   style={{ fontFamily: 'Google Sans, sans-serif' }}
                 >
-                  <span className="material-icons mr-3">rocket_launch</span>
-                  Start Your Journey
-                  <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  <Link to="/career-paths">
+                    <span className="material-icons mr-3">rocket_launch</span>
+                    Start Your Journey
+                    <ArrowRight className="ml-3 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Link>
                 </Button>
                 
                 <Button 

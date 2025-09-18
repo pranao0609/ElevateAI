@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
 
-import { 
+import {
   Users,
   Calendar,
   Clock,
@@ -112,7 +112,7 @@ const Mentorship = () => {
       meetLink: "meet.google.com/abc-defg-hij"
     },
     {
-      mentor: "Rohit Patel", 
+      mentor: "Rohit Patel",
       topic: "Machine Learning Career Path",
       date: "Tomorrow, 10:00 AM",
       duration: "45 minutes",
@@ -123,7 +123,7 @@ const Mentorship = () => {
     {
       mentor: "Anjali Gupta",
       topic: "Product Management Fundamentals",
-      date: "Friday, 2:00 PM", 
+      date: "Friday, 2:00 PM",
       duration: "90 minutes",
       type: "Video Call",
       status: "Confirmed",
@@ -145,7 +145,7 @@ const Mentorship = () => {
     {
       title: "Data Science Career Track",
       description: "Comprehensive program covering ML, analytics, and career guidance",
-      duration: "16 weeks", 
+      duration: "16 weeks",
       mentors: 6,
       students: 18,
       price: "₹55,000",
@@ -158,7 +158,7 @@ const Mentorship = () => {
       duration: "10 weeks",
       mentors: 5,
       students: 15,
-      price: "₹40,000", 
+      price: "₹40,000",
       features: ["Case study analysis", "Product strategy workshops", "Leadership training", "Network building"],
       gradient: "from-purple-500 to-pink-500"
     }
@@ -181,760 +181,1029 @@ const Mentorship = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white">
         <Header />
         
-        <main className="pt-8">
-          {/* Google Material Hero Section */}
-          <section className="py-20 lg:py-28 relative overflow-hidden">
-            {/* Google-style Background Elements */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
-              <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
-              
-              {/* Google-style geometric pattern */}
-              <div className="absolute top-20 right-1/3 opacity-5">
-                <div className="grid grid-cols-4 gap-4">
-                  {[...Array(16)].map((_, i) => (
-                    <div
-                      key={i}
-                      className={`w-3 h-3 rounded-full ${
-                        i % 4 === 0 ? 'bg-blue-500' :
-                        i % 4 === 1 ? 'bg-green-500' :
-                        i % 4 === 2 ? 'bg-red-500' : 'bg-yellow-500'
-                      }`}
-                    />
-                  ))}
-                </div>
+        {/* Google-style Hero Section */}
+        <section className="relative overflow-hidden pt-20 pb-32">
+          {/* Background decoration */}
+          <div className="absolute inset-0 overflow-hidden pointer-events-none">
+            <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+            <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
+          </div>
+
+          <div className="relative container mx-auto px-6 lg:px-8">
+            <div className="text-center space-y-8 max-w-5xl mx-auto">
+              <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
+                <span className="material-icons text-base">school</span>
+                <span style={{ fontFamily: 'Google Sans, sans-serif' }}>Professional Mentorship Platform</span>
               </div>
+
+              <h1 
+                className="text-5xl lg:text-7xl font-normal text-gray-900 leading-tight"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Accelerate Your Career with
+                <span className="block bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  Expert Mentorship
+                </span>
+              </h1>
+
+              <p 
+                className="text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Get personalized guidance from experienced professionals at top companies. 
+                Accelerate your career with <span className="font-medium text-blue-600">1:1 mentorship</span> and structured programs.
+              </p>
             </div>
+          </div>
+        </section>
 
-            <div className="container px-6 lg:px-8 relative z-10">
-              <div className="text-center space-y-8 max-w-4xl mx-auto">
-                {/* Google-style Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
-                  <span className="material-icons text-base">people</span>
-                  <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
-                    Expert Mentorship
-                  </span>
-                </div>
-
-                <h1 
-                  className="text-5xl lg:text-7xl font-normal text-gray-900 leading-tight"
-                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                >
-                  Learn from Industry
-                  <span className="block bg-gradient-to-r from-blue-600 via-purple-600 to-green-600 bg-clip-text text-transparent font-medium mt-2">
-                    Experts & Mentors
-                  </span>
-                </h1>
-
-                <p 
-                  className="text-xl lg:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-                  style={{ fontFamily: 'Roboto, sans-serif' }}
-                >
-                  Get personalized guidance from experienced professionals at top companies. 
-                  Accelerate your career with <span className="font-medium text-blue-600">1:1 mentorship</span> and structured programs.
-                </p>
+        {/* Mentorship Platform */}
+        <section className="py-20 bg-white">
+          <div className="container px-6 lg:px-8">
+            <Tabs defaultValue="gemini-mentor" className="space-y-8">
+              <div className="text-center">
+                <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-4 bg-gray-100 p-1 rounded-full">
+                  <TabsTrigger 
+                    value="gemini-mentor"
+                    className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-base">smart_toy</span>
+                    Gemini Mentor
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="mentors"
+                    className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-base">person</span>
+                    Find Mentors
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="sessions"
+                    className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-base">event</span>
+                    My Sessions
+                  </TabsTrigger>
+                  <TabsTrigger 
+                    value="programs"
+                    className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    <span className="material-icons mr-2 text-base">school</span>
+                    Programs
+                  </TabsTrigger>
+                </TabsList>
               </div>
-            </div>
-          </section>
 
-          {/* Mentorship Platform */}
-          <section className="py-20 bg-white">
-            <div className="container px-6 lg:px-8">
-              <Tabs defaultValue="mentors" className="space-y-8">
-                <div className="text-center">
-                  <TabsList className="grid w-full max-w-lg mx-auto grid-cols-3 bg-gray-100 p-1 rounded-full">
-                    <TabsTrigger 
-                      value="mentors"
-                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
+              {/* Gemini Mentor Tab - NOW FIRST */}
+              <TabsContent value="gemini-mentor" className="space-y-8">
+                <div className="text-center space-y-6 mb-16">
+                  <div className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-full">
+                    <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                      <span className="material-icons text-white text-sm">auto_awesome</span>
+                    </div>
+                    <span 
+                      className="text-sm font-medium text-blue-700"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      <span className="material-icons mr-2 text-base">person_search</span>
-                      Find Mentors
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="sessions"
-                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      <span className="material-icons mr-2 text-base">event</span>
-                      My Sessions
-                    </TabsTrigger>
-                    <TabsTrigger 
-                      value="programs"
-                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      <span className="material-icons mr-2 text-base">school</span>
-                      Programs
-                    </TabsTrigger>
-                  </TabsList>
-                </div>
-
-                {/* Find Mentors Tab */}
-                <TabsContent value="mentors" className="space-y-8">
-                  <div className="text-center space-y-6 mb-16">
-                    <h2 
-                      className="text-4xl lg:text-5xl font-normal text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Connect with Industry Experts
-                    </h2>
-                    <p 
-                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-                      style={{ fontFamily: 'Roboto, sans-serif' }}
-                    >
-                      Browse our network of experienced mentors from top companies and book 
-                      <span className="font-medium text-blue-600"> personalized sessions</span>.
-                    </p>
+                      Powered by Google Gemini AI
+                    </span>
                   </div>
 
-                  {/* Google-style Search and Filters */}
-                  <Card className="border-0 rounded-3xl shadow-lg">
-                    <CardContent className="p-8">
-                      <div className="flex flex-col md:flex-row gap-6 items-center">
-                        <div className="flex-1 relative">
-                          <span className="material-icons absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl">search</span>
-                          <input
-                            type="text"
-                            placeholder="Search by expertise, company, or name..."
-                            className="w-full pl-12 pr-6 py-4 rounded-full border-2 border-gray-200 bg-white focus:outline-none focus:ring-0 focus:border-blue-500 text-base transition-all duration-200"
-                            style={{ fontFamily: 'Roboto, sans-serif' }}
-                          />
-                        </div>
-                        <div className="flex gap-3">
-                          <Button 
-                            variant="outline" 
-                            className="h-12 px-6 rounded-full border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-all duration-200"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <span className="material-icons mr-2 text-base">tune</span>
-                            Filters
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            className="h-12 px-6 rounded-full border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-600 transition-all duration-200"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <span className="material-icons mr-2 text-base">location_on</span>
-                            Location
-                          </Button>
-                          <Button 
-                            variant="outline" 
-                            className="h-12 px-6 rounded-full border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-600 transition-all duration-200"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <span className="material-icons mr-2 text-base">schedule</span>
-                            Availability
-                          </Button>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <h2 
+                    className="text-4xl lg:text-5xl font-normal text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    AI-Powered Career Mentorship
+                  </h2>
+                  <p 
+                    className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Get instant, personalized career guidance from Google's advanced AI. 
+                    Available 24/7 to help you <span className="font-medium text-purple-600">accelerate your growth</span>.
+                  </p>
+                </div>
 
-                  {/* Mentors Grid */}
-                  <div className="grid lg:grid-cols-2 gap-8">
-                    {mentors.map((mentor) => (
-                      <Card key={mentor.id} className="group border-0 rounded-3xl shadow-lg bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                        <CardHeader className="space-y-6 p-8">
-                          <div className="flex items-start space-x-4">
-                            <div className="relative">
-                              <Avatar className="h-20 w-20 ring-4 ring-white shadow-lg">
-                                <AvatarImage src={mentor.avatar} alt={mentor.name} />
-                                <AvatarFallback className={`bg-gradient-to-br ${mentor.gradient} text-white font-medium text-xl`}>
-                                  {mentor.name.split(' ').map(n => n[0]).join('')}
-                                </AvatarFallback>
-                              </Avatar>
-                              {/* Online status indicator */}
-                              {mentor.availability === "Available" && (
-                                <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-4 border-white shadow-sm"></div>
-                              )}
+                {/* Gemini AI Interface */}
+                <div className="grid lg:grid-cols-3 gap-8">
+                  {/* Chat Interface */}
+                  <div className="lg:col-span-2">
+                    <Card className="border-0 rounded-3xl shadow-2xl bg-white h-[600px] flex flex-col">
+                      <CardHeader className="p-6 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-3xl">
+                        <div className="flex items-center gap-4">
+                          <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                            <span className="material-icons text-white text-xl">psychology</span>
+                          </div>
+                          <div>
+                            <CardTitle 
+                              className="text-xl font-medium text-gray-900"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              Gemini Career Mentor
+                            </CardTitle>
+                            <p 
+                              className="text-sm text-gray-600"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              Your AI-powered career advisor
+                            </p>
+                          </div>
+                          <div className="ml-auto flex items-center gap-2">
+                            <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                            <span 
+                              className="text-sm text-green-600 font-medium"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              Online
+                            </span>
+                          </div>
+                        </div>
+                      </CardHeader>
+
+                      {/* Chat Messages Area */}
+                      <CardContent className="flex-1 p-6 overflow-y-auto space-y-6">
+                        {/* Welcome Message */}
+                        <div className="flex gap-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-md">
+                            <span className="material-icons text-white text-sm">smart_toy</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl rounded-tl-sm p-4 border border-blue-200">
+                              <p 
+                                className="text-gray-800 leading-relaxed"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                👋 Hi! I'm your Gemini Career Mentor. I'm here to help you with:
+                              </p>
+                              <ul 
+                                className="mt-3 space-y-1 text-sm text-gray-700"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                <li className="flex items-center gap-2">
+                                  <span className="material-icons text-green-500 text-sm">check_circle</span>
+                                  Career path planning & transitions
+                                </li>
+                                <li className="flex items-center gap-2">
+                                  <span className="material-icons text-green-500 text-sm">check_circle</span>
+                                  Resume and interview preparation
+                                </li>
+                                <li className="flex items-center gap-2">
+                                  <span className="material-icons text-green-500 text-sm">check_circle</span>
+                                  Skill development recommendations
+                                </li>
+                                <li className="flex items-center gap-2">
+                                  <span className="material-icons text-green-500 text-sm">check_circle</span>
+                                  Industry insights and trends
+                                </li>
+                              </ul>
+                              <p 
+                                className="mt-3 text-sm text-blue-600 font-medium"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                What would you like to know about your career journey?
+                              </p>
                             </div>
-                            
-                            <div className="flex-1">
-                              <div className="flex items-start justify-between">
-                                <div>
-                                  <h3 
-                                    className="font-medium text-xl text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-1"
+                          </div>
+                        </div>
+
+                        {/* Sample User Message */}
+                        <div className="flex gap-3 justify-end">
+                          <div className="max-w-[70%]">
+                            <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl rounded-tr-sm p-4 text-white">
+                              <p style={{ fontFamily: 'Roboto, sans-serif' }}>
+                                I'm a computer science student interested in AI/ML careers. What skills should I focus on?
+                              </p>
+                            </div>
+                          </div>
+                          <div className="w-10 h-10 bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-md">
+                            <span className="material-icons text-white text-sm">person</span>
+                          </div>
+                        </div>
+
+                        {/* Sample AI Response */}
+                        <div className="flex gap-3">
+                          <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center shadow-md">
+                            <span className="material-icons text-white text-sm">smart_toy</span>
+                          </div>
+                          <div className="flex-1">
+                            <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl rounded-tl-sm p-4 border border-blue-200">
+                              <p 
+                                className="text-gray-800 leading-relaxed mb-3"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                Great choice! AI/ML is a rapidly growing field. Here's my personalized roadmap for you:
+                              </p>
+                              
+                              <div className="space-y-3">
+                                <div className="bg-white rounded-xl p-3 border border-gray-200">
+                                  <h4 
+                                    className="font-medium text-blue-600 mb-2 flex items-center gap-2"
                                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                                   >
-                                    {mentor.name}
-                                  </h3>
-                                  <p 
-                                    className="text-gray-600 mb-1"
+                                    <span className="material-icons text-sm">code</span>
+                                    Technical Skills (Priority 1)
+                                  </h4>
+                                  <div className="flex flex-wrap gap-2">
+                                    {["Python", "TensorFlow", "PyTorch", "SQL", "Statistics"].map((skill, idx) => (
+                                      <Badge key={idx} className="bg-blue-100 text-blue-700 border border-blue-200">
+                                        {skill}
+                                      </Badge>
+                                    ))}
+                                  </div>
+                                </div>
+                                
+                                <div className="bg-white rounded-xl p-3 border border-gray-200">
+                                  <h4 
+                                    className="font-medium text-green-600 mb-2 flex items-center gap-2"
+                                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                                  >
+                                    <span className="material-icons text-sm">build</span>
+                                    Next Steps
+                                  </h4>
+                                  <ul 
+                                    className="text-sm text-gray-700 space-y-1"
                                     style={{ fontFamily: 'Roboto, sans-serif' }}
                                   >
-                                    {mentor.title}
-                                  </p>
-                                  <p 
-                                    className="font-medium text-blue-600"
-                                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                                  >
-                                    {mentor.company}
-                                  </p>
-                                </div>
-                                <Badge 
-                                  className={`rounded-full px-3 py-1 font-medium ${
-                                    mentor.availability === "Available" 
-                                      ? "bg-green-100 text-green-700 border-green-200" 
-                                      : "bg-gray-100 text-gray-700 border-gray-200"
-                                  }`}
-                                >
-                                  {mentor.availability}
-                                </Badge>
-                              </div>
-                              
-                              <div className="flex items-center space-x-6 mt-3 text-sm text-gray-500">
-                                <div className="flex items-center space-x-1">
-                                  <span className="material-icons text-yellow-500 text-base">star</span>
-                                  <span className="font-medium">{mentor.rating}</span>
-                                  <span>({mentor.reviews})</span>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                  <span className="material-icons text-gray-400 text-base">location_on</span>
-                                  <span>{mentor.location}</span>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                  <span className="material-icons text-gray-400 text-base">work</span>
-                                  <span>{mentor.experience}</span>
+                                    <li>• Build 2-3 ML projects for your portfolio</li>
+                                    <li>• Consider Google's Machine Learning Course</li>
+                                    <li>• Join AI/ML communities and competitions</li>
+                                  </ul>
                                 </div>
                               </div>
                             </div>
                           </div>
-                        </CardHeader>
+                        </div>
+                      </CardContent>
 
-                        <CardContent className="space-y-8 p-8 pt-0">
+                      {/* Chat Input */}
+                      <div className="border-t border-gray-100 p-6">
+                        <div className="flex gap-3">
+                          <div className="flex-1 relative">
+                            <input
+                              type="text"
+                              placeholder="Ask me anything about your career..."
+                              className="w-full pl-4 pr-12 py-3 rounded-full border-2 border-gray-200 bg-white focus:outline-none focus:ring-0 focus:border-blue-500 transition-all duration-200"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            />
+                            <Button className="absolute right-2 top-1/2 transform -translate-y-1/2 h-8 w-8 rounded-full bg-gradient-to-r from-blue-600 to-blue-700 text-white p-0">
+                              <span className="material-icons text-sm">send</span>
+                            </Button>
+                          </div>
+                        </div>
+                      </div>
+                    </Card>
+                  </div>
+
+                  {/* AI Features Sidebar */}
+                  <div className="space-y-6">
+                    {/* Quick Actions */}
+                    <Card className="border-0 rounded-3xl shadow-lg">
+                      <CardHeader className="p-6">
+                        <CardTitle 
+                          className="text-lg font-medium text-gray-900 flex items-center gap-2"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons text-blue-600">flash_on</span>
+                          Quick Actions
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-6 pt-0 space-y-3">
+                        {[
+                          { icon: "description", text: "Resume Review", color: "blue" },
+                          { icon: "school", text: "Skill Assessment", color: "green" },
+                          { icon: "trending_up", text: "Career Path", color: "purple" },
+                          { icon: "psychology", text: "Interview Prep", color: "orange" }
+                        ].map((action, idx) => (
+                          <Button
+                            key={idx}
+                            variant="outline"
+                            className="w-full justify-start h-12 rounded-2xl border-2 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            <span className={`material-icons mr-3 text-${action.color}-600`}>{action.icon}</span>
+                            {action.text}
+                          </Button>
+                        ))}
+                      </CardContent>
+                    </Card>
+
+                    {/* AI Insights */}
+                    <Card className="border-0 rounded-3xl shadow-lg">
+                      <CardHeader className="p-6">
+                        <CardTitle 
+                          className="text-lg font-medium text-gray-900 flex items-center gap-2"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons text-purple-600">insights</span>
+                          AI Insights
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="p-6 pt-0 space-y-4">
+                        <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl p-4 border border-blue-200">
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="material-icons text-blue-600 text-lg">trending_up</span>
+                            <h4 
+                              className="font-medium text-blue-700"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              Market Trend
+                            </h4>
+                          </div>
                           <p 
+                            className="text-sm text-blue-800"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            AI/ML roles are growing 35% faster than average in India
+                          </p>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-green-50 to-green-100 rounded-2xl p-4 border border-green-200">
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="material-icons text-green-600 text-lg">lightbulb</span>
+                            <h4 
+                              className="font-medium text-green-700"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              Personalized Tip
+                            </h4>
+                          </div>
+                          <p 
+                            className="text-sm text-green-800"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            Based on your profile, consider Google's AI certification
+                          </p>
+                        </div>
+
+                        <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl p-4 border border-purple-200">
+                          <div className="flex items-center gap-3 mb-2">
+                            <span className="material-icons text-purple-600 text-lg">schedule</span>
+                            <h4 
+                              className="font-medium text-purple-700"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              Weekly Goal
+                            </h4>
+                          </div>
+                          <p 
+                            className="text-sm text-purple-800"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            Complete 2 coding challenges this week
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Session Stats */}
+                    <Card className="border-0 rounded-3xl shadow-lg bg-gradient-to-br from-gray-50 to-gray-100">
+                      <CardContent className="p-6">
+                        <div className="text-center space-y-4">
+                          <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-2xl mx-auto flex items-center justify-center shadow-lg">
+                            <span className="material-icons text-white text-2xl">auto_awesome</span>
+                          </div>
+                          <div>
+                            <h3 
+                              className="text-2xl font-bold text-gray-900"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              24/7 Available
+                            </h3>
+                            <p 
+                              className="text-gray-600"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              Always here to help
+                            </p>
+                          </div>
+                          <div className="grid grid-cols-2 gap-4 pt-4">
+                            <div className="text-center">
+                              <div 
+                                className="text-lg font-bold text-blue-600"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                1.2M+
+                              </div>
+                              <div 
+                                className="text-xs text-gray-600"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                Students Helped
+                              </div>
+                            </div>
+                            <div className="text-center">
+                              <div 
+                                className="text-lg font-bold text-green-600"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                95%
+                              </div>
+                              <div 
+                                className="text-xs text-gray-600"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                Success Rate
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+
+                {/* AI Capabilities Section */}
+                <div className="mt-16">
+                  <div className="text-center mb-12">
+                    <h3 
+                      className="text-3xl font-normal text-gray-900 mb-4"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      What Gemini Mentor Can Help You With
+                    </h3>
+                    <p 
+                      className="text-lg text-gray-600 max-w-2xl mx-auto"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      Powered by Google's most advanced AI, tailored for career success
+                    </p>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    {[
+                      {
+                        icon: "psychology",
+                        title: "Career Counseling",
+                        description: "Get personalized advice on career paths and transitions",
+                        gradient: "from-blue-500 to-blue-600"
+                      },
+                      {
+                        icon: "school",
+                        title: "Skill Development",
+                        description: "Identify skill gaps and get learning recommendations",
+                        gradient: "from-green-500 to-green-600"
+                      },
+                      {
+                        icon: "description",
+                        title: "Resume Optimization",
+                        description: "AI-powered resume reviews and improvement suggestions",
+                        gradient: "from-purple-500 to-purple-600"
+                      },
+                      {
+                        icon: "quiz",
+                        title: "Interview Practice",
+                        description: "Mock interviews with real-time feedback and tips",
+                        gradient: "from-orange-500 to-red-500"
+                      }
+                    ].map((capability, idx) => (
+                      <Card key={idx} className="border-0 rounded-3xl shadow-lg hover:shadow-xl transition-all duration-300 group">
+                        <CardContent className="p-6 text-center">
+                          <div className={`w-16 h-16 bg-gradient-to-br ${capability.gradient} rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300`}>
+                            <span className="material-icons text-white text-2xl">{capability.icon}</span>
+                          </div>
+                          <h4 
+                            className="text-lg font-medium text-gray-900 mb-2"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            {capability.title}
+                          </h4>
+                          <p 
+                            className="text-sm text-gray-600 leading-relaxed"
+                            style={{ fontFamily: 'Roboto, sans-serif' }}
+                          >
+                            {capability.description}
+                          </p>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+
+                {/* CTA Section */}
+                <Card className="border-0 rounded-3xl shadow-2xl bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 text-white mt-16">
+                  <CardContent className="p-12 text-center">
+                    <div className="max-w-3xl mx-auto space-y-6">
+                      <div className="w-20 h-20 bg-white/20 rounded-2xl mx-auto flex items-center justify-center backdrop-blur-sm">
+                        <span className="material-icons text-3xl">rocket_launch</span>
+                      </div>
+                      <h3 
+                        className="text-3xl lg:text-4xl font-normal"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        Ready to Accelerate Your Career?
+                      </h3>
+                      <p 
+                        className="text-xl opacity-90 leading-relaxed"
+                        style={{ fontFamily: 'Roboto, sans-serif' }}
+                      >
+                        Start your journey with AI-powered mentorship. Get personalized guidance, 
+                        skill recommendations, and career insights tailored just for you.
+                      </p>
+                      <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+                        <Button 
+                          className="h-14 px-8 bg-white text-blue-600 hover:bg-gray-100 rounded-2xl shadow-lg text-lg font-medium"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons mr-2">chat</span>
+                          Start Chatting Now
+                        </Button>
+                        <Button 
+                          variant="outline"
+                          className="h-14 px-8 border-2 border-white/30 text-white hover:bg-white/10 rounded-2xl backdrop-blur-sm text-lg font-medium"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons mr-2">play_circle</span>
+                          Watch Demo
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </TabsContent>
+
+              {/* Find Mentors Tab */}
+              <TabsContent value="mentors" className="space-y-8">
+                <div className="text-center space-y-6 mb-16">
+                  <h2 
+                    className="text-4xl lg:text-5xl font-normal text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Connect with Expert Mentors
+                  </h2>
+                  <p 
+                    className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Learn from industry professionals at top tech companies. Get personalized guidance 
+                    for your <span className="font-medium text-blue-600">career journey</span>.
+                  </p>
+                </div>
+
+                <div className="grid lg:grid-cols-2 xl:grid-cols-2 gap-8">
+                  {mentors.map((mentor, index) => (
+                    <Card key={mentor.id} className="group border-0 rounded-3xl shadow-lg bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                      <CardHeader className="space-y-6 p-8">
+                        <div className="flex items-start gap-6">
+                          <div className="relative">
+                            <Avatar className="h-20 w-20 ring-4 ring-white shadow-lg">
+                              <AvatarImage src={mentor.avatar} alt={mentor.name} />
+                              <AvatarFallback 
+                                className={`text-2xl text-white bg-gradient-to-br ${mentor.gradient}`}
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {mentor.name.split(' ').map(n => n[0]).join('')}
+                              </AvatarFallback>
+                            </Avatar>
+                            <div className={`absolute -bottom-2 -right-2 w-6 h-6 rounded-full border-2 border-white ${
+                              mentor.availability === 'Available' ? 'bg-green-500' : 'bg-yellow-500'
+                            }`}></div>
+                          </div>
+                          
+                          <div className="flex-1 space-y-3">
+                            <div>
+                              <h3 
+                                className="text-2xl font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {mentor.name}
+                              </h3>
+                              <p 
+                                className="text-blue-600 font-medium"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                {mentor.title}
+                              </p>
+                              <p 
+                                className="text-gray-500 text-sm"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                {mentor.company} • {mentor.experience}
+                              </p>
+                            </div>
+                            
+                            <div className="flex items-center gap-4">
+                              <div className="flex items-center gap-1">
+                                <span className="material-icons text-yellow-400 text-base">star</span>
+                                <span 
+                                  className="font-medium text-gray-900"
+                                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                                >
+                                  {mentor.rating}
+                                </span>
+                                <span 
+                                  className="text-gray-500 text-sm"
+                                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                                >
+                                  ({mentor.reviews} reviews)
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </CardHeader>
+
+                      <CardContent className="space-y-6 p-8 pt-0">
+                        <p 
+                          className="text-gray-600 leading-relaxed"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          {mentor.bio}
+                        </p>
+                        
+                        <div className="flex flex-wrap gap-2">
+                          {mentor.expertise.map((skill, skillIndex) => (
+                            <Badge 
+                              key={skillIndex} 
+                              className="bg-blue-100 text-blue-700 border border-blue-200 hover:bg-blue-200 transition-colors duration-200"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              {skill}
+                            </Badge>
+                          ))}
+                        </div>
+                        
+                        <div className="flex items-center justify-between pt-4 border-t border-gray-100">
+                          <div className="flex items-center gap-6 text-sm text-gray-500">
+                            <div className="flex items-center gap-2">
+                              <span className="material-icons text-sm">location_on</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>{mentor.location}</span>
+                            </div>
+                            <div className="flex items-center gap-2">
+                              <span className="material-icons text-sm">schedule</span>
+                              <span style={{ fontFamily: 'Roboto, sans-serif' }}>{mentor.hourlyRate}/hour</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex gap-3 pt-4">
+                          <Button 
+                            className="flex-1 h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-lg transition-all duration-300"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            <span className="material-icons mr-2">video_call</span>
+                            Book Session
+                          </Button>
+                          <Button 
+                            variant="outline"
+                            className="h-12 px-4 rounded-full border-2 border-gray-300 hover:bg-gray-50 transition-all duration-300"
+                          >
+                            <span className="material-icons">chat</span>
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+
+              {/* Sessions Tab */}
+              <TabsContent value="sessions" className="space-y-8">
+                <div className="text-center space-y-6 mb-16">
+                  <h2 
+                    className="text-4xl lg:text-5xl font-normal text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    My Mentorship Sessions
+                  </h2>
+                  <p 
+                    className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Track your progress and manage your upcoming sessions with 
+                    <span className="font-medium text-blue-600"> expert mentors</span>.
+                  </p>
+                </div>
+
+                <div className="grid lg:grid-cols-3 gap-8">
+                  {/* Upcoming Sessions */}
+                  <div className="lg:col-span-2 space-y-6">
+                    <h3 
+                      className="text-2xl font-medium text-gray-900 mb-6"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Upcoming Sessions
+                    </h3>
+                    
+                    {upcomingSessions.map((session, index) => (
+                      <Card key={index} className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
+                        <CardContent className="p-8">
+                          <div className="flex items-start justify-between mb-6">
+                            <div className="space-y-3">
+                              <h4 
+                                className="text-xl font-medium text-gray-900"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {session.topic}
+                              </h4>
+                              <p 
+                                className="text-blue-600 font-medium"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                with {session.mentor}
+                              </p>
+                            </div>
+                            <Badge 
+                              className={`${session.status === 'Confirmed' ? 'bg-green-100 text-green-700 border-green-200' : 'bg-yellow-100 text-yellow-700 border-yellow-200'}`}
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              {session.status}
+                            </Badge>
+                          </div>
+                          
+                          <div className="grid grid-cols-3 gap-4 mb-6">
+                            <div className="flex items-center gap-2 text-gray-600">
+                              <span className="material-icons text-sm">schedule</span>
+                              <span 
+                                className="text-sm"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                {session.date}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-600">
+                              <span className="material-icons text-sm">timer</span>
+                              <span 
+                                className="text-sm"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                {session.duration}
+                              </span>
+                            </div>
+                            <div className="flex items-center gap-2 text-gray-600">
+                              <span className="material-icons text-sm">
+                                {session.type === 'Video Call' ? 'video_call' : 'phone'}
+                              </span>
+                              <span 
+                                className="text-sm"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                {session.type}
+                              </span>
+                            </div>
+                          </div>
+                          
+                          <div className="flex gap-3">
+                            {session.meetLink && (
+                              <Button 
+                                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full shadow-lg transition-all duration-300"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                <span className="material-icons mr-2">videocam</span>
+                                Join Meeting
+                              </Button>
+                            )}
+                            <Button 
+                              variant="outline"
+                              className="rounded-full border-2 border-gray-300 hover:bg-gray-50 transition-all duration-300"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              <span className="material-icons mr-2">edit</span>
+                              Reschedule
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
+
+                  {/* Sidebar */}
+                  <div className="space-y-6">
+                    {/* Progress Overview */}
+                    <Card className="border-0 rounded-3xl shadow-lg bg-gradient-to-br from-blue-50 to-blue-100">
+                      <CardContent className="p-8 text-center">
+                        <div className="w-16 h-16 bg-gradient-to-br from-blue-600 to-blue-700 rounded-2xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                          <span className="material-icons text-white text-2xl">trending_up</span>
+                        </div>
+                        <h3 
+                          className="text-2xl font-bold text-blue-700 mb-2"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          12 Sessions
+                        </h3>
+                        <p 
+                          className="text-blue-600"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          Completed this month
+                        </p>
+                        
+                        <div className="grid grid-cols-2 gap-4 mt-6 pt-6 border-t border-blue-200">
+                          <div className="text-center">
+                            <div 
+                              className="text-lg font-bold text-blue-700"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              4.8
+                            </div>
+                            <div 
+                              className="text-xs text-blue-600"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              Avg Rating
+                            </div>
+                          </div>
+                          <div className="text-center">
+                            <div 
+                              className="text-lg font-bold text-blue-700"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
+                              18h
+                            </div>
+                            <div 
+                              className="text-xs text-blue-600"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              Total Time
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Quick Actions */}
+                    <Card className="border-0 rounded-3xl shadow-lg">
+                      <CardHeader className="p-8">
+                        <CardTitle 
+                          className="text-xl font-medium text-gray-900"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          Quick Actions
+                        </CardTitle>
+                      </CardHeader>
+                      <CardContent className="space-y-4 p-8 pt-0">
+                        <Button 
+                          className="w-full justify-start h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-lg transition-all duration-300"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons mr-3">person_add</span>
+                          Find New Mentor
+                        </Button>
+                        <Button 
+                          className="w-full justify-start h-12 rounded-full border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-600 transition-all duration-300"
+                          variant="outline"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons mr-3">event</span>
+                          Schedule Session
+                        </Button>
+                        <Button 
+                          className="w-full justify-start h-12 rounded-full border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-600 transition-all duration-300"
+                          variant="outline"
+                          style={{ fontFamily: 'Google Sans, sans-serif' }}
+                        >
+                          <span className="material-icons mr-3">flag</span>
+                          Update Goals
+                        </Button>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </TabsContent>
+
+              {/* Programs Tab */}
+              <TabsContent value="programs" className="space-y-8">
+                <div className="text-center space-y-6 mb-16">
+                  <h2 
+                    className="text-4xl lg:text-5xl font-normal text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Structured Mentorship Programs
+                  </h2>
+                  <p 
+                    className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Comprehensive programs designed to fast-track your career with
+                    <span className="font-medium text-blue-600"> structured learning</span> and mentorship.
+                  </p>
+                </div>
+
+                <div className="grid lg:grid-cols-3 gap-8">
+                  {mentorshipPrograms.map((program, index) => (
+                    <Card key={index} className="group border-0 rounded-3xl shadow-lg bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
+                      <CardHeader className="space-y-6 p-8">
+                        <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${program.gradient} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg`}>
+                          <span className="material-icons text-white text-2xl">school</span>
+                        </div>
+
+                        <div>
+                          <CardTitle 
+                            className="text-2xl font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-3"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            {program.title}
+                          </CardTitle>
+                          <CardDescription 
                             className="text-gray-600 leading-relaxed"
                             style={{ fontFamily: 'Roboto, sans-serif' }}
                           >
-                            {mentor.bio}
-                          </p>
+                            {program.description}
+                          </CardDescription>
+                        </div>
+                      </CardHeader>
 
-                          {/* Expertise */}
-                          <div className="space-y-3">
-                            <h4 
-                              className="font-medium text-gray-900"
-                              style={{ fontFamily: 'Google Sans, sans-serif' }}
-                            >
-                              Expertise
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {mentor.expertise.map((skill, index) => (
-                                <Badge 
-                                  key={index} 
-                                  className="bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-3 py-1 text-sm font-medium"
-                                >
-                                  {skill}
-                                </Badge>
-                              ))}
-                            </div>
-                          </div>
-
-                          {/* Stats */}
-                          <div className="grid grid-cols-3 gap-6 py-6 border-t border-b border-gray-100">
-                            <div className="text-center">
-                              <div 
-                                className="text-2xl font-bold text-blue-600 mb-1"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {mentor.sessions}
-                              </div>
-                              <div 
-                                className="text-sm text-gray-500"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Sessions
-                              </div>
-                            </div>
-                            <div className="text-center">
-                              <div 
-                                className="text-2xl font-bold text-green-600 mb-1"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {mentor.successStories}
-                              </div>
-                              <div 
-                                className="text-sm text-gray-500"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Success Stories
-                              </div>
-                            </div>
-                            <div className="text-center">
-                              <div 
-                                className="text-2xl font-bold text-gray-900 mb-1"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {mentor.hourlyRate}
-                              </div>
-                              <div 
-                                className="text-sm text-gray-500"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Per hour
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Action Buttons */}
-                          <div className="flex space-x-4">
-                            <Button 
-                              className={`flex-1 h-12 bg-gradient-to-r ${mentor.gradient} hover:shadow-lg text-white rounded-full shadow-md transition-all duration-300 group`}
-                              style={{ fontFamily: 'Google Sans, sans-serif' }}
-                            >
-                              Book Session
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              className="h-12 w-12 rounded-full border-2 border-gray-300 hover:bg-blue-50 hover:border-blue-300 hover:text-blue-600 transition-all duration-300"
-                            >
-                              <span className="material-icons">chat</span>
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </TabsContent>
-
-                {/* My Sessions Tab */}
-                <TabsContent value="sessions" className="space-y-8">
-                  <div className="text-center space-y-6 mb-16">
-                    <h2 
-                      className="text-4xl lg:text-5xl font-normal text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Your Mentorship Sessions
-                    </h2>
-                    <p 
-                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-                      style={{ fontFamily: 'Roboto, sans-serif' }}
-                    >
-                      Manage your upcoming sessions and track your 
-                      <span className="font-medium text-blue-600"> mentorship journey</span>.
-                    </p>
-                  </div>
-
-                  <div className="grid lg:grid-cols-3 gap-8">
-                    {/* Upcoming Sessions */}
-                    <div className="lg:col-span-2 space-y-8">
-                      <Card className="border-0 rounded-3xl shadow-lg">
-                        <CardHeader className="p-8">
-                          <CardTitle 
-                            className="flex items-center space-x-3 text-2xl font-medium text-gray-900"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
-                              <span className="material-icons text-white text-xl">event</span>
-                            </div>
-                            <span>Upcoming Sessions</span>
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-8 pt-0">
-                          <div className="space-y-6">
-                            {upcomingSessions.map((session, index) => (
-                              <div key={index} className="group flex items-center space-x-4 p-6 rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 hover:shadow-md transition-all duration-300 hover:-translate-y-1">
-                                <div className="flex-1">
-                                  <div className="flex items-center justify-between mb-3">
-                                    <h4 
-                                      className="font-medium text-lg text-gray-900 group-hover:text-blue-600 transition-colors duration-300"
-                                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                                    >
-                                      {session.topic}
-                                    </h4>
-                                    <Badge 
-                                      className={`rounded-full px-3 py-1 font-medium ${
-                                        session.status === "Confirmed" 
-                                          ? "bg-green-100 text-green-700 border-green-200" 
-                                          : "bg-yellow-100 text-yellow-700 border-yellow-200"
-                                      }`}
-                                    >
-                                      {session.status}
-                                    </Badge>
-                                  </div>
-                                  <p 
-                                    className="text-gray-600 mb-3"
-                                    style={{ fontFamily: 'Roboto, sans-serif' }}
-                                  >
-                                    with {session.mentor}
-                                  </p>
-                                  <div className="flex items-center space-x-6 text-sm text-gray-500">
-                                    <div className="flex items-center space-x-2">
-                                      <span className="material-icons text-base">schedule</span>
-                                      <span>{session.date}</span>
-                                    </div>
-                                    <span>{session.duration}</span>
-                                    <div className="flex items-center space-x-2">
-                                      <span className="material-icons text-base">
-                                        {session.type === "Video Call" ? "videocam" : "phone"}
-                                      </span>
-                                      <span>{session.type}</span>
-                                    </div>
-                                  </div>
-                                  {session.meetLink && (
-                                    <div className="mt-3 text-xs text-blue-600 bg-blue-50 px-3 py-2 rounded-full inline-block">
-                                      <span className="material-icons mr-1 text-sm">link</span>
-                                      {session.meetLink}
-                                    </div>
-                                  )}
-                                </div>
-                                <Button 
-                                  className="h-10 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300"
-                                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                                >
-                                  <span className="material-icons mr-2">videocam</span>
-                                  Join
-                                </Button>
-                              </div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      {/* Session History */}
-                      <Card className="border-0 rounded-3xl shadow-lg">
-                        <CardHeader className="p-8">
-                          <CardTitle 
-                            className="flex items-center space-x-3 text-2xl font-medium text-gray-900"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-green-600 shadow-lg">
-                              <span className="material-icons text-white text-xl">check_circle</span>
-                            </div>
-                            <span>Completed Sessions</span>
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="p-8 pt-0">
-                          <div className="space-y-4">
-                            {[
-                              { mentor: "Priya Sharma", topic: "React Best Practices", date: "2 days ago", rating: 5 },
-                              { mentor: "Rohit Patel", topic: "Data Science Career Path", date: "1 week ago", rating: 5 },
-                              { mentor: "Anjali Gupta", topic: "Product Interview Prep", date: "2 weeks ago", rating: 4 }
-                            ].map((session, index) => (
-                              <div key={index} className="flex items-center justify-between p-4 rounded-2xl border border-gray-100 hover:bg-gray-50 transition-colors duration-200">
-                                <div>
-                                  <h4 
-                                    className="font-medium text-gray-900 mb-1"
-                                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                                  >
-                                    {session.topic}
-                                  </h4>
-                                  <p 
-                                    className="text-sm text-gray-500"
-                                    style={{ fontFamily: 'Roboto, sans-serif' }}
-                                  >
-                                    with {session.mentor} • {session.date}
-                                  </p>
-                                </div>
-                                <div className="flex items-center space-x-1">
-                                  {[...Array(session.rating)].map((_, i) => (
-                                    <span key={i} className="material-icons text-yellow-500 text-lg">star</span>
-                                  ))}
-                                </div>
-                              </div>
-                            ))}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </div>
-
-                    {/* Progress Sidebar */}
-                    <div className="space-y-8">
-                      <Card className="border-0 rounded-3xl shadow-lg">
-                        <CardHeader className="p-8">
-                          <CardTitle 
-                            className="text-xl font-medium text-gray-900"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            Your Progress
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-6 p-8 pt-0">
-                          <div className="text-center">
+                      <CardContent className="space-y-8 p-8 pt-0">
+                        {/* Program Stats */}
+                        <div className="grid grid-cols-3 gap-4 text-center">
+                          <div className="p-4 bg-gray-50 rounded-2xl">
                             <div 
-                              className="text-4xl font-bold text-blue-600 mb-2"
+                              className="text-2xl font-bold text-blue-600 mb-1"
                               style={{ fontFamily: 'Google Sans, sans-serif' }}
                             >
-                              12
+                              {program.duration}
                             </div>
                             <div 
-                              className="text-gray-500"
+                              className="text-sm text-gray-500"
                               style={{ fontFamily: 'Roboto, sans-serif' }}
                             >
-                              Total Sessions
+                              Duration
                             </div>
                           </div>
-                          
-                          <div className="space-y-4">
-                            <div className="flex justify-between items-center">
-                              <span 
-                                className="text-gray-700"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Skills Learned
-                              </span>
-                              <span 
-                                className="font-semibold text-gray-900"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                18
-                              </span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span 
-                                className="text-gray-700"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Average Rating
-                              </span>
-                              <span 
-                                className="font-semibold text-gray-900"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                4.8/5
-                              </span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span 
-                                className="text-gray-700"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Career Goals
-                              </span>
-                              <span 
-                                className="font-semibold text-gray-900"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                75% Complete
-                              </span>
-                            </div>
-                          </div>
-                        </CardContent>
-                      </Card>
-
-                      <Card className="border-0 rounded-3xl shadow-lg">
-                        <CardHeader className="p-8">
-                          <CardTitle 
-                            className="text-xl font-medium text-gray-900"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            Quick Actions
-                          </CardTitle>
-                        </CardHeader>
-                        <CardContent className="space-y-4 p-8 pt-0">
-                          <Button 
-                            className="w-full justify-start h-12 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-full shadow-lg transition-all duration-300"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <span className="material-icons mr-3">person_add</span>
-                            Find New Mentor
-                          </Button>
-                          <Button 
-                            className="w-full justify-start h-12 rounded-full border-2 border-gray-300 hover:bg-green-50 hover:border-green-300 hover:text-green-600 transition-all duration-300"
-                            variant="outline"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <span className="material-icons mr-3">event</span>
-                            Schedule Session
-                          </Button>
-                          <Button 
-                            className="w-full justify-start h-12 rounded-full border-2 border-gray-300 hover:bg-purple-50 hover:border-purple-300 hover:text-purple-600 transition-all duration-300"
-                            variant="outline"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            <span className="material-icons mr-3">flag</span>
-                            Update Goals
-                          </Button>
-                        </CardContent>
-                      </Card>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                {/* Programs Tab */}
-                <TabsContent value="programs" className="space-y-8">
-                  <div className="text-center space-y-6 mb-16">
-                    <h2 
-                      className="text-4xl lg:text-5xl font-normal text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Structured Mentorship Programs
-                    </h2>
-                    <p 
-                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-                      style={{ fontFamily: 'Roboto, sans-serif' }}
-                    >
-                      Comprehensive programs designed to fast-track your career with 
-                      <span className="font-medium text-blue-600"> structured learning</span> and mentorship.
-                    </p>
-                  </div>
-
-                  <div className="grid lg:grid-cols-3 gap-8">
-                    {mentorshipPrograms.map((program, index) => (
-                      <Card key={index} className="group border-0 rounded-3xl shadow-lg bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                        <CardHeader className="space-y-6 p-8">
-                          <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${program.gradient} flex items-center justify-center group-hover:scale-110 transition-all duration-300 shadow-lg`}>
-                            <span className="material-icons text-white text-2xl">school</span>
-                          </div>
-                          
-                          <div>
-                            <CardTitle 
-                              className="text-2xl font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300 mb-3"
+                          <div className="p-4 bg-gray-50 rounded-2xl">
+                            <div 
+                              className="text-2xl font-bold text-green-600 mb-1"
                               style={{ fontFamily: 'Google Sans, sans-serif' }}
                             >
-                              {program.title}
-                            </CardTitle>
-                            <CardDescription 
-                              className="text-gray-600 leading-relaxed"
+                              {program.mentors}
+                            </div>
+                            <div 
+                              className="text-sm text-gray-500"
                               style={{ fontFamily: 'Roboto, sans-serif' }}
                             >
-                              {program.description}
-                            </CardDescription>
-                          </div>
-                        </CardHeader>
-
-                        <CardContent className="space-y-8 p-8 pt-0">
-                          {/* Program Stats */}
-                          <div className="grid grid-cols-3 gap-4 text-center">
-                            <div className="p-4 bg-gray-50 rounded-2xl">
-                              <div 
-                                className="text-2xl font-bold text-blue-600 mb-1"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {program.duration}
-                              </div>
-                              <div 
-                                className="text-sm text-gray-500"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Duration
-                              </div>
-                            </div>
-                            <div className="p-4 bg-gray-50 rounded-2xl">
-                              <div 
-                                className="text-2xl font-bold text-green-600 mb-1"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {program.mentors}
-                              </div>
-                              <div 
-                                className="text-sm text-gray-500"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Mentors
-                              </div>
-                            </div>
-                            <div className="p-4 bg-gray-50 rounded-2xl">
-                              <div 
-                                className="text-2xl font-bold text-purple-600 mb-1"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {program.students}
-                              </div>
-                              <div 
-                                className="text-sm text-gray-500"
-                                style={{ fontFamily: 'Roboto, sans-serif' }}
-                              >
-                                Students
-                              </div>
+                              Mentors
                             </div>
                           </div>
-
-                          {/* Features */}
-                          <div className="space-y-4">
-                            <h4 
-                              className="font-medium text-gray-900"
+                          <div className="p-4 bg-gray-50 rounded-2xl">
+                            <div 
+                              className="text-2xl font-bold text-purple-600 mb-1"
                               style={{ fontFamily: 'Google Sans, sans-serif' }}
                             >
-                              What's Included
-                            </h4>
-                            <div className="space-y-3">
-                              {program.features.map((feature, featureIndex) => (
-                                <div key={featureIndex} className="flex items-center space-x-3">
-                                  <span className="material-icons text-green-500 text-lg">check_circle</span>
-                                  <span 
-                                    className="text-gray-700"
-                                    style={{ fontFamily: 'Roboto, sans-serif' }}
-                                  >
-                                    {feature}
-                                  </span>
-                                </div>
-                              ))}
+                              {program.students}
+                            </div>
+                            <div 
+                              className="text-sm text-gray-500"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              Students
                             </div>
                           </div>
+                        </div>
 
-                          {/* Price and CTA */}
-                          <div className="space-y-6 pt-6 border-t border-gray-100">
-                            <div className="text-center">
-                              <div 
-                                className="text-3xl font-bold text-gray-900 mb-1"
+                        {/* Features List */}
+                        <div className="space-y-3">
+                          {program.features.map((feature, featureIndex) => (
+                            <div key={featureIndex} className="flex items-center gap-3">
+                              <div className="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+                                <span className="material-icons text-green-600 text-sm">check</span>
+                              </div>
+                              <span 
+                                className="text-gray-700"
+                                style={{ fontFamily: 'Roboto, sans-serif' }}
+                              >
+                                {feature}
+                              </span>
+                            </div>
+                          ))}
+                        </div>
+
+                        {/* Price and CTA */}
+                        <div className="pt-4 border-t border-gray-100">
+                          <div className="flex items-center justify-between mb-4">
+                            <div>
+                              <span 
+                                className="text-3xl font-bold text-gray-900"
                                 style={{ fontFamily: 'Google Sans, sans-serif' }}
                               >
                                 {program.price}
-                              </div>
-                              <div 
-                                className="text-gray-500"
+                              </span>
+                              <span 
+                                className="text-gray-500 ml-2"
                                 style={{ fontFamily: 'Roboto, sans-serif' }}
                               >
-                                One-time payment
-                              </div>
+                                total
+                              </span>
                             </div>
-                            
-                            <Button 
-                              className={`w-full h-12 bg-gradient-to-r ${program.gradient} hover:shadow-lg text-white rounded-full shadow-md transition-all duration-300 group`}
-                              style={{ fontFamily: 'Google Sans, sans-serif' }}
-                            >
-                              Enroll Now
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                            </Button>
                           </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-
-                  {/* Bottom CTA */}
-                  <div className="text-center space-y-8 bg-gradient-to-br from-blue-50 to-purple-50 rounded-3xl p-12 border border-blue-100">
-                    <h3 
-                      className="text-3xl font-medium text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Can't Find the Right Program?
-                    </h3>
-                    <p 
-                      className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg"
-                      style={{ fontFamily: 'Roboto, sans-serif' }}
-                    >
-                      We offer custom mentorship programs tailored to your specific career goals and 
-                      <span className="font-medium text-blue-600"> learning needs</span>.
-                    </p>
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                      <Button 
-                        size="lg" 
-                        className="h-12 px-8 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-full shadow-lg hover:shadow-xl transition-all duration-300"
-                        style={{ fontFamily: 'Google Sans, sans-serif' }}
-                      >
-                        <span className="material-icons mr-3">design_services</span>
-                        Design Custom Program
-                      </Button>
-                      <Button 
-                        size="lg" 
-                        variant="outline"
-                        className="h-12 px-8 border-2 border-gray-300 hover:bg-white hover:border-blue-300 hover:text-blue-600 rounded-full transition-all duration-300"
-                        style={{ fontFamily: 'Google Sans, sans-serif' }}
-                      >
-                        <span className="material-icons mr-3">support_agent</span>
-                        Talk to Advisor
-                      </Button>
-                    </div>
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </section>
-        </main>
-
+                          <Button 
+                            className={`w-full h-12 bg-gradient-to-r ${program.gradient} hover:scale-105 text-white rounded-full shadow-lg transition-all duration-300`}
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            <span className="material-icons mr-2">arrow_forward</span>
+                            Enroll Now
+                          </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
+        </section>
       </div>
     </>
   );

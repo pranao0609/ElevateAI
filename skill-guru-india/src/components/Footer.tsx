@@ -215,7 +215,7 @@ const Footer = () => {
                     <span className="material-icons text-yellow-400">location_on</span>
                   </div>
                   <span style={{ fontFamily: 'Roboto, sans-serif' }}>
-                    Bangalore, India
+                    PUNE, INDIA
                   </span>
                 </div>
               </div>
