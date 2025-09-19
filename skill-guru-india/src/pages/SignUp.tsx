@@ -37,6 +37,7 @@ const SignUp = () => {
       alert("Passwords don't match!");
       return;
     }
+    console.log("Form Data:", formData);
 
     try {
       const res = await fetch("http://127.0.0.1:8000/auth/signup", {
@@ -56,7 +57,7 @@ const SignUp = () => {
       
       alert("Account created successfully!");
       localStorage.setItem("token", data.token);
-      navigate("/sign-in");
+      navigate("/onboarding");
 
     } catch (err) {
       console.error(err);

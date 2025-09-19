@@ -17,7 +17,7 @@ from api.health import router as health_router
 from api.config import router as config_router
 from api.version import router as version_router
 from career.routes import router as career_router
-
+from database.routes.profile_routes import router as profile_router 
 # Import chat routes (with fallback)
 try:
     from chat.routes import router as chat_router
@@ -57,6 +57,7 @@ app.include_router(health_router, tags=["health"])
 app.include_router(config_router, prefix="/api", tags=["configuration"])
 app.include_router(version_router, prefix="/api", tags=["version"])
 app.include_router(career_router, tags=["career"])
+app.include_router(profile_router, tags=["profile"])
 
 # Include chat router if available
 if CHAT_ENABLED:
@@ -78,7 +79,8 @@ def root():
             "chat": CHAT_ENABLED,
             "authentication": True,
             "user_management": True,
-            "career_guidance": True
+            "career_guidance": True,
+            "profile_management": True
         }
     }
 

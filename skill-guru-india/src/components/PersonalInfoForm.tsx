@@ -7,6 +7,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Layout } from "./Layout";
 import { ProgressIndicator } from "./ProgressIndicator";
 import { ArrowRight, User, Mail, Phone, MapPin, Calendar, Users } from "lucide-react";
+import axios from "axios";
+
 
 interface PersonalInfoFormProps {
   onNext: () => void;
@@ -24,20 +26,74 @@ export const PersonalInfoForm = ({ onNext, onBack }: PersonalInfoFormProps) => {
     gender: ""
   });
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+ // ✅ Handles all input changes and updates form state
+const handleInputChange = (field: string, value: string) => {
+  setFormData((prev) => ({
+    ...prev,
+    [field]: value,
+  }));
+};
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsLoading(false);
-      onNext();
-    }, 1000);
-  };
+// ✅ Handles form submission
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  console.log("Sending form data:", formData);
+
+  try {
+    // ✅ Payload shaped exactly like backend expects
+    const payload = {
+      personalInfo: {
+        name: formData.fullName || "N/A",
+        email: formData.email || "noemail@example.com",
+        phone: formData.phone || "0000000000",
+        location: formData.city || "N/A",
+        bio: "",
+        avatar: "",
+        headline: "",
+      },
+      careerInfo: {
+        currentRole: "N/A",
+        experience: "0 years",
+        industry: "N/A",
+        expectedSalary: "N/A",
+        preferredLocation: "N/A",
+      },
+      skills: [],
+      education: [],
+      achievements: [],
+      careerGoals: {
+        shortTerm: "N/A",
+        longTerm: "N/A",
+        interests: [],
+      },
+    };
+
+    const response = await axios.post(
+      `http://127.0.0.1:8000/api/profile/?user_id=${formData.email}`,
+      payload
+    );
+
+    console.log("✅ Form submitted successfully", response.data);
+    onNext(); // move to next step
+  } catch (error) {
+    if (error.response) {
+      console.error("❌ Backend responded with:", error.response.data);
+      if (error.response.data.detail) {
+        error.response.data.detail.forEach((err) => {
+          console.error(`Field: ${err.loc.join(" -> ")} | Issue: ${err.msg}`);
+        });
+      }
+    } else {
+      console.error("❌ Form submission failed:", error);
+    }
+  }
+};
+
+
+
+
+
+
 
   const isFormValid = Object.values(formData).every(value => value.trim() !== "");
 
