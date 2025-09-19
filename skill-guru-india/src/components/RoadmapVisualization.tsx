@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { 
   CheckCircle, 
   Circle, 
@@ -9,82 +9,111 @@ import {
   ExternalLink,
   Target,
   Trophy,
-  Zap
+  Zap,
+  X,
+  ChevronRight,
+  Play,
+  Award,
+  Users,
+  Calendar,
+  DollarSign,
+  ArrowRight,
+  Lightbulb,
+  TrendingUp,
+  Sparkles,
+  Rocket,
+  Brain,
+  Code
 } from 'lucide-react';
 
-// Mock shadcn/ui components with Google Material Design 3 styling
-const Card: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <div className={`border-0 rounded-3xl shadow-lg bg-white ${className}`}>{children}</div>
-);
+// Material 3 Components with enhanced responsiveness
+const M3Card: React.FC<{ 
+  className?: string; 
+  children: React.ReactNode; 
+  onClick?: (e: React.MouseEvent) => void;
+  onMouseEnter?: (e: React.MouseEvent) => void;
+  onMouseLeave?: (e: React.MouseEvent) => void;
+  variant?: 'elevated' | 'filled' | 'outlined';
+}> = ({ className, children, onClick, onMouseEnter, onMouseLeave, variant = 'elevated' }) => {
+  const variants = {
+    elevated: 'bg-white shadow-lg hover:shadow-xl border-0',
+    filled: 'bg-gradient-to-br from-blue-50 to-purple-50 shadow-md border-0',
+    outlined: 'bg-white border-2 border-outline shadow-sm hover:shadow-md'
+  };
+  
+  return (
+    <div 
+      className={`rounded-2xl md:rounded-3xl transition-all duration-300 ${variants[variant]} ${className}`} 
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {children}
+    </div>
+  );
+};
 
-const CardHeader: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <div className="p-8 border-b border-gray-100">{children}</div>
-);
-
-const CardTitle: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <h2 className={`text-2xl font-medium ${className}`} style={{ fontFamily: 'Google Sans, sans-serif' }}>{children}</h2>
-);
-
-const CardContent: React.FC<{ className?: string; children: React.ReactNode }> = ({ className, children }) => (
-  <div className={`p-8 ${className}`}>{children}</div>
-);
-
-const Button: React.FC<{
-  variant?: 'ghost' | 'default';
-  size?: 'sm' | 'default';
+const M3Button: React.FC<{
+  variant?: 'filled' | 'outlined' | 'text' | 'fab';
+  size?: 'sm' | 'default' | 'lg';
   onClick?: (e: React.MouseEvent) => void;
   children: React.ReactNode;
   className?: string;
-}> = ({ variant = 'default', size = 'default', onClick, children, className }) => {
-  const baseStyle = "inline-flex items-center justify-center rounded-full font-medium transition-all duration-200";
-  const variantStyles = {
-    ghost: "text-gray-600 hover:bg-gray-100 hover:text-gray-900",
-    default: "bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 shadow-md hover:shadow-lg"
+  icon?: React.ReactNode;
+}> = ({ variant = 'filled', size = 'default', onClick, children, className, icon }) => {
+  const baseStyle = "inline-flex items-center justify-center font-medium transition-all duration-300 focus:outline-none focus:ring-4 focus:ring-primary/20 active:scale-95";
+  
+  const variants = {
+    filled: 'bg-gradient-to-r from-primary to-primary-dark text-on-primary shadow-lg hover:shadow-xl',
+    outlined: 'border-2 border-primary text-primary hover:bg-primary/8 bg-surface',
+    text: 'text-primary hover:bg-primary/8',
+    fab: 'bg-gradient-to-r from-primary to-secondary text-on-primary shadow-xl hover:shadow-2xl rounded-full'
   };
-  const sizeStyles = {
-    sm: "px-3 py-2 text-sm h-8",
-    default: "px-6 py-3 text-base h-12"
+  
+  const sizes = {
+    sm: 'px-3 py-2 text-sm h-8 md:h-10 rounded-xl md:rounded-2xl',
+    default: 'px-4 py-3 text-sm md:text-base h-10 md:h-12 rounded-2xl md:rounded-3xl',
+    lg: 'px-6 py-4 text-base md:text-lg h-12 md:h-14 rounded-2xl md:rounded-3xl'
   };
+  
   return (
     <button
       onClick={onClick}
-      className={`${baseStyle} ${variantStyles[variant]} ${sizeStyles[size]} ${className}`}
+      className={`${baseStyle} ${variants[variant]} ${sizes[size]} ${className}`}
       style={{ fontFamily: 'Google Sans, sans-serif' }}
     >
+      {icon && <span className="mr-2">{icon}</span>}
       {children}
     </button>
   );
 };
 
-const Badge: React.FC<{
-  variant?: 'outline' | 'secondary' | 'destructive';
+const M3Chip: React.FC<{
+  variant?: 'filled' | 'outlined' | 'elevated';
   children: React.ReactNode;
   className?: string;
-}> = ({ variant = 'outline', children, className }) => {
-  const variantStyles = {
-    outline: "border border-gray-300 text-gray-700 bg-white",
-    secondary: "bg-gray-100 text-gray-800 border border-gray-200",
-    destructive: "bg-red-100 text-red-800 border border-red-200"
+  icon?: React.ReactNode;
+}> = ({ variant = 'filled', children, className, icon }) => {
+  const variants = {
+    filled: 'bg-secondary-container text-on-secondary-container',
+    outlined: 'border border-outline text-on-surface bg-surface',
+    elevated: 'bg-surface-variant text-on-surface-variant shadow-md'
   };
+  
   return (
-    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium ${variantStyles[variant]} ${className}`}
-          style={{ fontFamily: 'Roboto, sans-serif' }}>
+    <span className={`inline-flex items-center px-2 py-1 md:px-4 md:py-2 rounded-full text-xs md:text-sm font-medium transition-all duration-200 hover:scale-105 ${variants[variant]} ${className}`}
+          style={{ fontFamily: 'Google Sans, sans-serif' }}>
+      {icon && <span className="mr-1 md:mr-2">{icon}</span>}
       {children}
     </span>
   );
 };
 
-// TypeScript interfaces (unchanged)
+// Interfaces
 interface Resource {
   name: string;
   url: string;
   type: string;
-}
-
-interface Specialization {
-  name: string;
-  skills: string[];
-  resources: Resource[];
 }
 
 interface RoadmapNode {
@@ -98,7 +127,6 @@ interface RoadmapNode {
   connections: string[];
   skills?: string[];
   resources?: Resource[];
-  specializations?: Specialization[];
   project_ideas?: string[];
   next_steps?: string[];
 }
@@ -127,92 +155,50 @@ interface RoadmapVisualizationProps {
   roadmapData: RoadmapData;
 }
 
-const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData }) => {
+const ResponsiveRoadmapWithDetails: React.FC<RoadmapVisualizationProps> = ({ roadmapData }) => {
   const [selectedNode, setSelectedNode] = useState<RoadmapNode | null>(null);
   const [completedNodes, setCompletedNodes] = useState<Set<string>>(new Set(['start']));
+  const [hoveredNode, setHoveredNode] = useState<string | null>(null);
+  const detailsRef = useRef<HTMLDivElement>(null);
 
-  // Calculate node positions to prevent overlap
-  const calculateNodePositions = (nodes: RoadmapNode[]): RoadmapNode[] => {
-    const nodeLevels: { [key: string]: number } = {};
-    const visited: Set<string> = new Set();
-    
-    const assignLevels = (nodeId: string, level: number) => {
-      if (visited.has(nodeId)) return;
-      visited.add(nodeId);
-      nodeLevels[nodeId] = level;
-      const node = nodes.find(n => n.id === nodeId);
-      if (node) {
-        node.connections.forEach(connId => assignLevels(connId, level + 1));
-      }
-    };
-    
-    assignLevels('start', 0);
-    
-    const levels: { [key: number]: RoadmapNode[] } = {};
-    nodes.forEach(node => {
-      const level = nodeLevels[node.id] || 0;
-      if (!levels[level]) levels[level] = [];
-      levels[level].push(node);
-    });
-    
-    const nodeWidth = 320;
-    const nodeHeight = 200;
-    const updatedNodes = nodes.map(node => {
-      const level = nodeLevels[node.id] || 0;
-      const nodesInLevel = levels[level].length;
-      const indexInLevel = levels[level].findIndex(n => n.id === node.id);
-      
-      const totalWidth = nodesInLevel * nodeWidth;
-      const startX = (window.innerWidth - totalWidth) / 2;
-      const x = startX + indexInLevel * nodeWidth;
-      const y = level * nodeHeight;
-      
-      return { ...node, position: { x, y } };
-    });
-    
-    return updatedNodes;
-  };
-
-  const updatedNodes = calculateNodePositions(roadmapData.roadmap.nodes);
-  const maxLevel = Math.max(...Object.values(updatedNodes).map(n => n.position.y)) + 200;
-  const containerHeight = Math.max(maxLevel, 1400);
+  const updatedNodes = roadmapData.roadmap.nodes;
 
   const getNodeIcon = (node: RoadmapNode) => {
     const isCompleted = completedNodes.has(node.id);
     const isUnlocked = isCompleted || node.status === 'current';
     
+    const iconProps = { className: "w-5 h-5 md:w-7 md:h-7" };
+    
     switch (node.type) {
       case 'start':
-        return <span className="material-icons text-2xl text-green-500">play_circle</span>;
+        return <Rocket {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-success" />;
       case 'success':
-        return <span className="material-icons text-2xl text-yellow-500">emoji_events</span>;
+        return <Trophy {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-tertiary" />;
       case 'milestone':
-        return <span className="material-icons text-2xl text-purple-500">flag</span>;
+        return <Award {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-secondary" />;
       case 'choice':
-        return <span className="material-icons text-2xl text-orange-500">alt_route</span>;
+        return <Brain {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-primary" />;
       default:
         if (isCompleted) {
-          return <span className="material-icons text-2xl text-green-500">check_circle</span>;
+          return <CheckCircle {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-success" />;
         } else if (isUnlocked) {
-          return <span className="material-icons text-2xl text-blue-500">radio_button_unchecked</span>;
+          return <Sparkles {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-primary" />;
         } else {
-          return <span className="material-icons text-2xl text-gray-400">lock</span>;
+          return <Lock {...iconProps} className="w-5 h-5 md:w-7 md:h-7 text-outline" />;
         }
     }
   };
 
-  const getNodeStyle = (node: RoadmapNode) => {
+  const getNodeGradient = (node: RoadmapNode) => {
     const isCompleted = completedNodes.has(node.id);
     const isUnlocked = isCompleted || node.status === 'current';
     
-    let baseStyle = "relative p-6 rounded-3xl border-0 cursor-pointer transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1 min-w-[280px] max-w-[300px] shadow-lg";
-    
     if (isCompleted) {
-      return `${baseStyle} bg-gradient-to-br from-green-50 to-green-100 ring-2 ring-green-200`;
+      return "from-success-container to-success border-success";
     } else if (isUnlocked) {
-      return `${baseStyle} bg-gradient-to-br from-blue-50 to-blue-100 ring-2 ring-blue-200`;
+      return "from-primary-container to-secondary-container border-primary";
     } else {
-      return `${baseStyle} bg-gray-50 ring-2 ring-gray-200 opacity-60 cursor-not-allowed`;
+      return "from-surface-variant to-surface border-outline";
     }
   };
 
@@ -226,413 +212,522 @@ const RoadmapVisualization: React.FC<RoadmapVisualizationProps> = ({ roadmapData
     setCompletedNodes(newCompleted);
   };
 
+  // Handle phase selection and scroll to details
+  const handleNodeClick = (node: RoadmapNode) => {
+    setSelectedNode(node);
+    
+    // Smooth scroll to details section
+    setTimeout(() => {
+      if (detailsRef.current) {
+        detailsRef.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+          inline: 'nearest'
+        });
+      }
+    }, 100);
+  };
+
   const { user_profile, career_outlook, roadmap } = roadmapData;
 
   return (
     <>
-      {/* Google Fonts Import */}
+      {/* Google Fonts */}
       <link rel="preconnect" href="https://fonts.googleapis.com" />
       <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       <link 
-        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
-        rel="stylesheet" 
-      />
-      <link 
-        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" 
         rel="stylesheet" 
       />
 
-      <div className="w-full max-w-8xl mx-auto p-8 space-y-12 bg-gradient-to-br from-gray-50 via-blue-50 to-white min-h-screen">
-        {/* Google Material Header */}
-        <div className="text-center space-y-8 relative overflow-hidden">
-          {/* Background decoration */}
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            <div className="absolute top-1/4 left-10 w-64 h-64 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
-            <div className="absolute bottom-1/4 right-10 w-64 h-64 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
-          </div>
+      {/* Material 3 Color System + Responsive Styles */}
+      <style>{`
+        html { scroll-behavior: smooth; }
+        :root {
+          --md-sys-color-primary: #1976d2;
+          --md-sys-color-primary-dark: #1565c0;
+          --md-sys-color-primary-container: #e3f2fd;
+          --md-sys-color-on-primary: #ffffff;
+          --md-sys-color-on-primary-container: #0d47a1;
+          --md-sys-color-secondary: #9c27b0;
+          --md-sys-color-secondary-container: #f3e5f5;
+          --md-sys-color-on-secondary-container: #4a148c;
+          --md-sys-color-tertiary: #ff9800;
+          --md-sys-color-success: #4caf50;
+          --md-sys-color-success-container: #e8f5e8;
+          --md-sys-color-surface: #ffffff;
+          --md-sys-color-surface-variant: #f5f5f5;
+          --md-sys-color-on-surface: #1c1b1f;
+          --md-sys-color-on-surface-variant: #49454f;
+          --md-sys-color-outline: #79747e;
+        }
+        
+        .text-primary { color: var(--md-sys-color-primary); }
+        .text-secondary { color: var(--md-sys-color-secondary); }
+        .text-tertiary { color: var(--md-sys-color-tertiary); }
+        .text-success { color: var(--md-sys-color-success); }
+        .text-on-primary { color: var(--md-sys-color-on-primary); }
+        .text-on-surface { color: var(--md-sys-color-on-surface); }
+        .text-outline { color: var(--md-sys-color-outline); }
+        
+        .bg-primary { background-color: var(--md-sys-color-primary); }
+        .bg-primary-container { background-color: var(--md-sys-color-primary-container); }
+        .bg-secondary-container { background-color: var(--md-sys-color-secondary-container); }
+        .bg-success-container { background-color: var(--md-sys-color-success-container); }
+        .bg-surface { background-color: var(--md-sys-color-surface); }
+        .bg-surface-variant { background-color: var(--md-sys-color-surface-variant); }
+        
+        .border-primary { border-color: var(--md-sys-color-primary); }
+        .border-success { border-color: var(--md-sys-color-success); }
+        .border-outline { border-color: var(--md-sys-color-outline); }
+        
+        .from-primary { --tw-gradient-from: var(--md-sys-color-primary); }
+        .to-secondary { --tw-gradient-to: var(--md-sys-color-secondary); }
+        .from-primary-container { --tw-gradient-from: var(--md-sys-color-primary-container); }
+        .to-secondary-container { --tw-gradient-to: var(--md-sys-color-secondary-container); }
+        .from-success-container { --tw-gradient-from: var(--md-sys-color-success-container); }
+        .to-success { --tw-gradient-to: var(--md-sys-color-success); }
+        .from-surface-variant { --tw-gradient-from: var(--md-sys-color-surface-variant); }
+        .to-surface { --tw-gradient-to: var(--md-sys-color-surface); }
 
-          <div className="relative z-10">
-            <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm mb-8">
-              <span className="material-icons text-base">route</span>
-              <span style={{ fontFamily: 'Google Sans, sans-serif' }}>Learning Pathway</span>
-            </div>
+        .line-clamp-2 {
+          display: -webkit-box;
+          -webkit-line-clamp: 2;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
+        
+        .line-clamp-3 {
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
+          overflow: hidden;
+        }
 
-            <h1 
-              className="text-5xl lg:text-7xl font-normal text-gray-900 leading-tight mb-6"
-              style={{ fontFamily: 'Google Sans, sans-serif' }}
-            >
-              {roadmap.title}
-            </h1>
-            
-            <p 
-              className="text-xl lg:text-2xl text-gray-600 max-w-4xl mx-auto leading-relaxed mb-8"
-              style={{ fontFamily: 'Roboto, sans-serif' }}
-            >
-              {roadmap.description}
-            </p>
+        @media (max-width: 768px) {
+          .animate-pulse { animation: none; }
+        }
 
-            <div className="flex justify-center items-center space-x-12 text-base">
-              <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-full shadow-sm">
-                <span className="material-icons text-blue-600 text-lg">schedule</span>
-                <span style={{ fontFamily: 'Roboto, sans-serif' }}>
-                  Duration: <span className="font-medium">{user_profile.estimated_duration}</span>
-                </span>
+        @keyframes slideUp {
+          from {
+            opacity: 0;
+            transform: translateY(30px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+        
+        .animate-slideUp {
+          animation: slideUp 0.5s ease-out forwards;
+        }
+      `}</style>
+
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 relative overflow-hidden">
+        
+        {/* Mobile-friendly Animated Background */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-10 md:top-20 left-10 md:left-20 w-48 md:w-96 h-48 md:h-96 rounded-full bg-gradient-to-br from-primary/5 md:from-primary/10 to-secondary/5 md:to-secondary/10 blur-2xl md:blur-3xl animate-pulse" />
+          <div className="absolute bottom-10 md:bottom-20 right-10 md:right-20 w-48 md:w-96 h-48 md:h-96 rounded-full bg-gradient-to-br from-tertiary/4 md:from-tertiary/8 to-success/4 md:to-success/8 blur-2xl md:blur-3xl animate-pulse delay-1000" />
+        </div>
+
+        {/* Responsive Header */}
+        <div className="relative z-10 bg-white/95 backdrop-blur-xl border-b border-outline/20 sticky top-0">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3 md:space-x-6 flex-1 min-w-0">
+                <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl md:rounded-3xl flex items-center justify-center shadow-lg">
+                  <Code className="w-6 h-6 md:w-8 md:h-8 text-white" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h1 
+                    className="text-lg md:text-4xl font-medium text-on-surface leading-tight truncate"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    {roadmap.title}
+                  </h1>
+                  <p 
+                    className="text-sm md:text-lg text-on-surface-variant mt-1 line-clamp-2"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    {roadmap.description}
+                  </p>
+                </div>
               </div>
-              <div className="flex items-center space-x-3 bg-white px-4 py-2 rounded-full shadow-sm">
-                <span className="material-icons text-green-500 text-lg">trending_up</span>
-                <span style={{ fontFamily: 'Roboto, sans-serif' }}>
-                  Level: <span className="font-medium">{career_outlook.difficulty_level}</span>
-                </span>
+              
+              {/* Compact Progress Ring for Mobile */}
+              <div className="relative w-12 h-12 md:w-20 md:h-20 ml-4">
+                <svg className="w-12 h-12 md:w-20 md:h-20 transform -rotate-90" viewBox="0 0 36 36">
+                  <path
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeDasharray="100, 100"
+                    className="text-outline/20"
+                  />
+                  <path
+                    d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeDasharray={`${(completedNodes.size / roadmap.nodes.length) * 100}, 100`}
+                    className="text-primary transition-all duration-500"
+                    strokeLinecap="round"
+                  />
+                </svg>
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <span className="text-sm md:text-2xl font-semibold text-primary" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                    {Math.round((completedNodes.size / roadmap.nodes.length) * 100)}%
+                  </span>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Google Learning Path Roadmap Visualization */}
-        <div className="relative bg-white rounded-3xl shadow-lg overflow-hidden">
-          {/* Connection Lines with Google-style gradients */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none" style={{ zIndex: 1, height: `${containerHeight}px` }}>
-            {updatedNodes.map((node) =>
-              node.connections.map((connectionId) => {
-                const targetNode = updatedNodes.find(n => n.id === connectionId);
-                if (!targetNode) return null;
-                
-                return (
-                  <defs key={`${node.id}-${connectionId}-defs`}>
-                    <linearGradient id={`gradient-${node.id}-${connectionId}`} x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#3B82F6" stopOpacity="0.6" />
-                      <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0.4" />
-                    </linearGradient>
-                    <line
-                      key={`${node.id}-${connectionId}`}
-                      x1={node.position.x + 150}
-                      y1={node.position.y + 90}
-                      x2={targetNode.position.x + 150}
-                      y2={targetNode.position.y + 30}
-                      stroke={`url(#gradient-${node.id}-${connectionId})`}
-                      strokeWidth="3"
-                      strokeDasharray="8,4"
-                      strokeLinecap="round"
-                    />
-                  </defs>
-                );
-              })
-            )}
-          </svg>
-
-          {/* Roadmap Nodes */}
-          <div className="relative p-12" style={{ height: `${containerHeight}px`, zIndex: 2 }}>
-            {updatedNodes.map((node) => (
-              <div
-                key={node.id}
-                className="absolute"
-                style={{
-                  left: `${node.position.x}px`,
-                  top: `${node.position.y}px`,
-                }}
-              >
-                <div
-                  className={getNodeStyle(node)}
-                  onClick={() => setSelectedNode(node)}
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    {getNodeIcon(node)}
-                    {node.type !== 'start' && node.type !== 'success' && (
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          toggleNodeCompletion(node.id);
-                        }}
-                        className="w-8 h-8 rounded-full hover:bg-white/50"
-                      >
-                        {completedNodes.has(node.id) ? 
-                          <span className="material-icons text-green-600 text-lg">check</span> : 
-                          <span className="material-icons text-gray-400 text-lg">radio_button_unchecked</span>
-                        }
-                      </Button>
-                    )}
+        {/* Responsive Stats Cards */}
+        <div className="relative z-10 bg-white/80 backdrop-blur-sm border-b border-outline/10">
+          <div className="max-w-7xl mx-auto px-4 md:px-8 py-4 md:py-6">
+            <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
+              <M3Card variant="filled" className="p-3 md:p-6">
+                <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-2 md:space-y-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-primary rounded-xl md:rounded-2xl flex items-center justify-center">
+                    <Calendar className="w-4 h-4 md:w-6 md:h-6 text-white" />
                   </div>
-                  
-                  <h3 
-                    className="font-medium text-lg mb-2 text-gray-900"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    {node.title}
-                  </h3>
-                  <p 
-                    className="text-sm text-gray-600 mb-4 leading-relaxed"
-                    style={{ fontFamily: 'Roboto, sans-serif' }}
-                  >
-                    {node.description}
-                  </p>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {node.duration && (
-                      <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200">
-                        <span className="material-icons mr-1 text-xs">schedule</span>
-                        {node.duration}
-                      </Badge>
-                    )}
-                    
-                    {node.type === 'required' && (
-                      <Badge variant="destructive">
-                        <span className="material-icons mr-1 text-xs">priority_high</span>
-                        Required
-                      </Badge>
-                    )}
-                    
-                    {node.type === 'optional' && (
-                      <Badge variant="secondary">
-                        <span className="material-icons mr-1 text-xs">more_horiz</span>
-                        Optional
-                      </Badge>
-                    )}
+                  <div className="text-center md:text-left">
+                    <p className="text-xs md:text-sm text-on-surface-variant" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                      Duration
+                    </p>
+                    <p className="text-sm md:text-2xl font-semibold text-on-surface" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                      {user_profile.estimated_duration}
+                    </p>
                   </div>
                 </div>
-              </div>
+              </M3Card>
+              
+              <M3Card variant="filled" className="p-3 md:p-6">
+                <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-2 md:space-y-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-success rounded-xl md:rounded-2xl flex items-center justify-center">
+                    <TrendingUp className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                  </div>
+                  <div className="text-center md:text-left">
+                    <p className="text-xs md:text-sm text-on-surface-variant" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                      Level
+                    </p>
+                    <p className="text-sm md:text-2xl font-semibold text-on-surface" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                      {career_outlook.difficulty_level}
+                    </p>
+                  </div>
+                </div>
+              </M3Card>
+              
+              <M3Card variant="filled" className="p-3 md:p-6">
+                <div className="flex flex-col md:flex-row items-center md:space-x-4 space-y-2 md:space-y-0">
+                  <div className="w-8 h-8 md:w-12 md:h-12 bg-tertiary rounded-xl md:rounded-2xl flex items-center justify-center">
+                    <DollarSign className="w-4 h-4 md:w-6 md:h-6 text-white" />
+                  </div>
+                  <div className="text-center md:text-left">
+                    <p className="text-xs md:text-sm text-on-surface-variant" style={{ fontFamily: 'Roboto, sans-serif' }}>
+                      Salary
+                    </p>
+                    <p className="text-xs md:text-2xl font-semibold text-on-surface" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                      {career_outlook.average_salary_entry_level}
+                    </p>
+                  </div>
+                </div>
+              </M3Card>
+            </div>
+          </div>
+        </div>
+
+        {/* Main Roadmap Content - Responsive Grid */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+            {updatedNodes.map((node, index) => (
+              <M3Card 
+                key={node.id}
+                variant="elevated"
+                className={`
+                  cursor-pointer transition-all duration-300 transform
+                  bg-gradient-to-br ${getNodeGradient(node)} border-2
+                  ${hoveredNode === node.id ? 'scale-105 shadow-2xl' : 'hover:scale-[1.02]'}
+                  ${selectedNode?.id === node.id ? 'ring-4 ring-primary/30' : ''}
+                  group relative overflow-hidden
+                `}
+                onClick={() => handleNodeClick(node)}
+                onMouseEnter={() => setHoveredNode(node.id)}
+                onMouseLeave={() => setHoveredNode(null)}
+              >
+                {/* Floating Step Number */}
+                <div className="absolute -top-2 -right-2 md:-top-4 md:-right-4 w-8 h-8 md:w-12 md:h-12 bg-gradient-to-br from-primary to-secondary rounded-full shadow-xl flex items-center justify-center">
+                  <span className="text-white font-bold text-sm md:text-lg" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                    {index + 1}
+                  </span>
+                </div>
+
+                <div className="p-4 md:p-8">
+                  {/* Card Header */}
+                  <div className="flex items-center justify-between mb-4 md:mb-6">
+                    <div className="flex items-center space-x-3 md:space-x-4">
+                      <div className="w-10 h-10 md:w-14 md:h-14 bg-white/90 backdrop-blur-sm rounded-xl md:rounded-2xl shadow-lg flex items-center justify-center">
+                        {getNodeIcon(node)}
+                      </div>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      {node.type !== 'start' && node.type !== 'success' && (
+                        <M3Button
+                          variant="fab"
+                          size="sm"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            toggleNodeCompletion(node.id);
+                          }}
+                          className="w-8 h-8 md:w-12 md:h-12 shadow-lg"
+                        >
+                          {completedNodes.has(node.id) ? 
+                            <CheckCircle className="w-4 h-4 md:w-6 md:h-6" /> : 
+                            <Circle className="w-4 h-4 md:w-6 md:h-6" />
+                          }
+                        </M3Button>
+                      )}
+                      <div className="text-primary">
+                        <ChevronRight className="w-5 h-5 md:w-6 md:h-6 group-hover:translate-x-1 transition-transform" />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Card Content */}
+                  <div>
+                    <h3 
+                      className="font-semibold text-lg md:text-2xl text-on-surface mb-2 md:mb-3 line-clamp-2"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      {node.title}
+                    </h3>
+                    <p 
+                      className="text-sm md:text-base text-on-surface-variant leading-relaxed line-clamp-3 mb-3 md:mb-4"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {node.description}
+                    </p>
+                    
+                    {/* Card Footer */}
+                    <div className="flex items-center justify-between">
+                      <div className="flex flex-wrap gap-1 md:gap-2">
+                        {node.duration && (
+                          <M3Chip variant="elevated" icon={<Clock className="w-3 h-3 md:w-4 md:h-4" />}>
+                            {node.duration}
+                          </M3Chip>
+                        )}
+                        {node.type === 'required' && (
+                          <M3Chip variant="filled" className="bg-red-100 text-red-800">
+                            Required
+                          </M3Chip>
+                        )}
+                      </div>
+                      <div className="flex items-center text-primary">
+                        <span className="text-xs md:text-sm font-medium" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                          {selectedNode?.id === node.id ? 'Selected' : 'Explore'}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </M3Card>
             ))}
           </div>
         </div>
 
-        {/* Google-style Node Details Panel */}
+        {/* Details Section Below Roadmap */}
         {selectedNode && (
-          <Card className="border-l-4 border-l-blue-500 bg-gradient-to-br from-white to-blue-50">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="flex items-center space-x-3">
-                  {getNodeIcon(selectedNode)}
-                  <span>{selectedNode.title}</span>
-                </CardTitle>
-                <Button 
-                  variant="ghost" 
+          <div 
+            ref={detailsRef}
+            className="relative z-10 bg-gradient-to-r from-primary/5 to-secondary/5 border-t-4 border-primary animate-slideUp"
+          >
+            <div className="max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-12">
+              
+              {/* Details Header */}
+              <div className="flex items-center justify-between mb-6 md:mb-8">
+                <div className="flex items-center space-x-3 md:space-x-4">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-primary to-secondary rounded-2xl md:rounded-3xl flex items-center justify-center shadow-xl">
+                    {getNodeIcon(selectedNode)}
+                  </div>
+                  <div>
+                    <h2 
+                      className="text-2xl md:text-4xl font-semibold text-primary mb-2"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      {selectedNode.title}
+                    </h2>
+                    <p 
+                      className="text-sm md:text-lg text-on-surface-variant leading-relaxed"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {selectedNode.description}
+                    </p>
+                  </div>
+                </div>
+                <M3Button 
+                  variant="outlined" 
                   onClick={() => setSelectedNode(null)}
-                  className="w-10 h-10 rounded-full hover:bg-red-50 hover:text-red-600"
+                  icon={<X className="w-4 h-4" />}
+                  size="sm"
+                  className="shrink-0"
                 >
-                  <span className="material-icons">close</span>
-                </Button>
+                  <span className="hidden md:inline">Close</span>
+                </M3Button>
               </div>
-              <p 
-                className="text-gray-600 leading-relaxed mt-4"
-                style={{ fontFamily: 'Roboto, sans-serif' }}
-              >
-                {selectedNode.description}
-              </p>
-            </CardHeader>
-            
-            <CardContent className="space-y-8">
-              {selectedNode.skills && (
-                <div>
-                  <h4 
-                    className="font-medium mb-4 flex items-center text-lg"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    <span className="material-icons mr-2 text-blue-600">psychology</span>
-                    Skills to Learn
-                  </h4>
-                  <div className="flex flex-wrap gap-2">
-                    {selectedNode.skills.map((skill, index) => (
-                      <Badge key={index} variant="secondary" className="bg-blue-100 text-blue-700 border-blue-200">
-                        {skill}
-                      </Badge>
-                    ))}
-                  </div>
-                </div>
-              )}
 
-              {selectedNode.resources && (
-                <div>
-                  <h4 
-                    className="font-medium mb-4 flex items-center text-lg"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    <span className="material-icons mr-2 text-green-600">library_books</span>
-                    Learning Resources
-                  </h4>
-                  <div className="space-y-3">
-                    {selectedNode.resources.map((resource, index) => (
-                      <div key={index} className="flex items-center justify-between bg-white rounded-2xl p-4 border border-gray-200 hover:shadow-md transition-shadow duration-200">
-                        <div>
-                          <div 
-                            className="font-medium text-gray-900 mb-1"
-                            style={{ fontFamily: 'Google Sans, sans-serif' }}
-                          >
-                            {resource.name}
-                          </div>
-                          <Badge variant="outline" className="bg-gray-50">
-                            {resource.type}
-                          </Badge>
-                        </div>
-                        <Button 
-                          variant="ghost" 
-                          size="sm" 
-                          onClick={() => window.open(resource.url, '_blank')}
-                          className="text-blue-600 hover:text-blue-700 hover:bg-blue-50"
-                        >
-                          <span className="material-icons">open_in_new</span>
-                        </Button>
+              {/* Details Content */}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                
+                {selectedNode.skills && (
+                  <M3Card variant="elevated" className="p-4 md:p-8">
+                    <h4 
+                      className="flex items-center text-xl md:text-2xl font-semibold text-on-surface mb-4 md:mb-6"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <div className="w-6 h-6 md:w-8 md:h-8 bg-tertiary rounded-full flex items-center justify-center mr-3 md:mr-4">
+                        <Star className="w-3 h-3 md:w-5 md:h-5 text-white" />
                       </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {selectedNode.specializations && (
-                <div>
-                  <h4 
-                    className="font-medium mb-4 flex items-center text-lg"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    <span className="material-icons mr-2 text-purple-600">tune</span>
-                    Choose Your Specialization
-                  </h4>
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    {selectedNode.specializations.map((spec, index) => (
-                      <Card key={index} className="p-6 hover:shadow-lg transition-shadow duration-200">
-                        <h5 
-                          className="font-medium mb-3 text-gray-900"
-                          style={{ fontFamily: 'Google Sans, sans-serif' }}
-                        >
-                          {spec.name}
-                        </h5>
-                        <div className="space-y-2">
-                          {spec.skills.map((skill, skillIndex) => (
-                            <Badge key={skillIndex} variant="outline" className="text-xs mr-1 mb-1">
+                      Skills You'll Master
+                    </h4>
+                    <div className="grid grid-cols-1 gap-3 md:gap-4">
+                      {selectedNode.skills.map((skill, index) => (
+                        <M3Card key={index} variant="filled" className="p-3 md:p-4 hover:shadow-lg transition-all duration-200">
+                          <div className="flex items-center space-x-3 md:space-x-4">
+                            <div className="w-2 h-2 md:w-3 md:h-3 bg-gradient-to-r from-primary to-secondary rounded-full" />
+                            <span 
+                              className="font-medium text-on-surface text-sm md:text-lg"
+                              style={{ fontFamily: 'Google Sans, sans-serif' }}
+                            >
                               {skill}
-                            </Badge>
-                          ))}
-                        </div>
-                      </Card>
-                    ))}
-                  </div>
-                </div>
-              )}
+                            </span>
+                          </div>
+                        </M3Card>
+                      ))}
+                    </div>
+                  </M3Card>
+                )}
 
-              {selectedNode.project_ideas && (
-                <div>
-                  <h4 
-                    className="font-medium mb-4 flex items-center text-lg"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    <span className="material-icons mr-2 text-yellow-600">lightbulb</span>
-                    Project Ideas
-                  </h4>
-                  <ul className="space-y-2">
-                    {selectedNode.project_ideas.map((project, index) => (
-                      <li key={index} className="flex items-start space-x-2">
-                        <span className="material-icons text-green-500 text-base mt-0.5">check_circle_outline</span>
-                        <span 
-                          className="text-gray-700"
-                          style={{ fontFamily: 'Roboto, sans-serif' }}
-                        >
-                          {project}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
+                {selectedNode.resources && (
+                  <M3Card variant="elevated" className="p-4 md:p-8">
+                    <h4 
+                      className="flex items-center text-xl md:text-2xl font-semibold text-on-surface mb-4 md:mb-6"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <div className="w-6 h-6 md:w-8 md:h-8 bg-success rounded-full flex items-center justify-center mr-3 md:mr-4">
+                        <BookOpen className="w-3 h-3 md:w-5 md:h-5 text-white" />
+                      </div>
+                      Learning Resources
+                    </h4>
+                    <div className="space-y-3 md:space-y-4">
+                      {selectedNode.resources.map((resource, index) => (
+                        <M3Card key={index} variant="outlined" className="p-4 md:p-6 hover:shadow-xl transition-all duration-300">
+                          <div className="flex flex-col md:flex-row md:items-center justify-between space-y-3 md:space-y-0">
+                            <div className="flex-1">
+                              <h5 
+                                className="font-semibold text-lg md:text-xl text-on-surface mb-2"
+                                style={{ fontFamily: 'Google Sans, sans-serif' }}
+                              >
+                                {resource.name}
+                              </h5>
+                              <M3Chip variant="outlined">{resource.type}</M3Chip>
+                            </div>
+                            <M3Button 
+                              variant="filled" 
+                              size="sm" 
+                              onClick={() => window.open(resource.url, '_blank')}
+                              icon={<ExternalLink className="w-4 h-4" />}
+                              className="w-full md:w-auto md:ml-6"
+                            >
+                              Open Resource
+                            </M3Button>
+                          </div>
+                        </M3Card>
+                      ))}
+                    </div>
+                  </M3Card>
+                )}
 
-              {selectedNode.next_steps && (
-                <div>
-                  <h4 
-                    className="font-medium mb-4 flex items-center text-lg"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    <span className="material-icons mr-2 text-orange-600">trending_up</span>
-                    Next Steps
-                  </h4>
-                  <ul className="space-y-2">
-                    {selectedNode.next_steps.map((step, index) => (
-                      <li key={index} className="flex items-start space-x-2">
-                        <span className="material-icons text-blue-500 text-base mt-0.5">arrow_forward</span>
-                        <span 
-                          className="text-gray-700"
-                          style={{ fontFamily: 'Roboto, sans-serif' }}
-                        >
-                          {step}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        )}
+                {selectedNode.project_ideas && (
+                  <M3Card variant="elevated" className="p-4 md:p-8">
+                    <h4 
+                      className="flex items-center text-xl md:text-2xl font-semibold text-on-surface mb-4 md:mb-6"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <div className="w-6 h-6 md:w-8 md:h-8 bg-secondary rounded-full flex items-center justify-center mr-3 md:mr-4">
+                        <Lightbulb className="w-3 h-3 md:w-5 md:h-5 text-white" />
+                      </div>
+                      Project Ideas
+                    </h4>
+                    <div className="space-y-3 md:space-y-4">
+                      {selectedNode.project_ideas.map((project, index) => (
+                        <M3Card key={index} variant="filled" className="p-4 md:p-6">
+                          <div className="flex items-start space-x-3 md:space-x-4">
+                            <div className="w-6 h-6 md:w-8 md:h-8 bg-gradient-to-br from-secondary to-tertiary rounded-full flex items-center justify-center text-white font-bold flex-shrink-0">
+                              <span className="text-xs md:text-sm">{index + 1}</span>
+                            </div>
+                            <p 
+                              className="text-on-surface text-sm md:text-lg leading-relaxed"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              {project}
+                            </p>
+                          </div>
+                        </M3Card>
+                      ))}
+                    </div>
+                  </M3Card>
+                )}
 
-        {/* Google-style Progress Summary */}
-        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-0">
-          <CardContent className="p-8">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-              <div className="space-y-3">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="material-icons text-white text-2xl">task_alt</span>
-                </div>
-                <div 
-                  className="text-3xl font-bold text-blue-600"
-                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                >
-                  {completedNodes.size}/{roadmap.nodes.length}
-                </div>
-                <div 
-                  className="text-gray-600"
-                  style={{ fontFamily: 'Roboto, sans-serif' }}
-                >
-                  Steps Completed
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-green-500 to-green-600 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="material-icons text-white text-2xl">trending_up</span>
-                </div>
-                <div 
-                  className="text-3xl font-bold text-green-500"
-                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                >
-                  {Math.round((completedNodes.size / roadmap.nodes.length) * 100)}%
-                </div>
-                <div 
-                  className="text-gray-600"
-                  style={{ fontFamily: 'Roboto, sans-serif' }}
-                >
-                  Progress
-                </div>
-              </div>
-              <div className="space-y-3">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-yellow-500 to-orange-500 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="material-icons text-white text-2xl">payments</span>
-                </div>
-                <div 
-                  className="text-3xl font-bold text-yellow-600"
-                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                >
-                  {career_outlook.average_salary_entry_level}
-                </div>
-                <div 
-                  className="text-gray-600"
-                  style={{ fontFamily: 'Roboto, sans-serif' }}
-                >
-                  Expected Salary
-                </div>
+                {selectedNode.next_steps && (
+                  <M3Card variant="elevated" className="p-4 md:p-8">
+                    <h4 
+                      className="flex items-center text-xl md:text-2xl font-semibold text-on-surface mb-4 md:mb-6"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <div className="w-6 h-6 md:w-8 md:h-8 bg-primary rounded-full flex items-center justify-center mr-3 md:mr-4">
+                        <TrendingUp className="w-3 h-3 md:w-5 md:h-5 text-white" />
+                      </div>
+                      What's Next?
+                    </h4>
+                    <div className="space-y-3 md:space-y-4">
+                      {selectedNode.next_steps.map((step, index) => (
+                        <M3Card key={index} variant="outlined" className="p-4 md:p-6">
+                          <div className="flex items-start space-x-3 md:space-x-4">
+                            <ArrowRight className="w-5 h-5 md:w-6 md:h-6 text-primary flex-shrink-0 mt-0.5 md:mt-1" />
+                            <p 
+                              className="text-on-surface text-sm md:text-lg leading-relaxed"
+                              style={{ fontFamily: 'Roboto, sans-serif' }}
+                            >
+                              {step}
+                            </p>
+                          </div>
+                        </M3Card>
+                      ))}
+                    </div>
+                  </M3Card>
+                )}
               </div>
             </div>
-          </CardContent>
-        </Card>
-
-        {/* Google-style Help Text */}
-        <div className="text-center">
-          <div className="inline-flex items-center space-x-2 text-sm text-gray-500 bg-white px-4 py-2 rounded-full border border-gray-200 shadow-sm">
-            <span className="material-icons text-blue-500 text-sm">info</span>
-            <span style={{ fontFamily: 'Roboto, sans-serif' }}>
-              Click on any step to view detailed learning resources and requirements
-            </span>
           </div>
+        )}
+
+        {/* Mobile-Optimized FAB Progress */}
+        <div className="fixed bottom-4 right-4 md:bottom-8 md:right-8">
+          <M3Button variant="fab" size="lg" className="w-16 h-16 md:w-20 md:h-20 shadow-2xl">
+            <div className="text-center">
+              <div className="text-lg md:text-2xl font-bold">{Math.round((completedNodes.size / roadmap.nodes.length) * 100)}%</div>
+              <div className="text-xs opacity-90">Done</div>
+            </div>
+          </M3Button>
         </div>
       </div>
     </>
   );
 };
 
-export default RoadmapVisualization;
+export default ResponsiveRoadmapWithDetails;
