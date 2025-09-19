@@ -13,10 +13,303 @@ import {
   Users,
   FileText,
   ArrowRight,
-  Plus
+  Plus,
+  Brain,
+  CheckCircle,
+  AlertTriangle,
+  Sparkles,
+  User,
+  Briefcase
 } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+
+// Career Recommendation Parser (unchanged)
+const parseCareerRecommendation = (response: string) => {
+  const sections = response.split('------------------------------');
+  const recommendation = sections[1]?.trim();
+  
+  if (!recommendation) return null;
+
+  // Extract different parts using regex
+  const explanationMatch = recommendation.match(/- Explanation: (.*?)(?=- Skill Gaps:|$)/s);
+  const skillGapsMatch = recommendation.match(/- Skill Gaps: (.*?)$/s);
+
+  const explanation = explanationMatch?.[1]?.trim() || '';
+  const skillGaps = skillGapsMatch?.[1]?.trim() || 'None';
+
+  // Parse the explanation for structured data
+  const careerSuggestionMatch = explanation.match(/\*Career Suggestion\*: (.*?)(?=\*|$)/s);
+  const reasoningMatch = explanation.match(/\*Reasoning\*: (.*?)(?=\*|$)/s);
+  const initialStepsMatch = explanation.match(/\*Initial Steps\*:(.*?)$/s);
+
+  const careerSuggestion = careerSuggestionMatch?.[1]?.trim() || '';
+  const reasoning = reasoningMatch?.[1]?.trim() || '';
+  
+  // Parse initial steps
+  let initialSteps: string[] = [];
+  if (initialStepsMatch) {
+    const stepsText = initialStepsMatch[1];
+    const steps = stepsText.match(/\d+\.\s*\*(.*?)\*:(.*?)(?=\d+\.|$)/gs);
+    if (steps) {
+      initialSteps = steps.map(step => {
+        const stepMatch = step.match(/\d+\.\s*\*(.*?)\*:(.*)/s);
+        if (stepMatch) {
+          return `${stepMatch[1].trim()}: ${stepMatch[2].trim()}`;
+        }
+        return step.trim();
+      });
+    }
+  }
+
+  return {
+    careerSuggestion,
+    reasoning,
+    initialSteps,
+    skillGaps
+  };
+};
+
+// AI Recommendation Component (unchanged)
+const AICareerRecommendation: React.FC<{ recommendation: any }> = ({ recommendation }) => {
+  if (!recommendation) {
+    return (
+      <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
+        <CardHeader className="p-8 pb-6">
+          <CardTitle 
+            className="flex items-center space-x-3 text-xl font-medium text-gray-900"
+            style={{ fontFamily: 'Google Sans, sans-serif' }}
+          >
+            <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
+              <Brain className="text-white h-6 w-6" />
+            </div>
+            <span>AI Career Insights</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="p-8 pt-0">
+          <div className="text-center py-8">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+              <Sparkles className="w-8 h-8 text-gray-400" />
+            </div>
+            <p className="text-gray-600" style={{ fontFamily: 'Roboto, sans-serif' }}>
+              Loading your personalized career recommendations...
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
+      <CardHeader className="p-8 pb-6">
+        <CardTitle 
+          className="flex items-center space-x-3 text-xl font-medium text-gray-900"
+          style={{ fontFamily: 'Google Sans, sans-serif' }}
+        >
+          <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
+            <Brain className="text-white h-6 w-6" />
+          </div>
+          <span>AI Career Insights</span>
+        </CardTitle>
+        <CardDescription 
+          className="text-gray-600 text-lg mt-2"
+          style={{ fontFamily: 'Roboto, sans-serif' }}
+        >
+          Personalized recommendations based on your profile analysis
+        </CardDescription>
+      </CardHeader>
+      <CardContent className="p-8 pt-0 space-y-8">
+        
+        {/* Career Suggestion */}
+        {recommendation.careerSuggestion && (
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-100">
+            <div className="flex items-start space-x-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-purple-600 shadow-md">
+                <Briefcase className="text-white h-5 w-5" />
+              </div>
+              <div className="flex-1">
+                <h4 
+                  className="font-semibold text-lg text-gray-900 mb-2"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  Recommended Career Path
+                </h4>
+                <p 
+                  className="text-gray-700 leading-relaxed"
+                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                >
+                  {recommendation.careerSuggestion}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Reasoning */}
+        {recommendation.reasoning && (
+          <div className="p-6 rounded-2xl bg-gradient-to-r from-green-50 to-blue-50 border border-green-100">
+            <div className="flex items-start space-x-4">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-blue-600 shadow-md">
+                <Target className="text-white h-5 w-5" />
+              </div>
+              <div className="flex-1">
+                <h4 
+                  className="font-semibold text-lg text-gray-900 mb-2"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  Why This Path Suits You
+                </h4>
+                <p 
+                  className="text-gray-700 leading-relaxed"
+                  style={{ fontFamily: 'Roboto, sans-serif' }}
+                >
+                  {recommendation.reasoning}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Initial Steps */}
+        {recommendation.initialSteps && recommendation.initialSteps.length > 0 && (
+          <div>
+            <h4 
+              className="flex items-center text-lg font-semibold text-gray-900 mb-4"
+              style={{ fontFamily: 'Google Sans, sans-serif' }}
+            >
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-yellow-500 to-orange-600 shadow-md mr-3">
+                <CheckCircle className="text-white h-4 w-4" />
+              </div>
+              Next Action Steps
+            </h4>
+            <div className="space-y-3">
+              {recommendation.initialSteps.map((step: string, index: number) => {
+                const [title, description] = step.split(': ');
+                return (
+                  <div 
+                    key={index} 
+                    className="group flex items-start space-x-4 p-4 rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 hover:shadow-md transition-all duration-300 hover:-translate-y-1"
+                  >
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-purple-600 text-white text-sm font-bold shadow-md group-hover:shadow-lg transition-all duration-300">
+                      {index + 1}
+                    </div>
+                    
+                    <div className="flex-1 space-y-2">
+                      <h5 
+                        className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300"
+                        style={{ fontFamily: 'Google Sans, sans-serif' }}
+                      >
+                        {title}
+                      </h5>
+                      {description && (
+                        <p 
+                          className="text-gray-600 text-sm leading-relaxed"
+                          style={{ fontFamily: 'Roboto, sans-serif' }}
+                        >
+                          {description}
+                        </p>
+                      )}
+                    </div>
+                    
+                    <Button 
+                      size="sm" 
+                      variant="ghost" 
+                      className="h-8 w-8 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300"
+                    >
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* Skill Gaps */}
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200">
+          <div className="flex items-center space-x-3">
+            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-gray-500 to-gray-600 shadow-md">
+              {recommendation.skillGaps === 'None' ? 
+                <CheckCircle className="text-white h-4 w-4" /> : 
+                <AlertTriangle className="text-white h-4 w-4" />
+              }
+            </div>
+            <div>
+              <h5 
+                className="font-medium text-gray-900"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Skill Gaps Analysis
+              </h5>
+              <p 
+                className="text-sm text-gray-600"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                {recommendation.skillGaps === 'None' ? 
+                  'Great! No major skill gaps identified.' : 
+                  recommendation.skillGaps
+                }
+              </p>
+            </div>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
 
 const Dashboard = () => {
+  const [careerRecommendation, setCareerRecommendation] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+
+  // Sample AI response - replace this with actual API call
+  const sampleAIResponse = `Career Recommendations 
+------------------------------
+1. General Career Suggestion 
+   - Explanation: Hello Shreyash! It's great to hear about your impressive skills in backend development with FastAPI, C++, algorithms, and game development. That's a fantastic combination of technical expertise!
+Here's a career suggestion that I believe would be a fantastic fit for you:
+*Career Suggestion*: Software Engineer (with a focus on Game Development or Backend Systems)
+*Reasoning*: Your proficiency in backend technologies like FastAPI, coupled with your strong C++ and algorithms knowledge, makes you a highly valuable candidate for building robust and efficient software systems. The addition of game development skills indicates a strong aptitude for complex problem-solving, performance optimization, and creative application development. These skills are directly transferable to either specializing in the backend infrastructure for online games or working on complex backend systems for other industries that require high performance and scalability.
+*Initial Steps*:
+    1. *Build a Portfolio*: Showcase your game development projects and any backend applications you've built using FastAPI. This will visually demonstrate your abilities to potential employers.
+    2. *Network within Game Development Communities*: Connect with other game developers online (forums, Discord, LinkedIn) and attend local or virtual game development meetups. Networking can open doors to exciting opportunities.
+    3. *Explore Backend Roles in Gaming Companies*: Look for entry-level or junior backend engineer positions at gaming studios. Highlight how your FastAPI and C++ skills can contribute to their game servers, matchmaking systems, or other backend services.
+You have a strong foundation, Shreyash, and I'm excited to see where your talents take you!
+   - Skill Gaps: None
+------------------------------`;
+
+  // Fetch career recommendation from backend
+  const fetchCareerRecommendation = async () => {
+    try {
+      setLoading(true);
+      
+      // Replace this with your actual API call
+      // const response = await fetch('/api/career-recommendation', {
+      //   method: 'GET',
+      //   headers: {
+      //     'Authorization': `Bearer ${token}`,
+      //     'Content-Type': 'application/json'
+      //   }
+      // });
+      // const data = await response.json();
+      
+      // For demo purposes, using sample data
+      setTimeout(() => {
+        const parsedRecommendation = parseCareerRecommendation(sampleAIResponse);
+        setCareerRecommendation(parsedRecommendation);
+        setLoading(false);
+      }, 2000);
+      
+    } catch (error) {
+      console.error('Error fetching career recommendation:', error);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCareerRecommendation();
+  }, []);
+
   return (
     <>
       {/* Google Fonts Import */}
@@ -57,7 +350,7 @@ const Dashboard = () => {
         </div>
 
         <div className="container px-6 lg:px-8 relative z-10">
-          {/* Google Material Header */}
+          {/* Google Material Header - MATCHED SIZES */}
           <div className="text-center space-y-6 mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
               <span className="material-icons text-base">dashboard</span>
@@ -86,13 +379,16 @@ const Dashboard = () => {
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            {/* Left Column - Main Stats */}
+            {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* Career Progress - Google Material Card */}
+              {/* 🔄 SWAPPED ORDER: AI Career Recommendation comes FIRST */}
+              <AICareerRecommendation recommendation={loading ? null : careerRecommendation} />
+
+              {/* 🔄 SWAPPED ORDER: Career Progress comes SECOND */}
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
                 <CardHeader className="p-8 pb-6">
                   <CardTitle 
-                    className="flex items-center space-x-3 text-2xl font-medium text-gray-900"
+                    className="flex items-center space-x-3 text-xl font-medium text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
                     <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
@@ -171,116 +467,15 @@ const Dashboard = () => {
                   </div>
                 </CardContent>
               </Card>
-
-              {/* Recommended Actions - Google Material Card */}
-              <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
-                <CardHeader className="p-8 pb-6">
-                  <CardTitle 
-                    className="flex items-center space-x-3 text-2xl font-medium text-gray-900"
-                    style={{ fontFamily: 'Google Sans, sans-serif' }}
-                  >
-                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-green-500 to-green-600 shadow-lg">
-                      <span className="material-icons text-white text-xl">gps_fixed</span>
-                    </div>
-                    <span>AI Recommendations</span>
-                  </CardTitle>
-                </CardHeader>
-                <CardContent className="p-8 pt-0">
-                  <div className="space-y-4">
-                    {[
-                      {
-                        title: "Complete React Advanced Course",
-                        description: "Master advanced React concepts to boost your frontend skills",
-                        priority: "High",
-                        timeEstimate: "2 weeks",
-                        type: "Learning",
-                        icon: "school",
-                        color: "from-blue-500 to-blue-600"
-                      },
-                      {
-                        title: "Build a Full Stack Project",
-                        description: "Showcase your skills with a complete web application",
-                        priority: "Medium",
-                        timeEstimate: "3 weeks",
-                        type: "Project",
-                        icon: "code",
-                        color: "from-green-500 to-green-600"
-                      },
-                      {
-                        title: "Update Your Resume",
-                        description: "Add your latest projects and optimize for ATS",
-                        priority: "High",
-                        timeEstimate: "2 hours",
-                        type: "Profile",
-                        icon: "description",
-                        color: "from-purple-500 to-purple-600"
-                      }
-                    ].map((action, index) => (
-                      <div 
-                        key={index} 
-                        className="group flex items-start space-x-4 p-6 rounded-2xl border border-gray-100 bg-gradient-to-r from-white to-gray-50 hover:shadow-md transition-all duration-300 hover:-translate-y-1"
-                      >
-                        <div className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${action.color} shadow-md group-hover:shadow-lg transition-all duration-300`}>
-                          <span className="material-icons text-white">
-                            {action.icon}
-                          </span>
-                        </div>
-                        
-                        <div className="flex-1 space-y-3">
-                          <div className="flex items-center space-x-3">
-                            <h4 
-                              className="font-medium text-gray-900 text-lg group-hover:text-blue-600 transition-colors duration-300"
-                              style={{ fontFamily: 'Google Sans, sans-serif' }}
-                            >
-                              {action.title}
-                            </h4>
-                            <Badge 
-                              variant={action.priority === "High" ? "destructive" : "secondary"}
-                              className="rounded-full px-3 py-1"
-                            >
-                              {action.priority}
-                            </Badge>
-                          </div>
-                          
-                          <p 
-                            className="text-gray-600 leading-relaxed"
-                            style={{ fontFamily: 'Roboto, sans-serif' }}
-                          >
-                            {action.description}
-                          </p>
-                          
-                          <div className="flex items-center space-x-4 text-sm text-gray-500">
-                            <div className="flex items-center space-x-1">
-                              <span className="material-icons text-sm">schedule</span>
-                              <span>{action.timeEstimate}</span>
-                            </div>
-                            <Badge variant="outline" className="text-xs rounded-full">
-                              {action.type}
-                            </Badge>
-                          </div>
-                        </div>
-                        
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-10 w-10 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors duration-300"
-                        >
-                          <ArrowRight className="h-5 w-5" />
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
             </div>
 
-            {/* Right Column - Quick Stats & Actions */}
+            {/* Right Column - Quick Stats & Actions - MATCHED SIZES */}
             <div className="space-y-8">
               {/* Quick Stats - Google Material Card */}
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
                 <CardHeader className="p-6">
                   <CardTitle 
-                    className="text-xl font-medium text-gray-900"
+                    className="text-lg font-medium text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
                     Quick Stats
@@ -320,7 +515,7 @@ const Dashboard = () => {
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
                 <CardHeader className="p-6">
                   <CardTitle 
-                    className="flex items-center justify-between text-xl font-medium text-gray-900"
+                    className="flex items-center justify-between text-lg font-medium text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
                     <span>Upcoming Events</span>
@@ -389,7 +584,7 @@ const Dashboard = () => {
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
                 <CardHeader className="p-6">
                   <CardTitle 
-                    className="text-xl font-medium text-gray-900"
+                    className="text-lg font-medium text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
                     Quick Actions

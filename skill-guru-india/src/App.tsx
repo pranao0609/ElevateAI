@@ -16,6 +16,7 @@ import Profile from "./pages/Profile";
 import Dashboard from "@/components/Dashboard";
 import Community from "./pages/Community";
 import Onboarding  from "./pages/Onboarding";
+import JobMarket from "./pages/JobMarket";
 
 const queryClient = new QueryClient();
 
@@ -38,6 +39,7 @@ const App = () => (
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/community" element={<Community/>} />
            <Route path="/onboarding" element={<Onboarding />} />
+           <Route path="/job-market" element={<JobMarket />} />
           
 
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

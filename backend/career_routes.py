@@ -50,6 +50,18 @@ CAREER_PATHS_DATA = [
         "skills": ["Python", "Machine Learning", "SQL", "Statistics", "Tableau"],
         "companies": ["Google", "Microsoft", "Amazon", "Flipkart", "Jio"],
         "gradient": "bg-gradient-to-br from-warning to-orange-400"
+    },
+    {
+        "title": "DevOps Engineer",
+        "description": "Implement and manage CI/CD pipelines and cloud infrastructure",
+        "icon": "Server",
+        "match": random.randint(80, 90),
+        "salary": "₹10-15 LPA",
+        "growth": "Very High",
+        "demand": "Very High",
+        "skills": ["Docker", "Kubernetes", "AWS", "Jenkins", "Terraform"],
+        "companies": ["Google", "Microsoft", "Amazon", "Flipkart", "Jio"],
+        "gradient": "bg-gradient-to-br from-warning to-orange-400"
     }
 ]
 
