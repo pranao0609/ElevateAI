@@ -18,7 +18,7 @@ from database.firestore import firestore_db
 from .manager import manager
 from .models import *
 
-router = APIRouter(prefix="/chat")
+router = APIRouter(prefix="/api/chat")
 logger = logging.getLogger(__name__)
 
 def get_db():
@@ -50,23 +50,23 @@ def get_current_user_from_header(authorization: str = None):
     return None
 
 # WebSocket endpoint
-@router.websocket("/ws/{user_id}")
-async def websocket_endpoint(websocket: WebSocket, user_id: str):
+@router.websocket("/ws/{user_email}")
+async def websocket_endpoint(websocket: WebSocket, user_email: str):
     """WebSocket endpoint for real-time chat"""
-    username = user_id.split('@')[0] if '@' in user_id else user_id
-    
+    username = user_email.split('@')[0] if '@' in user_email else user_email
+
     try:
-        await manager.connect(websocket, user_id, username)
-        logger.info(f"🔌 WebSocket connected: {user_id}")
-        
+        await manager.connect(websocket, user_email, username)
+        logger.info(f"🔌 WebSocket connected: {user_email}")
+
         while True:
             try:
                 data = await websocket.receive_text()
                 message_data = json.loads(data)
-                await handle_websocket_message(user_id, message_data)
+                await handle_websocket_message(user_email, message_data)
                 
             except json.JSONDecodeError as e:
-                logger.error(f"Invalid JSON from {user_id}: {e}")
+                logger.error(f"Invalid JSON from {user_email}: {e}")
                 await websocket.send_text(json.dumps({
                     "type": "error",
                     "data": {"message": "Invalid message format"}
