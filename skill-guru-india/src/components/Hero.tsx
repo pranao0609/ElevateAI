@@ -93,6 +93,7 @@ const Hero = () => {
 
               {/* Google Material Design CTA Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
+                {/* Start Your Journey Button - Original styling */}
                 <Button
                   asChild
                   size="lg"
@@ -106,15 +107,21 @@ const Hero = () => {
                   </Link>
                 </Button>
                 
-                <Button 
-                  size="lg" 
-                  variant="outline" 
-                  className="h-14 px-8 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 rounded-full transition-all duration-300"
-                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                >
-                  <Play className="mr-3 h-5 w-5" />
-                  Watch Demo
-                </Button>
+                {/* Watch Demo Button - WITH Subtle Gemini Border Effect */}
+                <div className="hero-gemini-border-wrapper">
+                  <Button 
+                    size="lg" 
+                    className="hero-gemini-gradient-border h-14 px-8 rounded-full transition-all duration-300 border-2 border-gray-300 hover:border-transparent relative"
+                    style={{ 
+                      fontFamily: 'Google Sans, sans-serif',
+                      backgroundColor: '#ffffff',
+                      color: '#374151'
+                    }}
+                  >
+                    <Play className="mr-3 h-5 w-5" />
+                    Watch Demo
+                  </Button>
+                </div>
               </div>
 
               {/* Google-style Stats with Material Icons */}
@@ -185,50 +192,6 @@ const Hero = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
               </div>
-              
-              {/* Google Material Design Floating Cards */}
-              <div 
-                className="absolute -top-6 -left-6 bg-white rounded-2xl p-5 shadow-xl border border-gray-100 animate-bounce"
-                style={{ animation: 'bounce 3s infinite' }}
-              >
-                <div className="flex items-center space-x-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 to-blue-600">
-                    <Target className="h-5 w-5 text-white" />
-                  </div>
-                  <div>
-                    <div 
-                      className="text-sm font-medium text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Career Match
-                    </div>
-                    <div className="text-2xl font-bold text-blue-600">94%</div>
-                  </div>
-                </div>
-              </div>
-              
-              <div 
-                className="absolute -bottom-6 -right-6 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl p-5 shadow-xl text-white"
-                style={{ 
-                  animation: 'float 4s ease-in-out infinite',
-                }}
-              >
-                <div className="flex items-center space-x-3">
-                  <span className="material-icons text-2xl">psychology</span>
-                  <div>
-                    <div 
-                      className="text-sm font-medium"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Skills Growing
-                    </div>
-                    <div className="flex items-center mt-1">
-                      <TrendingUp className="h-4 w-4 mr-1" />
-                      <span className="text-xs">+12% this week</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
               {/* Additional Google-style notification card */}
               <div 
@@ -255,8 +218,9 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* Google Material Design Animations */}
-      <style >{`
+      {/* REDUCED CSS - Much Smaller Ring Effect */}
+      <style>{`
+        /* Original animations */
         @keyframes float {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
@@ -276,6 +240,140 @@ const Hero = () => {
         @keyframes pulse {
           0%, 100% { opacity: 0.4; }
           50% { opacity: 0.8; }
+        }
+
+        /* REDUCED Gemini Effect - Much Smaller Ring */
+        :root {
+          /* Subtle Google Gemini Gradient Colors */
+          --hero-gemini-orange: #FF8A80;
+          --hero-gemini-pink: #FF80AB;
+          --hero-gemini-purple: #EA80FC;
+          --hero-gemini-blue: #8C9EFF;
+          --hero-gemini-cyan: #84FFFF;
+          --hero-gemini-green: #B9F6CA;
+          --hero-gemini-yellow: #FFFF8D;
+        }
+
+        /* Button wrapper with minimal padding */
+        .hero-gemini-border-wrapper {
+          position: relative;
+          border-radius: 9999px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          padding: 0;
+        }
+
+        /* REDUCED: Much smaller gradient border overlay */
+        .hero-gemini-border-wrapper::before {
+          content: '';
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          right: -1px;
+          bottom: -1px;
+          background: linear-gradient(
+            45deg,
+            var(--hero-gemini-orange) 0%,
+            var(--hero-gemini-pink) 14%,
+            var(--hero-gemini-purple) 28%,
+            var(--hero-gemini-blue) 42%,
+            var(--hero-gemini-cyan) 57%,
+            var(--hero-gemini-green) 71%,
+            var(--hero-gemini-yellow) 85%,
+            var(--hero-gemini-orange) 100%
+          );
+          background-size: 400% 400%;
+          border-radius: inherit;
+          opacity: 0;
+          z-index: -1;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          filter: saturate(0.8) brightness(0.9);
+        }
+
+        /* REDUCED: Smaller gradient border on hover */
+        .hero-gemini-border-wrapper:hover::before {
+          opacity: 0.7;
+          animation: hero-gemini-gradient-rotate 5s linear infinite;
+          filter: saturate(1.0) brightness(1.0);
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+        }
+
+        /* REMOVED: Glow effect for cleaner look */
+        
+        /* Button maintains white background with subtle border */
+        .hero-gemini-gradient-border {
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+          color: #374151 !important;
+          position: relative;
+          z-index: 1;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-gemini-gradient-border:hover {
+          background-color: #f9fafb !important;
+          background: #f9fafb !important;
+          color: #374151 !important;
+          border-color: transparent !important;
+          transform: translateY(-1px);
+          box-shadow: 
+            0 6px 20px rgba(0, 0, 0, 0.08),
+            0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .hero-gemini-gradient-border:focus {
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+          color: #374151 !important;
+        }
+
+        .hero-gemini-gradient-border:active {
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+          color: #374151 !important;
+          transform: translateY(0px) scale(0.98);
+        }
+
+        /* REDUCED: Slower, more subtle animation */
+        @keyframes hero-gemini-gradient-rotate {
+          0% {
+            background-position: 0% 50%;
+            filter: hue-rotate(0deg) saturate(0.8) brightness(0.9);
+          }
+          50% {
+            background-position: 100% 50%;
+            filter: hue-rotate(180deg) saturate(1.0) brightness(1.0);
+          }
+          100% {
+            background-position: 0% 50%;
+            filter: hue-rotate(360deg) saturate(0.8) brightness(0.9);
+          }
+        }
+
+        /* SCOPED focus states */
+        .hero-gemini-gradient-border:focus-visible {
+          outline: 2px solid #8C9EFF;
+          outline-offset: 2px;
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+        }
+
+        /* SCOPED active states */
+        .hero-gemini-border-wrapper:active {
+          transform: scale(0.98);
+        }
+
+        /* SCOPED reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          .hero-gemini-border-wrapper:hover::before {
+            animation: none !important;
+          }
+          
+          .hero-gemini-gradient-border:hover {
+            transform: translateY(-1px);
+          }
         }
       `}</style>
     </>

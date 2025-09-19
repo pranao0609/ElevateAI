@@ -217,6 +217,7 @@ const Features = () => {
 
               {/* Google Material Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                {/* Start Free Trial Button - Original styling */}
                 <Button
                   asChild
                   size="lg"
@@ -230,24 +231,28 @@ const Features = () => {
                   </Link>
                 </Button>
 
-                <Button               
-                  size="lg" 
-                  variant="outline"
-                  className="h-14 px-10 border-2 border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-blue-300 hover:text-blue-600 rounded-full transition-all duration-300"
-                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                >
-                <span className="material-icons mr-3">menu_book</span>
-                <a 
-                  href="https://en.wikipedia.org/wiki/StudentAdvisor" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="inline-block text-inherit no-underline"
-                >
-                  Learn More
-                </a>
-                </Button>
-            
-              
+                {/* Learn More Button - WITH Gemini Border Effect */}
+                <div className="features-gemini-border-wrapper">
+                  <Button               
+                    size="lg" 
+                    className="features-gemini-gradient-border h-14 px-10 rounded-full transition-all duration-300 border-2 border-gray-300 hover:border-transparent relative"
+                    style={{ 
+                      fontFamily: 'Google Sans, sans-serif',
+                      backgroundColor: '#ffffff',
+                      color: '#374151'
+                    }}
+                  >
+                    <span className="material-icons mr-3">menu_book</span>
+                    <a 
+                      href="https://en.wikipedia.org/wiki/StudentAdvisor" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="inline-block text-inherit no-underline"
+                    >
+                      Learn More
+                    </a>
+                  </Button>
+                </div>
               </div>
 
               {/* Google-style trust indicators */}
@@ -269,6 +274,151 @@ const Features = () => {
           </div>
         </div>
       </section>
+
+      {/* Enhanced CSS with Subtle Gemini Border Effect for Learn More Button */}
+      <style>{`
+        /* SCOPED Gemini Effect - Only for Features Learn More Button */
+        :root {
+          /* Subtle Google Gemini Gradient Colors */
+          --features-gemini-orange: #FF8A80;
+          --features-gemini-pink: #FF80AB;
+          --features-gemini-purple: #EA80FC;
+          --features-gemini-blue: #8C9EFF;
+          --features-gemini-cyan: #84FFFF;
+          --features-gemini-green: #B9F6CA;
+          --features-gemini-yellow: #FFFF8D;
+        }
+
+        /* Button wrapper with minimal padding */
+        .features-gemini-border-wrapper {
+          position: relative;
+          border-radius: 9999px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          padding: 0;
+        }
+
+        /* SUBTLE: Small gradient border overlay */
+        .features-gemini-border-wrapper::before {
+          content: '';
+          position: absolute;
+          top: -1px;
+          left: -1px;
+          right: -1px;
+          bottom: -1px;
+          background: linear-gradient(
+            45deg,
+            var(--features-gemini-orange) 0%,
+            var(--features-gemini-pink) 14%,
+            var(--features-gemini-purple) 28%,
+            var(--features-gemini-blue) 42%,
+            var(--features-gemini-cyan) 57%,
+            var(--features-gemini-green) 71%,
+            var(--features-gemini-yellow) 85%,
+            var(--features-gemini-orange) 100%
+          );
+          background-size: 400% 400%;
+          border-radius: inherit;
+          opacity: 0;
+          z-index: -1;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          filter: saturate(0.8) brightness(0.9);
+        }
+
+        /* SUBTLE: Small gradient border on hover */
+        .features-gemini-border-wrapper:hover::before {
+          opacity: 0.7;
+          animation: features-gemini-gradient-rotate 5s linear infinite;
+          filter: saturate(1.0) brightness(1.0);
+          top: -2px;
+          left: -2px;
+          right: -2px;
+          bottom: -2px;
+        }
+
+        /* Button maintains white background with subtle border */
+        .features-gemini-gradient-border {
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+          color: #374151 !important;
+          position: relative;
+          z-index: 1;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .features-gemini-gradient-border:hover {
+          background-color: #f9fafb !important;
+          background: #f9fafb !important;
+          color: #2563eb !important;
+          border-color: transparent !important;
+          transform: translateY(-1px);
+          box-shadow: 
+            0 6px 20px rgba(0, 0, 0, 0.08),
+            0 3px 10px rgba(0, 0, 0, 0.04);
+        }
+
+        .features-gemini-gradient-border:focus {
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+          color: #374151 !important;
+        }
+
+        .features-gemini-gradient-border:active {
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+          color: #374151 !important;
+          transform: translateY(0px) scale(0.98);
+        }
+
+        /* SUBTLE: Slower, more subtle animation */
+        @keyframes features-gemini-gradient-rotate {
+          0% {
+            background-position: 0% 50%;
+            filter: hue-rotate(0deg) saturate(0.8) brightness(0.9);
+          }
+          50% {
+            background-position: 100% 50%;
+            filter: hue-rotate(180deg) saturate(1.0) brightness(1.0);
+          }
+          100% {
+            background-position: 0% 50%;
+            filter: hue-rotate(360deg) saturate(0.8) brightness(0.9);
+          }
+        }
+
+        /* SCOPED focus states */
+        .features-gemini-gradient-border:focus-visible {
+          outline: 2px solid #8C9EFF;
+          outline-offset: 2px;
+          background-color: #ffffff !important;
+          background: #ffffff !important;
+        }
+
+        /* SCOPED active states */
+        .features-gemini-border-wrapper:active {
+          transform: scale(0.98);
+        }
+
+        /* SCOPED reduced motion support */
+        @media (prefers-reduced-motion: reduce) {
+          .features-gemini-border-wrapper:hover::before {
+            animation: none !important;
+          }
+          
+          .features-gemini-gradient-border:hover {
+            transform: translateY(-1px);
+          }
+        }
+
+        /* Ensure link styling inside button */
+        .features-gemini-gradient-border a {
+          color: inherit !important;
+          text-decoration: none !important;
+        }
+
+        .features-gemini-gradient-border:hover a {
+          color: inherit !important;
+        }
+      `}</style>
     </>
   );
 };
