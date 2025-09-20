@@ -18,6 +18,17 @@ from api.config import router as config_router
 from api.version import router as version_router
 from career.routes import router as career_router
 from database.routes.profile_routes import router as profile_router 
+from database.routes.career_form_router import router as career_form_router
+
+# Import document routes (with fallback for development)
+try:
+    from database.routes.documents_routes import router as document_router
+    DOCUMENT_ROUTES_ENABLED = True
+    logging.info("✅ Document routes loaded")
+except ImportError as e:
+    logging.warning(f"⚠️ Document routes not loaded: {e}")
+    DOCUMENT_ROUTES_ENABLED = False
+
 # Import chat routes (with fallback)
 try:
     from chat.routes import router as chat_router
@@ -36,7 +47,7 @@ logger = logging.getLogger(__name__)
 # Create FastAPI app
 app = FastAPI(
     title="Student Advisor Portal",
-    description="Community chat platform with Firestore backend",
+    description="Community chat platform with Firestore backend and document management",
     version="1.0.0",
     lifespan=lifespan
 )
@@ -58,6 +69,14 @@ app.include_router(config_router, prefix="/api", tags=["configuration"])
 app.include_router(version_router, prefix="/api", tags=["version"])
 app.include_router(career_router, tags=["career"])
 app.include_router(profile_router, tags=["profile"])
+app.include_router(career_form_router, tags=["career-form"])
+
+# Include document router if available
+if DOCUMENT_ROUTES_ENABLED:
+    app.include_router(document_router, tags=["documents"])
+    logger.info("✅ Document routes included")
+else:
+    logger.warning("⚠️ Document routes not available")
 
 # Include chat router if available
 if CHAT_ENABLED:
@@ -72,6 +91,7 @@ def root():
         "message": "Student Advisor Portal API",
         "version": "1.0.0",
         "database": "Firestore",
+        "storage": "Google Cloud Storage" if DOCUMENT_ROUTES_ENABLED else "Not configured",
         "status": "running",
         "websocket_url": "/api/chat/ws/{user_id}" if CHAT_ENABLED else None,
         "docs": "/docs",
@@ -80,9 +100,76 @@ def root():
             "authentication": True,
             "user_management": True,
             "career_guidance": True,
-            "profile_management": True
+            "profile_management": True,
+            "career_forms": True,
+            "document_management": DOCUMENT_ROUTES_ENABLED,
+            "file_storage": "GCP Storage" if DOCUMENT_ROUTES_ENABLED else "Not configured"
+        },
+        "available_endpoints": {
+            "documents": "/api/documents/upload/{user_email}" if DOCUMENT_ROUTES_ENABLED else "Not available",
+            "health": "/health",
+            "docs": "/docs"
         }
     }
+
+# Temporary document upload endpoint for development (remove after proper setup)
+if not DOCUMENT_ROUTES_ENABLED:
+    from fastapi import HTTPException, UploadFile, File, Form
+    from typing import List, Optional
+    
+    @app.post("/api/documents/upload/{user_email}")
+    async def temp_upload_documents(
+        user_email: str,
+        domain: str = Form(...),
+        portfolio_url: Optional[str] = Form(None),
+        linkedin_url: Optional[str] = Form(None),
+        github_url: Optional[str] = Form(None),
+        personal_portfolio_url: Optional[str] = Form(None),
+        resume: Optional[UploadFile] = File(None),
+        certificates: List[UploadFile] = File(default=[])
+    ):
+        """Temporary document upload endpoint for development"""
+        logger.warning("🚧 Using temporary document upload endpoint")
+        
+        # Simulate processing
+        uploaded_files = []
+        total_size = 0
+        
+        if resume and resume.filename:
+            content = await resume.read()
+            uploaded_files.append({
+                "type": "resume",
+                "filename": resume.filename,
+                "size": len(content)
+            })
+            total_size += len(content)
+        
+        for cert in certificates:
+            if cert.filename:
+                content = await cert.read()
+                uploaded_files.append({
+                    "type": "certificate", 
+                    "filename": cert.filename,
+                    "size": len(content)
+                })
+                total_size += len(content)
+        
+        return {
+            "success": True,
+            "message": f"Development mode: {len(uploaded_files)} file(s) received but not stored",
+            "user_email": user_email,
+            "uploaded_files": uploaded_files,
+            "total_files": len(uploaded_files),
+            "total_size": total_size,
+            "note": "Files are not actually stored in development mode. Set up GCP Storage for production.",
+            "data_received": {
+                "domain": domain,
+                "portfolio_url": portfolio_url,
+                "linkedin_url": linkedin_url,
+                "github_url": github_url,
+                "personal_portfolio_url": personal_portfolio_url
+            }
+        }
 
 # Run configuration
 if __name__ == "__main__":

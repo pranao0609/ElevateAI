@@ -3,50 +3,38 @@ from typing import List, Optional, Literal
 from datetime import datetime
 
 class PersonalInfo(BaseModel):
-    name: str = Field(..., min_length=1, max_length=100)
+    # Make these fields optional with defaults for incomplete profiles
+    name: str = Field(default="", min_length=0, max_length=100)  # Allow empty initially
     email: EmailStr
-    phone: str = Field(..., min_length=10, max_length=15)
-    location: str = Field(..., min_length=1, max_length=100)
-    bio: Optional[str] = Field(None, max_length=1000)
-    avatar: Optional[str] = None
-    headline: Optional[str] = Field(None, max_length=200)
+    phone: str = Field(default="", min_length=0, max_length=15)  # Allow empty initially  
+    location: str = Field(default="", min_length=0, max_length=100)  # Allow empty initially
+    
 
 class CareerInfo(BaseModel):
-    current_role: str = Field(..., min_length=1, max_length=100, alias="currentRole")
-    experience: str = Field(..., min_length=1, max_length=50)
-    industry: str = Field(..., min_length=1, max_length=100)
-    expected_salary: str = Field(..., min_length=1, max_length=50, alias="expectedSalary")
-    preferred_location: str = Field(..., min_length=1, max_length=200, alias="preferredLocation")
+    current_role: str = Field(default="N/A", min_length=1, max_length=100, alias="currentRole")
+    industry: str = Field(default="N/A", min_length=1, max_length=100)
+    expected_salary: str = Field(default="N/A", min_length=1, max_length=50, alias="expectedSalary")
+    preferred_location: str = Field(default="N/A", min_length=1, max_length=200, alias="preferredLocation")
 
-class Skill(BaseModel):
-    name: str = Field(..., min_length=1, max_length=50)
-    level: int = Field(..., ge=0, le=100)
-    category: Literal['technical', 'soft']
+# Enhanced Education model to match your form     # Computer Science, etc.
 
-class Education(BaseModel):
-    degree: str = Field(..., min_length=1, max_length=100)
-    institution: str = Field(..., min_length=1, max_length=200)
-    year: str = Field(..., min_length=4, max_length=4)
-    grade: str = Field(..., min_length=1, max_length=20)
+# Academic/Career Background model for your form data
+class AcademicBackground(BaseModel):
+    education_level: str = Field(..., alias="educationLevel")  # Required from form
+    field_of_study: str = Field(..., alias="fieldOfStudy")     # Required from form
+    years_of_experience: str = Field(..., alias="yearsOfExperience")  # Required from form
+    interests: List[str] = Field(default_factory=list)         # Career interests array
 
-class Achievement(BaseModel):
-    title: str = Field(..., min_length=1, max_length=200)
-    description: str = Field(..., min_length=1, max_length=1000)
-    date: str = Field(..., min_length=4, max_length=10)
 
-class CareerGoals(BaseModel):
-    short_term: str = Field(..., min_length=1, max_length=1000, alias="shortTerm")
-    long_term: str = Field(..., min_length=1, max_length=1000, alias="longTerm")
-    interests: List[str] = Field(default_factory=list)
 
+# Main Profile Model with new academic background
 class UserProfile(BaseModel):
     personal_info: PersonalInfo = Field(..., alias="personalInfo")
     career_info: CareerInfo = Field(..., alias="careerInfo")
-    skills: List[Skill] = Field(default_factory=list)
-    education: List[Education] = Field(default_factory=list)
-    achievements: List[Achievement] = Field(default_factory=list)
-    career_goals: CareerGoals = Field(..., alias="careerGoals")
+    # Academic background from your form
+    academic_background: Optional[AcademicBackground] = Field(None, alias="academicBackground")
 
+# Response models remain the same
 class ProfileResponse(BaseModel):
     user_id: str
     profile: UserProfile
@@ -55,3 +43,16 @@ class ProfileResponse(BaseModel):
 
 class UpdateProfileRequest(BaseModel):
     profile: UserProfile
+
+# Specific request model for your career form
+class CareerInfoFormRequest(BaseModel):
+    education_level: str = Field(..., alias="educationLevel")
+    field_of_study: str = Field(..., alias="fieldOfStudy")
+    years_of_experience: str = Field(..., alias="yearsOfExperience")
+    interests: List[str] = Field(default_factory=list)
+
+# Response model for career form submission
+class CareerInfoFormResponse(BaseModel):
+    user_id: str
+    academic_background: AcademicBackground
+    updated_at: datetime

@@ -11,9 +11,10 @@ import axios from "axios";
 
 
 interface PersonalInfoFormProps {
-  onNext: () => void;
+  onNext: (email: string) => void;
   onBack?: () => void;
 }
+
 
 export const PersonalInfoForm = ({ onNext, onBack }: PersonalInfoFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -47,24 +48,12 @@ const handleSubmit = async (e: React.FormEvent) => {
         email: formData.email || "noemail@example.com",
         phone: formData.phone || "0000000000",
         location: formData.city || "N/A",
-        bio: "",
-        avatar: "",
-        headline: "",
       },
       careerInfo: {
         currentRole: "N/A",
-        experience: "0 years",
         industry: "N/A",
         expectedSalary: "N/A",
         preferredLocation: "N/A",
-      },
-      skills: [],
-      education: [],
-      achievements: [],
-      careerGoals: {
-        shortTerm: "N/A",
-        longTerm: "N/A",
-        interests: [],
       },
     };
 
@@ -74,7 +63,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     );
 
     console.log("✅ Form submitted successfully", response.data);
-    onNext(); // move to next step
+    onNext(formData.email);  // instead of just onNext()
+ // move to next step
   } catch (error) {
     if (error.response) {
       console.error("❌ Backend responded with:", error.response.data);

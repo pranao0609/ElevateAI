@@ -66,3 +66,7 @@ def require_authentication(authorization: Optional[str] = Header(None)):
 def get_optional_user(authorization: Optional[str] = Header(None)):
     """Get user if authenticated, None otherwise"""
     return get_current_user_from_token(authorization)
+
+def get_current_user(authorization: Optional[str] = Header(None)):
+    """Get current user - required for career form routes"""
+    return require_authentication(authorization)

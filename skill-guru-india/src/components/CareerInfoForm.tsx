@@ -8,10 +8,12 @@ import { Badge } from "@/components/ui/badge";
 import { Layout } from "./Layout";
 import { ProgressIndicator } from "./ProgressIndicator";
 import { ArrowRight, GraduationCap, BookOpen, Briefcase, Heart, X } from "lucide-react";
+import axios from "axios";
 
 interface CareerInfoFormProps {
   onNext: () => void;
   onBack: () => void;
+  userEmail: string; // ✅ Fixed prop name to match your usage
 }
 
 const interestOptions = [
@@ -22,13 +24,21 @@ const interestOptions = [
   "Artificial Intelligence", "Blockchain", "Digital Marketing", "Content Creation"
 ];
 
-export const CareerInfoForm = ({ onNext, onBack }: CareerInfoFormProps) => {
+export const CareerInfoForm = ({ onNext, onBack, userEmail }: CareerInfoFormProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
+    // Academic Background Fields (Required)
     educationLevel: "",
     fieldOfStudy: "",
     yearsOfExperience: "",
-    interests: [] as string[]
+    interests: [] as string[],
+    
+    // Career Info Fields (Optional, will default to "N/A" in backend)
+    currentRole: "",
+    
+    industry: "",
+    expectedSalary: "",
+    preferredLocation: "",
   });
   const [newInterest, setNewInterest] = useState("");
 
@@ -55,13 +65,65 @@ export const CareerInfoForm = ({ onNext, onBack }: CareerInfoFormProps) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
+    if (!isFormValid) return;
     
-    // Simulate form submission
-    setTimeout(() => {
-      setIsLoading(false);
+    console.log("🚀 Starting career form submission for:", userEmail);
+    setIsLoading(true);
+
+    try {
+      // ✅ Structure payload to match backend expectations
+      const payload = {
+        careerInfo: {
+          // Academic Background (Required fields)
+          educationLevel: formData.educationLevel,
+          fieldOfStudy: formData.fieldOfStudy,
+          yearsOfExperience: formData.yearsOfExperience,
+          interests: formData.interests,
+          
+          // Career Info (Optional fields)
+          currentRole: formData.currentRole || "N/A",
+          experience: formData.experience || "N/A",
+          industry: formData.industry || "N/A",
+          expectedSalary: formData.expectedSalary || "N/A",
+          preferredLocation: formData.preferredLocation || "N/A",
+        },
+      };
+
+      console.log("📦 Sending payload:", JSON.stringify(payload, null, 2));
+
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/career-form/academic-background/${userEmail}`,
+        {
+          method: "POST",
+          headers: { 
+            "Content-Type": "application/json",
+            "Accept": "application/json"
+          },
+          body: JSON.stringify(payload),
+        }
+      );
+
+      console.log("📡 Response status:", response.status);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("❌ Server error response:", errorText);
+        throw new Error(`Failed to submit career form: ${response.status} ${errorText}`);
+      }
+
+      const result = await response.json();
+      console.log("✅ Career info updated successfully:", result);
+
+      // Show success message
+      alert("Career information saved successfully!");
+      
       onNext();
-    }, 1000);
+    } catch (error) {
+      console.error("❌ Failed to update career info:", error);
+      alert(`Error submitting career info: ${error.message}. Please try again.`);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const isFormValid = formData.educationLevel && formData.fieldOfStudy && 
@@ -88,6 +150,13 @@ export const CareerInfoForm = ({ onNext, onBack }: CareerInfoFormProps) => {
         stepLabels={["Personal Info", "Career Info", "Documents", "Dashboard"]}
       >
         <div className="max-w-3xl mx-auto">
+          {/* Debug Info (Remove in production) */}
+          <div className="mb-4 p-4 bg-blue-50 rounded-lg">
+            <p className="text-sm text-blue-700">
+              <strong>Debug:</strong> Submitting for user: {userEmail}
+            </p>
+          </div>
+          
           {/* Google Material Progress Indicator */}
           <div className="mb-12">
             <div className="flex items-center justify-center mb-8">
@@ -355,6 +424,106 @@ export const CareerInfoForm = ({ onNext, onBack }: CareerInfoFormProps) => {
                   </div>
                 </div>
 
+                {/* Optional Career Fields Section */}
+                <div className="space-y-6 pt-6 border-t border-gray-100">
+                  <div className="space-y-3">
+                    <Label 
+                      className="text-lg font-medium text-gray-900 flex items-center"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <span className="material-icons mr-2 text-orange-500">work</span>
+                      Additional Career Information
+                      <span className="text-sm text-gray-500 ml-2">(Optional)</span>
+                    </Label>
+                    <p 
+                      className="text-gray-600 leading-relaxed"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      Provide additional details about your career to get more personalized recommendations.
+                    </p>
+                  </div>
+
+                  {/* Current Role */}
+                  <div className="space-y-3">
+                    <Label 
+                      htmlFor="currentRole" 
+                      className="text-base font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Current Role/Position
+                    </Label>
+                    <Input
+                      id="currentRole"
+                      type="text"
+                      placeholder="e.g., Software Developer, Student, Manager"
+                      className="h-12 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm px-4"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                      value={formData.currentRole}
+                      onChange={(e) => handleInputChange("currentRole", e.target.value)}
+                    />
+                  </div>
+
+                  {/* Industry */}
+                  <div className="space-y-3">
+                    <Label 
+                      htmlFor="industry" 
+                      className="text-base font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Industry
+                    </Label>
+                    <Input
+                      id="industry"
+                      type="text"
+                      placeholder="e.g., Technology, Healthcare, Finance"
+                      className="h-12 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm px-4"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                      value={formData.industry}
+                      onChange={(e) => handleInputChange("industry", e.target.value)}
+                    />
+                  </div>
+
+                  {/* Expected Salary */}
+                  <div className="space-y-3">
+                    <Label 
+                      htmlFor="expectedSalary" 
+                      className="text-base font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Expected Salary Range
+                    </Label>
+                    <Input
+                      id="expectedSalary"
+                      type="text"
+                      placeholder="e.g., $50,000 - $70,000, ₹5-8 LPA"
+                      className="h-12 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm px-4"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                      value={formData.expectedSalary}
+                      onChange={(e) => handleInputChange("expectedSalary", e.target.value)}
+                    />
+                  </div>
+
+                  {/* Preferred Location */}
+                  <div className="space-y-3">
+                    <Label 
+                      htmlFor="preferredLocation" 
+                      className="text-base font-medium text-gray-900"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      Preferred Work Location
+                    </Label>
+                    <Input
+                      id="preferredLocation"
+                      type="text"
+                      placeholder="e.g., Remote, New York, Mumbai, Flexible"
+                      className="h-12 rounded-2xl border-2 border-gray-200 focus:border-blue-500 focus:ring-0 bg-white shadow-sm px-4"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                      value={formData.preferredLocation}
+                      onChange={(e) => handleInputChange("preferredLocation", e.target.value)}
+                    />
+                  </div>
+                </div>
+
                 {/* Form Actions */}
                 <div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-100">
                   <Button
@@ -376,7 +545,7 @@ export const CareerInfoForm = ({ onNext, onBack }: CareerInfoFormProps) => {
                     {isLoading ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-                        Saving...
+                        Saving Career Info...
                       </>
                     ) : (
                       <>
