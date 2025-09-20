@@ -6,6 +6,8 @@ backend/serviceAccountKey.json
 # Virtual environments
 advisorenv/
 venv/
+genenv/
+env/
 
 # Node modules
 node_modules/
