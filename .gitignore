@@ -13,3 +13,5 @@ node_modules/
 # Python cache
 __pycache__/
 *.pyc
+
+backend/electric-medium-472710-f8-f591187ebed6.json
