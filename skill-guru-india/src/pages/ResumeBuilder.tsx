@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from 'react-router-dom';
 import { 
   FileText,
   Wand2,
@@ -18,52 +20,274 @@ import {
   Plus,
   Edit3,
   Copy,
-  Star
+  Star,
+  Lock
 } from "lucide-react";
 
+// Authentication Guard Component
+const AuthenticationRequired: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
+
+      <Header />
+      
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white flex items-center justify-center p-6">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
+        </div>
+
+        {/* Authentication Required Card */}
+        <Card className="w-full max-w-2xl border-0 rounded-3xl shadow-2xl bg-white relative z-10">
+          <CardHeader className="text-center space-y-6 p-12">
+            {/* Google-style resume icon */}
+            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="material-icons text-white text-3xl">description</span>
+            </div>
+            
+            <div className="space-y-4">
+              <CardTitle 
+                className="text-3xl font-medium text-gray-900"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Build Your Professional Resume
+              </CardTitle>
+              <CardDescription 
+                className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Sign in to create ATS-optimized resumes with AI-powered suggestions and professional templates.
+              </CardDescription>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-8 p-12 pt-0">
+            {/* Resume Builder Features */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md">
+                  <span className="material-icons text-white text-lg">auto_awesome</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    AI-Powered Content
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Smart suggestions to improve resume content and impact
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-600 shadow-md">
+                  <span className="material-icons text-white text-lg">gps_fixed</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    ATS Optimization
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Ensure your resume passes applicant tracking systems
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
+                  <span className="material-icons text-white text-lg">palette</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Professional Templates
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Choose from industry-specific resume designs
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-md">
+                  <span className="material-icons text-white text-lg">analytics</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Performance Analytics
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Track resume performance and keyword optimization
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Template Preview */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="material-icons text-orange-600">preview</span>
+                <h4 
+                  className="font-semibold text-gray-900"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  What You'll Create:
+                </h4>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: "Professional Templates", icon: "description", color: "text-blue-600" },
+                  { label: "ATS-Optimized", icon: "gps_fixed", color: "text-green-600" },
+                  { label: "AI Suggestions", icon: "auto_awesome", color: "text-purple-600" },
+                  { label: "Export Options", icon: "download", color: "text-orange-600" }
+                ].map((item, index) => (
+                  <div key={index} className="text-center">
+                    <span className={`material-icons text-2xl ${item.color} mb-2 block`}>
+                      {item.icon}
+                    </span>
+                    <span 
+                      className="text-sm text-gray-700 font-medium"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Resume Success Stats */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-green-50 to-blue-50 border border-green-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <span className="material-icons text-green-600">trending_up</span>
+                  <h4 
+                    className="font-semibold text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Success Stories
+                  </h4>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="material-icons text-yellow-500 text-lg">stars</span>
+                  <span 
+                    className="text-sm font-bold text-green-600"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    4.8/5 Rating
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                {[
+                  { stat: "10K+", label: "Resumes Created" },
+                  { stat: "87%", label: "Interview Success" },
+                  { stat: "2x", label: "Faster Hiring" }
+                ].map((item, index) => (
+                  <div key={index}>
+                    <div 
+                      className="text-2xl font-bold text-green-600 mb-1"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      {item.stat}
+                    </div>
+                    <div 
+                      className="text-sm text-gray-600"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {item.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                onClick={() => navigate('/sign-in')}
+                className="flex-1 h-14 bg-gradient-to-r from-orange-600 to-orange-700 hover:from-orange-700 hover:to-orange-800 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">login</span>
+                Sign In to Build Resume
+              </Button>
+
+              <Button 
+                onClick={() => navigate('/sign-up')}
+                variant="outline"
+                className="flex-1 h-14 border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 rounded-2xl text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">person_add</span>
+                Create Account
+              </Button>
+            </div>
+
+            {/* Additional Info */}
+            <div className="text-center pt-4 border-t border-gray-200">
+              <p 
+                className="text-sm text-gray-500"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Join thousands of job seekers who landed their dream jobs with our AI-powered resumes
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Google-style Feature Notice */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <span className="material-icons text-orange-500 text-sm">auto_awesome</span>
+            <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+              AI-powered resume optimization for maximum impact
+            </span>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
 const ResumeBuilder = () => {
-  const resumeTemplates = [
-    {
-      id: 1,
-      name: "Professional Classic",
-      description: "Clean, traditional layout perfect for corporate roles",
-      thumbnail: "bg-gradient-to-br from-slate-100 to-slate-200",
-      atsScore: 95,
-      category: "Corporate",
-      popularity: "Most Popular",
-      gradient: "from-blue-500 to-blue-600"
-    },
-    {
-      id: 2,
-      name: "Modern Tech",
-      description: "Contemporary design ideal for tech and startup positions",
-      thumbnail: "bg-gradient-to-br from-blue-100 to-indigo-200",
-      atsScore: 92,
-      category: "Technology",
-      popularity: "Trending",
-      gradient: "from-green-500 to-green-600"
-    },
-    {
-      id: 3,
-      name: "Creative Designer",
-      description: "Stylish template for creative and design professionals",
-      thumbnail: "bg-gradient-to-br from-purple-100 to-pink-200",
-      atsScore: 88,
-      category: "Creative",
-      popularity: "New",
-      gradient: "from-purple-500 to-pink-500"
-    },
-    {
-      id: 4,
-      name: "Executive Premium",
-      description: "Sophisticated layout for senior management roles",
-      thumbnail: "bg-gradient-to-br from-yellow-100 to-orange-200",
-      atsScore: 97,
-      category: "Executive",
-      popularity: "Premium",
-      gradient: "from-yellow-500 to-orange-500"
-    }
-  ];
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   const aiSuggestions = [
     {
@@ -126,6 +350,49 @@ const ResumeBuilder = () => {
     }
   };
 
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-white">
+          <div className="text-center">
+            <div className="google-loading-spinner mb-4"></div>
+            <p 
+              className="text-gray-600"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              Loading resume builder...
+            </p>
+          </div>
+        </div>
+        
+        <style>{`
+          .google-loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e0e0e0;
+            border-top: 3px solid #4285f4;
+            border-radius: 50%;
+            animation: google-spin 1s linear infinite;
+            margin: 0 auto;
+          }
+
+          @keyframes google-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </>
+    );
+  }
+
+  // Show authentication required screen if user is not authenticated
+  if (!isAuthenticated) {
+    return <AuthenticationRequired />;
+  }
+
+  // Show resume builder if user is authenticated
   return (
     <>
       {/* Google Fonts Import */}
@@ -144,7 +411,7 @@ const ResumeBuilder = () => {
         <Header />
         
         <main className="pt-8">
-          {/* Google Material Hero Section */}
+          {/* Google Material Hero Section with personalized welcome */}
           <section className="py-20 lg:py-28 relative overflow-hidden">
             {/* Google-style Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -170,11 +437,11 @@ const ResumeBuilder = () => {
 
             <div className="container px-6 lg:px-8 relative z-10">
               <div className="text-center space-y-8 max-w-4xl mx-auto">
-                {/* Google-style Badge */}
+                {/* Google-style Badge with personalization */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
                   <span className="material-icons text-base">auto_awesome</span>
                   <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
-                    AI-Powered Resume Builder
+                    Welcome back, {user?.firstName || user?.name?.split(' ')[0] || 'User'}! AI-Powered Resume Builder
                   </span>
                 </div>
 
@@ -205,7 +472,7 @@ const ResumeBuilder = () => {
             <div className="container px-6 lg:px-8">
               <Tabs defaultValue="builder" className="space-y-8">
                 <div className="text-center">
-                  <TabsList className="grid w-full max-w-md mx-auto grid-cols-3 bg-gray-100 p-1 rounded-full">
+                  <TabsList className="grid w-full max-w-md mx-auto grid-cols-2 bg-gray-100 p-1 rounded-full">
                     <TabsTrigger 
                       value="builder"
                       className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
@@ -214,14 +481,7 @@ const ResumeBuilder = () => {
                       <span className="material-icons mr-2 text-base">build</span>
                       Builder
                     </TabsTrigger>
-                    <TabsTrigger 
-                      value="templates"
-                      className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      <span className="material-icons mr-2 text-base">dashboard</span>
-                      Templates
-                    </TabsTrigger>
+                    
                     <TabsTrigger 
                       value="analysis"
                       className="rounded-full data-[state=active]:bg-white data-[state=active]:shadow-sm"
@@ -248,7 +508,7 @@ const ResumeBuilder = () => {
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-lg">
                               <span className="material-icons text-white text-xl">gps_fixed</span>
                             </div>
-                            <span>Resume Performance</span>
+                            <span>{user?.firstName || 'Your'} Resume Performance</span>
                           </CardTitle>
                         </CardHeader>
                         <CardContent className="p-8 pt-0">
@@ -293,7 +553,7 @@ const ResumeBuilder = () => {
                             <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-lg">
                               <span className="material-icons text-white text-xl">auto_awesome</span>
                             </div>
-                            <span>AI Suggestions</span>
+                            <span>AI Suggestions for {user?.firstName || 'You'}</span>
                           </CardTitle>
                           <CardDescription 
                             className="text-lg text-gray-600 mt-2"
@@ -420,7 +680,7 @@ const ResumeBuilder = () => {
                             className="text-xl font-medium text-gray-900"
                             style={{ fontFamily: 'Google Sans, sans-serif' }}
                           >
-                            Resume Preview
+                            {user?.firstName || 'Your'} Resume Preview
                           </CardTitle>
                           <CardDescription 
                             className="text-gray-600"
@@ -491,101 +751,6 @@ const ResumeBuilder = () => {
                   </div>
                 </TabsContent>
 
-                {/* Templates Tab */}
-                <TabsContent value="templates" className="space-y-8">
-                  <div className="text-center space-y-6 mb-16">
-                    <h2 
-                      className="text-4xl lg:text-5xl font-normal text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Professional Resume Templates
-                    </h2>
-                    <p 
-                      className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
-                      style={{ fontFamily: 'Roboto, sans-serif' }}
-                    >
-                      Choose from our collection of <span className="font-medium text-blue-600">ATS-optimized templates</span> designed 
-                      specifically for the Indian job market.
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {resumeTemplates.map((template) => (
-                      <Card key={template.id} className="group border-0 rounded-3xl shadow-lg bg-white hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2">
-                        <CardHeader className="space-y-6 p-8">
-                          <div className={`aspect-[8.5/11] rounded-2xl ${template.thumbnail} border border-gray-200 flex items-end p-6 relative overflow-hidden`}>
-                            <div className="w-full relative z-10">
-                              <div className="bg-white/95 backdrop-blur-sm rounded-xl p-4 text-center shadow-sm">
-                                <div 
-                                  className="text-sm font-medium text-gray-900"
-                                  style={{ fontFamily: 'Google Sans, sans-serif' }}
-                                >
-                                  {template.name}
-                                </div>
-                              </div>
-                            </div>
-                            {/* Decorative gradient overlay */}
-                            <div className={`absolute inset-0 bg-gradient-to-br ${template.gradient} opacity-10`} />
-                          </div>
-                          
-                          <div className="space-y-3">
-                            <div className="flex items-center justify-between">
-                              <h3 
-                                className="font-medium text-gray-900 text-lg group-hover:text-blue-600 transition-colors duration-300"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                {template.name}
-                              </h3>
-                              <Badge className="bg-blue-100 text-blue-700 border-blue-200 rounded-full px-3 py-1 text-xs font-medium">
-                                {template.popularity}
-                              </Badge>
-                            </div>
-                            <p 
-                              className="text-gray-600 leading-relaxed"
-                              style={{ fontFamily: 'Roboto, sans-serif' }}
-                            >
-                              {template.description}
-                            </p>
-                          </div>
-                        </CardHeader>
-
-                        <CardContent className="space-y-6 p-8 pt-0">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-2">
-                              <span className="material-icons text-green-600">trending_up</span>
-                              <span 
-                                className="text-sm font-medium text-gray-900"
-                                style={{ fontFamily: 'Google Sans, sans-serif' }}
-                              >
-                                ATS: {template.atsScore}%
-                              </span>
-                            </div>
-                            <Badge className="bg-gray-100 text-gray-700 border-gray-200 rounded-full px-3 py-1 text-xs font-medium">
-                              {template.category}
-                            </Badge>
-                          </div>
-
-                          <div className="flex space-x-3">
-                            <Button 
-                              className={`flex-1 h-12 bg-gradient-to-r ${template.gradient} hover:shadow-lg text-white rounded-full shadow-md transition-all duration-300 group`}
-                              style={{ fontFamily: 'Google Sans, sans-serif' }}
-                            >
-                              Use Template
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                            </Button>
-                            <Button 
-                              variant="outline" 
-                              className="h-12 w-12 rounded-full border-2 border-gray-300 hover:bg-gray-50 transition-all duration-300"
-                            >
-                              <span className="material-icons">visibility</span>
-                            </Button>
-                          </div>
-                        </CardContent>
-                      </Card>
-                    ))}
-                  </div>
-                </TabsContent>
-
                 {/* Analysis Tab */}
                 <TabsContent value="analysis" className="space-y-8">
                   <div className="text-center space-y-6 mb-16">
@@ -593,7 +758,7 @@ const ResumeBuilder = () => {
                       className="text-4xl lg:text-5xl font-normal text-gray-900"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      Resume Analysis & Optimization
+                      {user?.firstName || 'Your'} Resume Analysis & Optimization
                     </h2>
                     <p 
                       className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
@@ -764,7 +929,7 @@ const ResumeBuilder = () => {
                       className="text-3xl font-medium text-gray-900"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      Ready to Optimize Your Resume?
+                      Ready to Optimize Your Resume, {user?.firstName || 'User'}?
                     </h3>
                     <p 
                       className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg"

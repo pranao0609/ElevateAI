@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/Header";
+import { Link, useNavigate } from "react-router-dom";
 import { 
   TrendingUp, 
   Target, 
@@ -19,9 +20,16 @@ import {
   AlertTriangle,
   Sparkles,
   User,
-  Briefcase
+  Briefcase,
+  BarChart3,
+  ExternalLink,
+  Zap,
+  TrendingDown,
+  Shield,
+  Lock
 } from "lucide-react";
 import React, { useState, useEffect } from 'react';
+import { useAuth } from "@/contexts/AuthContext";
 
 // Career Recommendation Parser (unchanged)
 const parseCareerRecommendation = (response: string) => {
@@ -67,6 +75,196 @@ const parseCareerRecommendation = (response: string) => {
     initialSteps,
     skillGaps
   };
+};
+
+// Authentication Guard Component
+const AuthenticationRequired: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
+
+      <Header />
+      
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white flex items-center justify-center p-6">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
+        </div>
+
+        {/* Authentication Required Card */}
+        <Card className="w-full max-w-2xl border-0 rounded-3xl shadow-2xl bg-white relative z-10">
+          <CardHeader className="text-center space-y-6 p-12">
+            {/* Google-style security icon */}
+            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-red-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="material-icons text-white text-3xl">security</span>
+            </div>
+            
+            <div className="space-y-4">
+              <CardTitle 
+                className="text-3xl font-medium text-gray-900"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Authentication Required
+              </CardTitle>
+              <CardDescription 
+                className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Please sign in to access your personalized career dashboard and AI-powered insights.
+              </CardDescription>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-8 p-12 pt-0">
+            {/* Security Features */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md">
+                  <span className="material-icons text-white text-lg">person</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Personalized Experience
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Access your custom career insights and progress tracking
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-600 shadow-md">
+                  <span className="material-icons text-white text-lg">shield</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Secure & Private
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Your data is protected with Google-level security
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
+                  <span className="material-icons text-white text-lg">smart_toy</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    AI-Powered Insights
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Get personalized career recommendations and guidance
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-md">
+                  <span className="material-icons text-white text-lg">trending_up</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Progress Tracking
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Monitor your career development and achievements
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                onClick={() => navigate('/sign-in')}
+                className="flex-1 h-14 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">login</span>
+                Sign In to Dashboard
+              </Button>
+
+              <Button 
+                onClick={() => navigate('/sign-up')}
+                variant="outline"
+                className="flex-1 h-14 border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 rounded-2xl text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">person_add</span>
+                Create Account
+              </Button>
+            </div>
+
+            {/* Additional Info */}
+            <div className="text-center pt-4 border-t border-gray-200">
+              <p 
+                className="text-sm text-gray-500"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                By signing in, you agree to our{" "}
+                <Link to="/terms" className="text-blue-600 hover:text-blue-700 hover:underline">
+                  Terms of Service
+                </Link>{" "}
+                and{" "}
+                <Link to="/privacy" className="text-blue-600 hover:text-blue-700 hover:underline">
+                  Privacy Policy
+                </Link>
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Google-style Security Notice */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <span className="material-icons text-green-500 text-sm">verified_user</span>
+            <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+              Your privacy and security are our top priority
+            </span>
+          </div>
+        </div>
+      </section>
+    </>
+  );
 };
 
 // AI Recommendation Component (unchanged)
@@ -258,7 +456,9 @@ const AICareerRecommendation: React.FC<{ recommendation: any }> = ({ recommendat
   );
 };
 
+// Main Dashboard Component
 const Dashboard = () => {
+  const { user, isAuthenticated, isLoading } = useAuth();
   const [careerRecommendation, setCareerRecommendation] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -277,6 +477,50 @@ Here's a career suggestion that I believe would be a fantastic fit for you:
 You have a strong foundation, Shreyash, and I'm excited to see where your talents take you!
    - Skill Gaps: None
 ------------------------------`;
+
+  // Sample job trends data
+  const jobTrends = [
+    {
+      title: "AI/ML Engineer Roles",
+      growth: "+45%",
+      trend: "up",
+      description: "High demand across tech companies",
+      color: "bg-green-100 text-green-700",
+      icon: "smart_toy",
+      dotColor: "bg-green-500",
+      trendIcon: TrendingUp
+    },
+    {
+      title: "Remote Developer Jobs",
+      growth: "+32%",
+      trend: "up", 
+      description: "Growing remote opportunities",
+      color: "bg-blue-100 text-blue-700",
+      icon: "home",
+      dotColor: "bg-blue-500",
+      trendIcon: TrendingUp
+    },
+    {
+      title: "Full Stack Positions",
+      growth: "+28%",
+      trend: "up",
+      description: "High demand for versatile developers",
+      color: "bg-purple-100 text-purple-700",
+      icon: "code",
+      dotColor: "bg-purple-500",
+      trendIcon: TrendingUp
+    },
+    {
+      title: "Data Science Roles",
+      growth: "+15%",
+      trend: "up",
+      description: "Steady growth in analytics",
+      color: "bg-orange-100 text-orange-700", 
+      icon: "analytics",
+      dotColor: "bg-orange-500",
+      trendIcon: BarChart3
+    }
+  ];
 
   // Fetch career recommendation from backend
   const fetchCareerRecommendation = async () => {
@@ -304,12 +548,57 @@ You have a strong foundation, Shreyash, and I'm excited to see where your talent
       console.error('Error fetching career recommendation:', error);
       setLoading(false);
     }
-  };
+  };    
 
   useEffect(() => {
-    fetchCareerRecommendation();
-  }, []);
+    if (isAuthenticated) {
+      fetchCareerRecommendation();
+    }
+  }, [isAuthenticated]);
 
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-white">
+          <div className="text-center">
+            <div className="google-loading-spinner mb-4"></div>
+            <p 
+              className="text-gray-600"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              Loading your dashboard...
+            </p>
+          </div>
+        </div>
+        
+        <style>{`
+          .google-loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e0e0e0;
+            border-top: 3px solid #4285f4;
+            border-radius: 50%;
+            animation: google-spin 1s linear infinite;
+            margin: 0 auto;
+          }
+
+          @keyframes google-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </>
+    );
+  }
+
+  // Show authentication required screen if user is not authenticated
+  if (!isAuthenticated) {
+    return <AuthenticationRequired />;
+  }
+
+  // Show dashboard if user is authenticated
   return (
     <>
       {/* Google Fonts Import */}
@@ -350,12 +639,12 @@ You have a strong foundation, Shreyash, and I'm excited to see where your talent
         </div>
 
         <div className="container px-6 lg:px-8 relative z-10">
-          {/* Google Material Header - MATCHED SIZES */}
+          {/* Google Material Header - Welcome Message */}
           <div className="text-center space-y-6 mb-16">
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
               <span className="material-icons text-base">dashboard</span>
               <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
-                AI-Powered Dashboard
+                Welcome back, {user?.firstName || user?.name?.split(' ')[0] || 'User'}!
               </span>
             </div>
 
@@ -381,10 +670,10 @@ You have a strong foundation, Shreyash, and I'm excited to see where your talent
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Left Column - Main Content */}
             <div className="lg:col-span-2 space-y-8">
-              {/* 🔄 SWAPPED ORDER: AI Career Recommendation comes FIRST */}
+              {/* AI Career Recommendation comes FIRST */}
               <AICareerRecommendation recommendation={loading ? null : careerRecommendation} />
 
-              {/* 🔄 SWAPPED ORDER: Career Progress comes SECOND */}
+              {/* Career Progress comes SECOND */}
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
                 <CardHeader className="p-8 pb-6">
                   <CardTitle 
@@ -469,7 +758,7 @@ You have a strong foundation, Shreyash, and I'm excited to see where your talent
               </Card>
             </div>
 
-            {/* Right Column - Quick Stats & Actions - MATCHED SIZES */}
+            {/* Right Column - Quick Stats & Actions */}
             <div className="space-y-8">
               {/* Quick Stats - Google Material Card */}
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
@@ -511,72 +800,82 @@ You have a strong foundation, Shreyash, and I'm excited to see where your talent
                 </CardContent>
               </Card>
 
-              {/* Upcoming Events - Google Material Card */}
+              {/* Job Market Trends */}
               <Card className="border-0 rounded-3xl shadow-lg bg-white hover:shadow-xl transition-all duration-300">
                 <CardHeader className="p-6">
                   <CardTitle 
                     className="flex items-center justify-between text-lg font-medium text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
-                    <span>Upcoming Events</span>
+                    <div className="flex items-center space-x-2">
+                      <span className="material-icons text-blue-600">trending_up</span>
+                      <span>Job Market Trends</span>
+                    </div>
                     <Button 
+                      asChild
                       size="sm" 
                       variant="ghost" 
-                      className="h-10 w-10 rounded-full hover:bg-blue-50 hover:text-blue-600"
+                      className="h-8 w-8 rounded-full hover:bg-blue-50 hover:text-blue-600"
                     >
-                      <Plus className="h-5 w-5" />
+                      <Link to="/job-market">
+                        <ExternalLink className="h-4 w-4" />
+                      </Link>
                     </Button>
                   </CardTitle>
+                  <CardDescription 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Current hiring trends in your field
+                  </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6 pt-0 space-y-4">
-                  {[
-                    {
-                      title: "Mentor Session",
-                      time: "Today, 3:00 PM",
-                      type: "Meeting",
-                      color: "bg-blue-100 text-blue-700",
-                      icon: "people",
-                      dotColor: "bg-blue-500"
-                    },
-                    {
-                      title: "React Workshop",
-                      time: "Tomorrow, 10:00 AM",
-                      type: "Learning",
-                      color: "bg-green-100 text-green-700",
-                      icon: "school",
-                      dotColor: "bg-green-500"
-                    },
-                    {
-                      title: "Job Interview",
-                      time: "Friday, 2:00 PM",
-                      type: "Interview",
-                      color: "bg-yellow-100 text-yellow-700",
-                      icon: "work",
-                      dotColor: "bg-yellow-500"
-                    }
-                  ].map((event, index) => (
-                    <div key={index} className="flex items-center space-x-4 p-4 rounded-xl border border-gray-100 hover:shadow-sm transition-all duration-200">
-                      <div className={`w-3 h-3 rounded-full ${event.dotColor}`}></div>
+                  {jobTrends.map((trend, index) => (
+                    <div key={index} className="flex items-center space-x-4 p-4 rounded-xl border border-gray-100 hover:shadow-sm transition-all duration-200 group cursor-pointer">
+                      <div className={`w-3 h-3 rounded-full ${trend.dotColor}`}></div>
                       <div className="flex-1">
-                        <div 
-                          className="font-medium text-gray-900"
-                          style={{ fontFamily: 'Google Sans, sans-serif' }}
-                        >
-                          {event.title}
+                        <div className="flex items-center justify-between">
+                          <div 
+                            className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors duration-300"
+                            style={{ fontFamily: 'Google Sans, sans-serif' }}
+                          >
+                            {trend.title}
+                          </div>
+                          <div className="flex items-center space-x-1">
+                            <trend.trendIcon className="w-3 h-3 text-green-500" />
+                            <span className="text-sm font-semibold text-green-600">
+                              {trend.growth}
+                            </span>
+                          </div>
                         </div>
                         <div 
                           className="text-sm text-gray-500 flex items-center gap-1 mt-1"
                           style={{ fontFamily: 'Roboto, sans-serif' }}
                         >
-                          <span className="material-icons text-xs">schedule</span>
-                          {event.time}
+                          <span className="material-icons text-xs">{trend.icon}</span>
+                          {trend.description}
                         </div>
                       </div>
-                      <Badge variant="outline" className={`text-xs rounded-full ${event.color} border-0`}>
-                        {event.type}
+                      <Badge variant="outline" className={`text-xs rounded-full ${trend.color} border-0`}>
+                        Hot
                       </Badge>
                     </div>
                   ))}
+                  
+                  {/* View Full Market Analysis Button */}
+                  <div className="pt-2">
+                    <Button 
+                      asChild
+                      className="w-full justify-center h-10 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-md hover:shadow-lg transition-all duration-300"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <Link to="/job-market">
+                        <BarChart3 className="w-4 h-4 mr-2" />
+                        View Full Market Analysis
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Link>
+                    </Button>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -592,20 +891,23 @@ You have a strong foundation, Shreyash, and I'm excited to see where your talent
                 </CardHeader>
                 <CardContent className="p-6 pt-0 space-y-3">
                   {[
-                    { label: "Start Learning Path", icon: "menu_book", color: "hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200" },
-                    { label: "Book Mentor Session", icon: "people", color: "hover:bg-green-50 hover:text-green-600 hover:border-green-200" },
-                    { label: "Take Skills Assessment", icon: "quiz", color: "hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200" }
+                    { label: "Start Learning Path", icon: "menu_book", color: "hover:bg-blue-50 hover:text-blue-600 hover:border-blue-200", to: "/career-paths" },
+                    { label: "Book Mentor Session", icon: "people", color: "hover:bg-green-50 hover:text-green-600 hover:border-green-200", to: "/mentorship" },
+                    { label: "Take Skills Assessment", icon: "quiz", color: "hover:bg-purple-50 hover:text-purple-600 hover:border-purple-200", to: "/skills-analysis" }
                   ].map((action, index) => (
                     <Button 
                       key={index}
+                      asChild
                       className={`w-full justify-start h-12 rounded-xl border border-gray-200 text-gray-700 bg-white transition-all duration-200 ${action.color}`} 
                       variant="outline"
                       style={{ fontFamily: 'Roboto, sans-serif' }}
                     >
-                      <span className="material-icons mr-3">
-                        {action.icon}
-                      </span>
-                      {action.label}
+                      <Link to={action.to}>
+                        <span className="material-icons mr-3">
+                          {action.icon}
+                        </span>
+                        {action.label}
+                      </Link>
                     </Button>
                   ))}
                   

@@ -9,9 +9,11 @@ import { Link, useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import { signInWithGoogle } from "@/services/firebase";
 import ForgotPasswordDialog from "@/components/ForgotPasswordDialog";
+import { useAuth } from "@/contexts/AuthContext";
 
 const SignIn = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -43,9 +45,18 @@ const SignIn = () => {
       const data = await res.json();
       console.log("Sign-in success:", data);
 
+      // Use the auth context to login
+      login({
+        id: data.user?.id || data.id,
+        email: data.user?.email || formData.email,
+        name: data.user?.name || data.name,
+        firstName: data.user?.firstName,
+        lastName: data.user?.lastName,
+        token: data.token
+      });
+
       alert("Signed in successfully!");
-      localStorage.setItem("token", data.token);
-      navigate("/profile");
+      navigate("/dashboard");
 
     } catch (err) {
       console.error(err);
@@ -69,10 +80,18 @@ const SignIn = () => {
       if (!res.ok) throw new Error(`Backend error: ${res.statusText}`);
       const data = await res.json();
       console.log("Backend response:", data);
-      localStorage.setItem("user", JSON.stringify(data.user));
+
+      // Use the auth context to login
+      login({
+        id: data.user.id,
+        email: data.user.email,
+        name: data.user.name,
+        firstName: data.user.firstName,
+        lastName: data.user.lastName
+      });
 
       alert(data.message);
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (err) {
       console.error("Google sign-in failed:", err);
       alert("Google Sign-In failed. Check console for details.");

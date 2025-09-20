@@ -4,6 +4,9 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
+import { Link } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from 'react-router-dom';
 
 import {
   Users,
@@ -22,10 +25,275 @@ import {
   CheckCircle,
   Award,
   TrendingUp,
-  Target
+  Target,
+  Lock
 } from "lucide-react";
 
+// Authentication Guard Component
+const AuthenticationRequired: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
+
+      <Header />
+      
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white flex items-center justify-center p-6">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
+        </div>
+
+        {/* Authentication Required Card */}
+        <Card className="w-full max-w-2xl border-0 rounded-3xl shadow-2xl bg-white relative z-10">
+          <CardHeader className="text-center space-y-6 p-12">
+            {/* Google-style mentorship icon */}
+            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="material-icons text-white text-3xl">school</span>
+            </div>
+            
+            <div className="space-y-4">
+              <CardTitle 
+                className="text-3xl font-medium text-gray-900"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Unlock Expert Mentorship
+              </CardTitle>
+              <CardDescription 
+                className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Sign in to connect with industry experts, join mentorship programs, and accelerate your career growth.
+              </CardDescription>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-8 p-12 pt-0">
+            {/* Mentorship Features */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md">
+                  <span className="material-icons text-white text-lg">smart_toy</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Gemini AI Mentor
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    24/7 AI-powered career guidance and mentorship
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-600 shadow-md">
+                  <span className="material-icons text-white text-lg">people</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Expert Mentors
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Connect with professionals from top companies
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
+                  <span className="material-icons text-white text-lg">video_call</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    1:1 Sessions
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Personalized video sessions and career coaching
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-md">
+                  <span className="material-icons text-white text-lg">school</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Structured Programs
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Join comprehensive career development programs
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Mentor Preview */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="material-icons text-purple-600">preview</span>
+                <h4 
+                  className="font-semibold text-gray-900"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  Featured Mentors from Top Companies:
+                </h4>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { company: "Google", icon: "business", color: "text-blue-600" },
+                  { company: "Microsoft", icon: "computer", color: "text-green-600" },
+                  { company: "Amazon", icon: "storefront", color: "text-orange-600" },
+                  { company: "Flipkart", icon: "shopping_cart", color: "text-purple-600" }
+                ].map((company, index) => (
+                  <div key={index} className="text-center">
+                    <span className={`material-icons text-2xl ${company.color} mb-2 block`}>
+                      {company.icon}
+                    </span>
+                    <span 
+                      className="text-sm text-gray-700 font-medium"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {company.company}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Success Statistics */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-green-50 to-blue-50 border border-green-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <span className="material-icons text-green-600">trending_up</span>
+                  <h4 
+                    className="font-semibold text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Student Success Stories
+                  </h4>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="material-icons text-yellow-500 text-lg">star</span>
+                  <span 
+                    className="text-sm font-bold text-green-600"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    4.9/5 Rating
+                  </span>
+                </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4 text-center">
+                {[
+                  { stat: "5,000+", label: "Students Mentored" },
+                  { stat: "89%", label: "Career Advancement" },
+                  { stat: "3x", label: "Faster Growth" }
+                ].map((item, index) => (
+                  <div key={index}>
+                    <div 
+                      className="text-2xl font-bold text-green-600 mb-1"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      {item.stat}
+                    </div>
+                    <div 
+                      className="text-sm text-gray-600"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {item.label}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                onClick={() => navigate('/sign-in')}
+                className="flex-1 h-14 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">login</span>
+                Sign In to Find Mentors
+              </Button>
+
+              <Button 
+                onClick={() => navigate('/sign-up')}
+                variant="outline"
+                className="flex-1 h-14 border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 rounded-2xl text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">person_add</span>
+                Create Account
+              </Button>
+            </div>
+
+            {/* Additional Info */}
+            <div className="text-center pt-4 border-t border-gray-200">
+              <p 
+                className="text-sm text-gray-500"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Join thousands of professionals who accelerated their careers with expert mentorship
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Google-style Feature Notice */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <span className="material-icons text-purple-500 text-sm">school</span>
+            <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+              Expert mentorship from industry leaders at top companies
+            </span>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
 const Mentorship = () => {
+  const { user, isAuthenticated, isLoading } = useAuth();
+  
   const mentors = [
     {
       id: 1,
@@ -164,6 +432,49 @@ const Mentorship = () => {
     }
   ];
 
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-white">
+          <div className="text-center">
+            <div className="google-loading-spinner mb-4"></div>
+            <p 
+              className="text-gray-600"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              Loading mentorship platform...
+            </p>
+          </div>
+        </div>
+        
+        <style>{`
+          .google-loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e0e0e0;
+            border-top: 3px solid #4285f4;
+            border-radius: 50%;
+            animation: google-spin 1s linear infinite;
+            margin: 0 auto;
+          }
+
+          @keyframes google-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </>
+    );
+  }
+
+  // Show authentication required screen if user is not authenticated
+  if (!isAuthenticated) {
+    return <AuthenticationRequired />;
+  }
+
+  // Show mentorship platform if user is authenticated
   return (
     <>
       {/* Google Fonts Import */}
@@ -181,7 +492,7 @@ const Mentorship = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white">
         <Header />
         
-        {/* Google-style Hero Section */}
+        {/* Google-style Hero Section with personalized welcome */}
         <section className="relative overflow-hidden pt-20 pb-32">
           {/* Background decoration */}
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -193,7 +504,9 @@ const Mentorship = () => {
             <div className="text-center space-y-8 max-w-5xl mx-auto">
               <div className="inline-flex items-center gap-3 px-6 py-3 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
                 <span className="material-icons text-base">school</span>
-                <span style={{ fontFamily: 'Google Sans, sans-serif' }}>Professional Mentorship Platform</span>
+                <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                  Welcome back, {user?.firstName || user?.name?.split(' ')[0] || 'User'}! Professional Mentorship Platform
+                </span>
               </div>
 
               <h1 
@@ -277,7 +590,7 @@ const Mentorship = () => {
                     className="text-4xl lg:text-5xl font-normal text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
-                    AI-Powered Career Mentorship
+                    AI-Powered Career Mentorship for {user?.firstName || 'You'}
                   </h2>
                   <p 
                     className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
@@ -337,7 +650,7 @@ const Mentorship = () => {
                                 className="text-gray-800 leading-relaxed"
                                 style={{ fontFamily: 'Roboto, sans-serif' }}
                               >
-                                👋 Hi! I'm your Gemini Career Mentor. I'm here to help you with:
+                                👋 Hi {user?.firstName || user?.name?.split(' ')[0] || 'there'}! I'm your Gemini Career Mentor. I'm here to help you with:
                               </p>
                               <ul 
                                 className="mt-3 space-y-1 text-sm text-gray-700"
@@ -473,19 +786,21 @@ const Mentorship = () => {
                       </CardHeader>
                       <CardContent className="p-6 pt-0 space-y-3">
                         {[
-                          { icon: "description", text: "Resume Review", color: "blue" },
-                          { icon: "school", text: "Skill Assessment", color: "green" },
-                          { icon: "trending_up", text: "Career Path", color: "purple" },
-                          { icon: "psychology", text: "Interview Prep", color: "orange" }
+                          { icon: "description", text: "Resume Review", color: "blue", to: "/resume-builder" },
+                          { icon: "school", text: "Skill Assessment", color: "green", to: "/skills-analysis" },
+                          { icon: "trending_up", text: "Career Path", color: "purple", to: "/career-paths" }
                         ].map((action, idx) => (
                           <Button
                             key={idx}
+                            asChild
                             variant="outline"
                             className="w-full justify-start h-12 rounded-2xl border-2 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200"
                             style={{ fontFamily: 'Google Sans, sans-serif' }}
                           >
-                            <span className={`material-icons mr-3 text-${action.color}-600`}>{action.icon}</span>
-                            {action.text}
+                            <Link to={action.to}>
+                              <span className={`material-icons mr-3 text-${action.color}-600`}>{action.icon}</span>
+                              {action.text}
+                            </Link>
                           </Button>
                         ))}
                       </CardContent>
@@ -499,7 +814,7 @@ const Mentorship = () => {
                           style={{ fontFamily: 'Google Sans, sans-serif' }}
                         >
                           <span className="material-icons text-purple-600">insights</span>
-                          AI Insights
+                          AI Insights for {user?.firstName || 'You'}
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="p-6 pt-0 space-y-4">
@@ -694,7 +1009,7 @@ const Mentorship = () => {
                         className="text-3xl lg:text-4xl font-normal"
                         style={{ fontFamily: 'Google Sans, sans-serif' }}
                       >
-                        Ready to Accelerate Your Career?
+                        Ready to Accelerate Your Career, {user?.firstName || 'User'}?
                       </h3>
                       <p 
                         className="text-xl opacity-90 leading-relaxed"
@@ -867,7 +1182,7 @@ const Mentorship = () => {
                     className="text-4xl lg:text-5xl font-normal text-gray-900"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
-                    My Mentorship Sessions
+                    {user?.firstName || 'Your'} Mentorship Sessions
                   </h2>
                   <p 
                     className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"

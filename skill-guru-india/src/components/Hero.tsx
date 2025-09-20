@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, Target, TrendingUp, Users, Zap, School } from "lucide-react";
 import { Link } from "react-router-dom";
-import heroImage from "@/assets/hero-image.jpg";
+// Import your video from assets folder
+import advisorVideo from "@/assets/advisor-video.mp4"; // Update this filename to match your actual file name
 
 const Hero = () => {
   return (
@@ -182,13 +183,17 @@ const Hero = () => {
               </div>
             </div>
 
-            {/* Right Image with Google Material Design Cards */}
+            {/* Right Video Section - UPDATED to use local video */}
             <div className="relative">
               <div className="relative overflow-hidden rounded-3xl shadow-2xl bg-white">
-                <img 
-                  src={heroImage}
-                  alt="AI Career & Skills Advisor Platform"
+                {/* Use the imported video from assets */}
+                <video 
+                  src={advisorVideo}
                   className="w-full h-auto object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
               </div>
@@ -207,9 +212,9 @@ const Hero = () => {
                       className="text-xs font-medium text-yellow-800"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      New Opportunity
+                      AI Advisors Ready
                     </div>
-                    <div className="text-xs text-yellow-700">3 matches found</div>
+                    <div className="text-xs text-yellow-700">3 experts available</div>
                   </div>
                 </div>
               </div>
@@ -218,7 +223,7 @@ const Hero = () => {
         </div>
       </section>
 
-      {/* REDUCED CSS - Much Smaller Ring Effect */}
+      {/* CSS remains the same */}
       <style>{`
         /* Original animations */
         @keyframes float {
@@ -240,6 +245,14 @@ const Hero = () => {
         @keyframes pulse {
           0%, 100% { opacity: 0.4; }
           50% { opacity: 0.8; }
+        }
+
+        /* Video specific styles */
+        video {
+          border-radius: inherit;
+          width: 100%;
+          height: auto;
+          max-width: 100%;
         }
 
         /* REDUCED Gemini Effect - Much Smaller Ring */
@@ -300,8 +313,6 @@ const Hero = () => {
           bottom: -2px;
         }
 
-        /* REMOVED: Glow effect for cleaner look */
-        
         /* Button maintains white background with subtle border */
         .hero-gemini-gradient-border {
           background-color: #ffffff !important;

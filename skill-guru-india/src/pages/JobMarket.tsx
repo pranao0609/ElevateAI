@@ -28,7 +28,15 @@ import {
   Bookmark,
   Eye,
   ChevronRight,
-  Navigation
+  Navigation,
+  CheckCircle,
+  FileText,
+  UserCheck,
+  Network,
+  BookOpen,
+  Lightbulb,
+  Newspaper,
+  TrendingDown
 } from "lucide-react";
 
 // Interfaces remain the same...
@@ -69,34 +77,39 @@ interface NewsItem {
   readTime: string;
 }
 
+interface JobPlatform {
+  id: string;
+  name: string;
+  description: string;
+  url: string;
+  logoUrl: string;
+  speciality: string;
+  activeJobs: string;
+  color: string;
+}
+
+interface JobSearchTip {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+  category: string;
+}
+
 const JobMarket = () => {
-  const [nearbyJobs, setNearbyJobs] = useState<Job[]>([]);
   const [roleBasedJobs, setRoleBasedJobs] = useState<Job[]>([]);
   const [marketTrends, setMarketTrends] = useState<MarketTrend[]>([]);
   const [marketNews, setMarketNews] = useState<NewsItem[]>([]);
+  const [jobPlatforms, setJobPlatforms] = useState<JobPlatform[]>([]);
+  const [jobSearchTips, setJobSearchTips] = useState<JobSearchTip[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRole, setSelectedRole] = useState("All Roles");
   const [selectedLocation, setSelectedLocation] = useState("Current Location");
   const [searchQuery, setSearchQuery] = useState("");
-  const [userLocation, setUserLocation] = useState("Mumbai, India");
 
   useEffect(() => {
     fetchJobMarketData();
-    getUserLocation();
   }, []);
-
-  const getUserLocation = () => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setUserLocation("Mumbai, India");
-        },
-        (error) => {
-          console.log("Location access denied");
-        }
-      );
-    }
-  };
 
   const fetchJobMarketData = async () => {
     try {
@@ -104,10 +117,11 @@ const JobMarket = () => {
       
       // Simulate API calls with sample data
       setTimeout(() => {
-        setNearbyJobs(sampleNearbyJobs);
         setRoleBasedJobs(sampleRoleBasedJobs);
         setMarketTrends(sampleMarketTrends);
         setMarketNews(sampleMarketNews);
+        setJobPlatforms(sampleJobPlatforms);
+        setJobSearchTips(sampleJobSearchTips);
         setLoading(false);
       }, 1500);
       
@@ -117,47 +131,103 @@ const JobMarket = () => {
     }
   };
 
-  // Sample data (same as before but shortened for brevity)
-  const sampleNearbyJobs: Job[] = [
+  // Sample data for job platforms with real logos
+  const sampleJobPlatforms: JobPlatform[] = [
     {
       id: '1',
-      title: 'Senior Frontend Developer',
-      company: 'TechCorp Solutions',
-      location: 'Bandra, Mumbai',
-      distance: '2.3 km',
-      salary: '₹12-18 LPA',
-      type: 'Full-time',
-      postedTime: '2 hours ago',
-      description: 'Looking for an experienced React developer to join our dynamic team.',
-      skills: ['React', 'JavaScript', 'TypeScript', 'Node.js'],
-      urgent: true,
-      remote: false
+      name: 'Naukri.com',
+      description: 'India\'s leading job portal with 50M+ registered users',
+      url: 'https://naukri.com',
+      logoUrl: 'https://static.naukimg.com/s/0/0/i/naukri_Logo_120x30.gif',
+      speciality: 'All Industries',
+      activeJobs: '2.5M+',
+      color: 'from-blue-500 to-blue-600'
     },
     {
       id: '2',
-      title: 'Data Scientist',
-      company: 'Analytics Pro',
-      location: 'Andheri, Mumbai',
-      distance: '4.1 km',
-      salary: '₹15-22 LPA',
-      type: 'Full-time',
-      postedTime: '5 hours ago',
-      description: 'Join our AI/ML team to build cutting-edge data solutions.',
-      skills: ['Python', 'Machine Learning', 'SQL', 'TensorFlow'],
-      remote: true
+      name: 'LinkedIn',
+      description: 'Professional networking platform with global opportunities',
+      url: 'https://linkedin.com/jobs',
+      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png',
+      speciality: 'Professional Network',
+      activeJobs: '15M+',
+      color: 'from-blue-700 to-blue-800'
     },
     {
       id: '3',
-      title: 'Product Manager',
-      company: 'Innovation Labs',
-      location: 'Powai, Mumbai',
-      distance: '6.8 km',
-      salary: '₹20-28 LPA',
-      type: 'Full-time',
-      postedTime: '1 day ago',
-      description: 'Lead product strategy and development for our fintech platform.',
-      skills: ['Product Strategy', 'Analytics', 'User Research', 'Agile'],
-      urgent: true
+      name: 'Indeed',
+      description: 'World\'s largest job search engine',
+      url: 'https://indeed.co.in',
+      logoUrl: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/Indeed_logo.svg',
+      speciality: 'Global Jobs',
+      activeJobs: '10M+',
+      color: 'from-blue-600 to-indigo-600'
+    },
+    {
+      id: '4',
+      name: 'Glassdoor',
+      description: 'Company reviews, salaries, and job listings',
+      url: 'https://glassdoor.co.in',
+      logoUrl: 'https://media.glassdoor.com/lst2x/glassdoor_logo_80x80.png',
+      speciality: 'Company Insights',
+      activeJobs: '1M+',
+      color: 'from-green-500 to-emerald-600'
+    },
+    {
+      id: '5',
+      name: 'AngelList',
+      description: 'Startup jobs and equity opportunities',
+      url: 'https://angel.co',
+      logoUrl: 'https://images.crunchbase.com/image/upload/c_lpad,f_auto,q_auto:eco,dpr_1/erkxwhl1gd48xfhe2yld',
+      speciality: 'Startups & Tech',
+      activeJobs: '100K+',
+      color: 'from-black to-gray-700'
+    }
+  ];
+
+  // Sample data for job search tips
+  const sampleJobSearchTips: JobSearchTip[] = [
+    {
+      id: '1',
+      title: 'Optimize Your Resume',
+      description: 'Use ATS-friendly formats, relevant keywords, and quantify achievements with numbers and metrics.',
+      icon: 'description',
+      category: 'Resume'
+    },
+    {
+      id: '2',
+      title: 'Build Your Network',
+      description: 'Connect with professionals in your field, attend industry events, and leverage referrals.',
+      icon: 'people',
+      category: 'Networking'
+    },
+    {
+      id: '3',
+      title: 'Research Companies',
+      description: 'Study company culture, values, recent news, and interview processes before applying.',
+      icon: 'business',
+      category: 'Research'
+    },
+    {
+      id: '4',
+      title: 'Prepare for Interviews',
+      description: 'Practice common questions, prepare examples using STAR method, and research interviewers.',
+      icon: 'psychology',
+      category: 'Interview'
+    },
+    {
+      id: '5',
+      title: 'Use Multiple Platforms',
+      description: 'Apply through various job boards, company websites, and professional networks simultaneously.',
+      icon: 'hub',
+      category: 'Strategy'
+    },
+    {
+      id: '6',
+      title: 'Follow Up Professionally',
+      description: 'Send thank-you emails after interviews and follow up on applications appropriately.',
+      icon: 'mail',
+      category: 'Communication'
     }
   ];
 
@@ -184,6 +254,18 @@ const JobMarket = () => {
       postedTime: '6 hours ago',
       description: 'Create beautiful and intuitive user experiences.',
       skills: ['Figma', 'Adobe XD', 'Prototyping', 'User Research']
+    },
+    {
+      id: '6',
+      title: 'Data Analyst',
+      company: 'Analytics Corp',
+      location: 'Hyderabad',
+      salary: '₹6-10 LPA',
+      type: 'Full-time',
+      postedTime: '1 day ago',
+      description: 'Analyze data to drive business insights and decisions.',
+      skills: ['Python', 'SQL', 'Tableau', 'Statistics'],
+      remote: true
     }
   ];
 
@@ -270,9 +352,6 @@ const JobMarket = () => {
             <div className="flex items-center space-x-1">
               <MapPin className="w-4 h-4" />
               <span>{job.location}</span>
-              {showDistance && job.distance && (
-                <span className="text-blue-600 font-medium">({job.distance})</span>
-              )}
             </div>
             <div className="flex items-center space-x-1">
               <Clock className="w-4 h-4" />
@@ -320,73 +399,169 @@ const JobMarket = () => {
     </Card>
   );
 
-  const TrendCard: React.FC<{ trend: MarketTrend }> = ({ trend }) => (
-    <Card className="border-0 rounded-xl shadow-sm bg-white hover:shadow-md transition-all duration-300">
+  const TipCard: React.FC<{ tip: JobSearchTip }> = ({ tip }) => (
+    <Card className="border-0 rounded-xl shadow-sm bg-white hover:shadow-md transition-all duration-300 group cursor-pointer">
       <CardContent className="p-4">
-        <div className="flex items-center justify-between mb-3">
-          <div className={`flex items-center space-x-2 ${
+        <div className="flex items-start space-x-3">
+          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-sm flex-shrink-0">
+            <span className="material-icons text-white text-lg">{tip.icon}</span>
+          </div>
+          <div className="flex-1">
+            <div className="flex items-center justify-between mb-2">
+              <h4 className="font-semibold text-base text-gray-900 group-hover:text-blue-600 transition-colors duration-300" 
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}>
+                {tip.title}
+              </h4>
+              <Badge variant="outline" className="text-xs rounded-full">
+                {tip.category}
+              </Badge>
+            </div>
+            <p className="text-gray-600 text-sm leading-relaxed" style={{ fontFamily: 'Roboto, sans-serif' }}>
+              {tip.description}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+
+  const PlatformCard: React.FC<{ platform: JobPlatform }> = ({ platform }) => (
+    <Card className="border-0 rounded-xl shadow-sm bg-white hover:shadow-md transition-all duration-300 group cursor-pointer">
+      <CardContent className="p-4">
+        <div className="flex items-center space-x-3 mb-3">
+          <div className="w-12 h-12 bg-white border border-gray-200 rounded-xl flex items-center justify-center shadow-sm overflow-hidden">
+            <img 
+              src={platform.logoUrl} 
+              alt={`${platform.name} logo`}
+              className="w-8 h-8 object-contain"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.nextElementSibling!.classList.remove('hidden');
+              }}
+            />
+            <div className={`hidden w-8 h-8 bg-gradient-to-br ${platform.color} rounded-lg flex items-center justify-center text-white text-xs font-bold`}>
+              {platform.name.substring(0, 2).toUpperCase()}
+            </div>
+          </div>
+          <div className="flex-1">
+            <h4 className="font-semibold text-base text-gray-900 group-hover:text-blue-600 transition-colors duration-300" 
+                style={{ fontFamily: 'Google Sans, sans-serif' }}>
+              {platform.name}
+            </h4>
+            <div className="flex items-center space-x-2 text-xs text-gray-500">
+              <span>{platform.speciality}</span>
+              <span>•</span>
+              <span className="font-medium text-green-600">{platform.activeJobs} jobs</span>
+            </div>
+          </div>
+          <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-300" />
+        </div>
+        <p className="text-gray-600 text-sm leading-relaxed mb-3" style={{ fontFamily: 'Roboto, sans-serif' }}>
+          {platform.description}
+        </p>
+        <Button 
+          className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full text-sm hover:shadow-md transition-all duration-300"
+          style={{ fontFamily: 'Google Sans, sans-serif' }}
+          onClick={() => window.open(platform.url, '_blank')}
+        >
+          Visit Platform
+        </Button>
+      </CardContent>
+    </Card>
+  );
+
+  const TrendCard: React.FC<{ trend: MarketTrend }> = ({ trend }) => (
+    <Card className="border-0 rounded-xl shadow-sm bg-gradient-to-br from-gray-50 to-blue-50 hover:shadow-md transition-all duration-300 hover:from-blue-50 hover:to-indigo-50">
+      <CardContent className="p-5">
+        <div className="flex items-center justify-between mb-4">
+          <div className={`flex items-center space-x-3 ${
             trend.trend === 'up' ? 'text-green-600' :
             trend.trend === 'down' ? 'text-red-600' : 'text-gray-600'
           }`}>
-            <TrendingUp className={`w-4 h-4 ${trend.trend === 'down' ? 'rotate-180' : ''}`} />
-            <span className="font-semibold text-lg">{trend.percentage}%</span>
+            <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+              trend.trend === 'up' ? 'bg-green-100' : 
+              trend.trend === 'down' ? 'bg-red-100' : 'bg-gray-100'
+            }`}>
+              {trend.trend === 'up' ? (
+                <TrendingUp className="w-5 h-5" />
+              ) : trend.trend === 'down' ? (
+                <TrendingDown className="w-5 h-5" />
+              ) : (
+                <BarChart3 className="w-5 h-5" />
+              )}
+            </div>
+            <span className="font-bold text-2xl">{trend.percentage}%</span>
           </div>
-          <Badge variant="outline" className="text-xs rounded-full">
+          <Badge variant="outline" className="text-xs rounded-full bg-white">
             {trend.category}
           </Badge>
         </div>
-        <h4 className="font-semibold text-base text-gray-900 mb-2" style={{ fontFamily: 'Google Sans, sans-serif' }}>
+        <h4 className="font-semibold text-lg text-gray-900 mb-2" style={{ fontFamily: 'Google Sans, sans-serif' }}>
           {trend.title}
         </h4>
-        <p className="text-gray-600 text-sm mb-2" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <p className="text-gray-600 text-sm mb-3 leading-relaxed" style={{ fontFamily: 'Roboto, sans-serif' }}>
           {trend.description}
         </p>
-        <div className="text-xs text-gray-500">
-          {trend.timeframe}
+        <div className="flex items-center text-xs text-gray-500">
+          <Clock className="w-3 h-3 mr-1" />
+          <span>{trend.timeframe}</span>
         </div>
       </CardContent>
     </Card>
   );
 
   const NewsCard: React.FC<{ news: NewsItem }> = ({ news }) => (
-    <Card className="border-0 rounded-xl shadow-sm bg-white hover:shadow-md transition-all duration-300 group cursor-pointer">
-      <CardContent className="p-4">
-        <div className="flex items-start justify-between mb-2">
-          <Badge variant="secondary" className="bg-purple-50 text-purple-700 rounded-full px-2 py-1 text-xs">
-            {news.category}
-          </Badge>
-          <div className="text-xs text-gray-500">
+    <div className="bg-white border-l-4 border-l-orange-400 rounded-r-xl shadow-sm hover:shadow-md transition-all duration-300 group cursor-pointer">
+      <div className="p-5">
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center">
+              <Newspaper className="w-4 h-4 text-orange-600" />
+            </div>
+            <Badge className="bg-orange-50 text-orange-700 text-xs rounded-full px-2 py-1">
+              {news.category}
+            </Badge>
+          </div>
+          <div className="text-xs text-gray-500 flex items-center">
+            <Clock className="w-3 h-3 mr-1" />
             {news.publishedAt}
           </div>
         </div>
         
-        <h4 className="font-semibold text-base text-gray-900 mb-2 group-hover:text-blue-600 transition-colors duration-300 line-clamp-2" 
+        <h4 className="font-bold text-lg text-gray-900 mb-2 group-hover:text-orange-600 transition-colors duration-300 leading-tight" 
             style={{ fontFamily: 'Google Sans, sans-serif' }}>
           {news.title}
         </h4>
         
-        <p className="text-gray-600 text-sm leading-relaxed mb-3 line-clamp-2" style={{ fontFamily: 'Roboto, sans-serif' }}>
+        <p className="text-gray-700 text-sm leading-relaxed mb-4" style={{ fontFamily: 'Roboto, sans-serif' }}>
           {news.summary}
         </p>
         
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 text-xs text-gray-500">
-            <span>{news.source}</span>
+            <div className="flex items-center">
+              <Globe className="w-3 h-3 mr-1" />
+              <span className="font-medium">{news.source}</span>
+            </div>
             <span>•</span>
-            <span>{news.readTime}</span>
+            <div className="flex items-center">
+              <Eye className="w-3 h-3 mr-1" />
+              <span>{news.readTime}</span>
+            </div>
           </div>
           <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full">
-              <Heart className="h-3 w-3" />
+            <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-orange-50">
+              <Heart className="h-3 w-3 text-gray-400 hover:text-orange-500" />
             </Button>
-            <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full">
-              <Share2 className="h-3 w-3" />
+            <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full hover:bg-orange-50">
+              <Share2 className="h-3 w-3 text-gray-400 hover:text-orange-500" />
             </Button>
-            <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-blue-600 transition-colors duration-300" />
+            <ArrowUpRight className="w-4 h-4 text-gray-400 group-hover:text-orange-600 transition-colors duration-300" />
           </div>
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 
   if (loading) {
@@ -435,7 +610,7 @@ const JobMarket = () => {
       <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white">
         <Header />
         
-        {/* Hero Section - Reduced sizes */}
+        {/* Hero Section */}
         <section className="py-16 relative overflow-hidden">
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             <div className="absolute top-1/4 left-10 w-72 h-72 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
@@ -465,197 +640,110 @@ const JobMarket = () => {
                 className="text-lg lg:text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
                 style={{ fontFamily: 'Roboto, sans-serif' }}
               >
-                Discover opportunities near you, track market trends, and stay updated with 
+                Discover opportunities, learn job search strategies, and stay updated with 
                 the latest <span className="font-medium text-blue-600">industry insights</span>.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Search and Filter Section */}
-        <section className="py-6 bg-white border-t border-gray-100">
-          <div className="container px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
-              <div className="flex items-center space-x-2 text-gray-600">
-                <Navigation className="w-4 h-4 text-blue-600" />
-                <span className="text-sm" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                  Current Location: <span className="font-medium text-gray-900">{userLocation}</span>
-                </span>
-              </div>
-              
-              <div className="flex items-center space-x-3">
-                <div className="relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <Input
-                    placeholder="Search jobs..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="pl-9 pr-4 py-2 w-64 rounded-full border-2 border-gray-200 focus:border-blue-500 text-sm"
-                  />
-                </div>
-                
-                <Select value={selectedRole} onValueChange={setSelectedRole}>
-                  <SelectTrigger className="w-40 rounded-full border-2 border-gray-200 text-sm">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="All Roles">All Roles</SelectItem>
-                    <SelectItem value="Developer">Developer</SelectItem>
-                    <SelectItem value="Designer">Designer</SelectItem>
-                    <SelectItem value="Manager">Manager</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Button 
-                  variant="outline" 
-                  className="rounded-full px-4 py-2 border-2 border-gray-200 hover:border-blue-500 text-sm"
-                >
-                  <Filter className="w-4 h-4 mr-2" />
-                  Filters
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Main Content - Reduced spacing */}
+        {/* Main Content */}
         <section className="py-8">
           <div className="container px-6 lg:px-8">
-            <div className="grid lg:grid-cols-3 gap-6">
+            <div className="grid lg:grid-cols-3 gap-8">
               
-              {/* Left Column - Jobs */}
+              {/* Left Column - Main Content */}
               <div className="lg:col-span-2 space-y-8">
                 
-                {/* Nearby Jobs */}
+                {/* How to Find Jobs Section */}
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <h2 
-                      className="text-2xl font-medium text-gray-900"
+                      className="text-2xl font-medium text-gray-900 flex items-center"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      Jobs Near You
+                      <Lightbulb className="w-6 h-6 mr-2 text-yellow-500" />
+                      How to Find Jobs
                     </h2>
                     <Button variant="ghost" className="text-blue-600 hover:text-blue-800 text-sm">
-                      View All <ChevronRight className="w-4 h-4 ml-1" />
+                      View All Tips <ChevronRight className="w-4 h-4 ml-1" />
                     </Button>
                   </div>
-                  <div className="space-y-4">
-                    {nearbyJobs.map((job) => (
-                      <JobCard key={job.id} job={job} showDistance={true} />
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {jobSearchTips.map((tip) => (
+                      <TipCard key={tip.id} tip={tip} />
                     ))}
                   </div>
                 </div>
 
-                {/* Role-Based Jobs */}
+               
+
+                {/* Market News Section - New Design */}
                 <div>
                   <div className="flex items-center justify-between mb-6">
                     <h2 
-                      className="text-2xl font-medium text-gray-900"
+                      className="text-2xl font-medium text-gray-900 flex items-center"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      Recommended for You
+                      <Newspaper className="w-6 h-6 mr-2 text-orange-500" />
+                      Market News
                     </h2>
-                    <Button variant="ghost" className="text-blue-600 hover:text-blue-800 text-sm">
-                      View All <ChevronRight className="w-4 h-4 ml-1" />
+                    <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full">
+                      <RefreshCw className="w-4 h-4" />
                     </Button>
                   </div>
                   <div className="space-y-4">
-                    {roleBasedJobs.map((job) => (
-                      <JobCard key={job.id} job={job} />
+                    {marketNews.map((news) => (
+                      <NewsCard key={news.id} news={news} />
+                    ))}
+                  </div>
+                </div>
+
+                 {/* Market Trends Section */}
+                <div>
+                  <div className="flex items-center justify-between mb-6">
+                    <h2 
+                      className="text-2xl font-medium text-gray-900 flex items-center"
+                      style={{ fontFamily: 'Google Sans, sans-serif' }}
+                    >
+                      <BarChart3 className="w-6 h-6 mr-2 text-blue-600" />
+                      Market Trends
+                    </h2>
+                  </div>
+                  <div className="grid md:grid-cols-2 gap-4">
+                    {marketTrends.map((trend) => (
+                      <TrendCard key={trend.id} trend={trend} />
                     ))}
                   </div>
                 </div>
               </div>
 
-              {/* Right Column - Trends and News - Reduced sizes */}
+              {/* Right Column - Job Platforms and Market Overview */}
               <div className="space-y-6">
                 
-                {/* Market Trends */}
-                <Card className="border-0 rounded-2xl shadow-md bg-white">
+                {/* Top Job Platforms */}
+                <Card className="border-0 rounded-2xl shadow-md bg-white sticky top-6">
                   <CardHeader className="p-5">
                     <CardTitle 
                       className="flex items-center text-lg font-medium text-gray-900"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      <BarChart3 className="w-5 h-5 mr-2 text-blue-600" />
-                      Market Trends
+                      <Network className="w-5 h-5 mr-2 text-purple-600" />
+                      Top Job Platforms
                     </CardTitle>
                     <CardDescription className="text-sm" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                      Current hiring trends and insights
+                      Popular job search platforms in India
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="p-5 pt-0 space-y-3">
-                    {marketTrends.map((trend) => (
-                      <TrendCard key={trend.id} trend={trend} />
+                    {jobPlatforms.map((platform) => (
+                      <PlatformCard key={platform.id} platform={platform} />
                     ))}
                   </CardContent>
                 </Card>
 
-                {/* Market News */}
-                <Card className="border-0 rounded-2xl shadow-md bg-white">
-                  <CardHeader className="p-5">
-                    <div className="flex items-center justify-between">
-                      <CardTitle 
-                        className="flex items-center text-lg font-medium text-gray-900"
-                        style={{ fontFamily: 'Google Sans, sans-serif' }}
-                      >
-                        <Globe className="w-5 h-5 mr-2 text-green-600" />
-                        Market News
-                      </CardTitle>
-                      <Button variant="ghost" size="icon" className="h-7 w-7 rounded-full">
-                        <RefreshCw className="w-4 h-4" />
-                      </Button>
-                    </div>
-                    <CardDescription className="text-sm" style={{ fontFamily: 'Roboto, sans-serif' }}>
-                      Latest industry news and updates
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="p-5 pt-0 space-y-3">
-                    {marketNews.map((news) => (
-                      <NewsCard key={news.id} news={news} />
-                    ))}
-                  </CardContent>
-                </Card>
-
-                {/* Quick Stats - Smaller */}
-                <Card className="border-0 rounded-2xl shadow-md bg-gradient-to-br from-blue-50 to-purple-50">
-                  <CardHeader className="p-5">
-                    <CardTitle 
-                      className="text-lg font-medium text-gray-900"
-                      style={{ fontFamily: 'Google Sans, sans-serif' }}
-                    >
-                      Market Overview
-                    </CardTitle>
-                  </CardHeader>
-                  <CardContent className="p-5 pt-0 space-y-3">
-                    {[
-                      { label: "Active Jobs", value: "12,543", icon: "work", color: "text-blue-600" },
-                      { label: "Companies Hiring", value: "2,847", icon: "apartment", color: "text-green-600" },
-                      { label: "Remote Positions", value: "5,291", icon: "home", color: "text-purple-600" },
-                      { label: "New This Week", value: "1,023", icon: "trending_up", color: "text-orange-600" }
-                    ].map((stat, index) => (
-                      <div key={index} className="flex items-center justify-between p-3 bg-white rounded-xl shadow-sm">
-                        <div className="flex items-center space-x-2">
-                          <span className={`material-icons ${stat.color} text-lg`}>
-                            {stat.icon}
-                          </span>
-                          <span 
-                            className="text-gray-700 font-medium text-sm"
-                            style={{ fontFamily: 'Roboto, sans-serif' }}
-                          >
-                            {stat.label}
-                          </span>
-                        </div>
-                        <span 
-                          className="font-bold text-lg text-gray-900"
-                          style={{ fontFamily: 'Google Sans, sans-serif' }}
-                        >
-                          {stat.value}
-                        </span>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
+            
+                
               </div>
             </div>
           </div>

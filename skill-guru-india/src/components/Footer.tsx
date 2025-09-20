@@ -60,7 +60,7 @@ const Footer = () => {
                     className="text-2xl font-medium text-white"
                     style={{ fontFamily: 'Google Sans, sans-serif' }}
                   >
-                    Student Advisor Portal
+                    Student Advisor
                   </span>
                   <div 
                     className="text-sm text-blue-300 -mt-1"

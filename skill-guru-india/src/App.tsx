@@ -17,6 +17,7 @@ import Dashboard from "@/components/Dashboard";
 import Community from "./pages/Community";
 import Onboarding  from "./pages/Onboarding";
 import JobMarket from "./pages/JobMarket";
+import { AuthProvider } from '@/contexts/AuthContext';
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <Chatbot />
+        <AuthProvider>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/career-paths" element={<CareerPaths />} />
@@ -45,6 +47,7 @@ const App = () => (
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Header from "@/components/Header";
+import { useAuth } from "@/contexts/AuthContext";
+import { useNavigate } from 'react-router-dom';
 import { 
   Brain,
   Target,
@@ -77,7 +79,262 @@ ChartJS.register(
   Filler
 );
 
+// Authentication Guard Component
+const AuthenticationRequired: React.FC = () => {
+  const navigate = useNavigate();
+
+  return (
+    <>
+      {/* Google Fonts Import */}
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+      <link 
+        href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Roboto:wght@300;400;500;700&display=swap" 
+        rel="stylesheet" 
+      />
+      <link 
+        href="https://fonts.googleapis.com/icon?family=Material+Icons" 
+        rel="stylesheet" 
+      />
+
+      <Header />
+      
+      <section className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-white flex items-center justify-center p-6">
+        {/* Background decoration */}
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-10 w-96 h-96 rounded-full bg-gradient-to-br from-blue-400/10 to-purple-400/10 blur-3xl" />
+          <div className="absolute bottom-1/4 right-10 w-80 h-80 rounded-full bg-gradient-to-br from-green-400/8 to-yellow-400/8 blur-3xl" />
+        </div>
+
+        {/* Authentication Required Card */}
+        <Card className="w-full max-w-2xl border-0 rounded-3xl shadow-2xl bg-white relative z-10">
+          <CardHeader className="text-center space-y-6 p-12">
+            {/* Google-style skills icon */}
+            <div className="w-20 h-20 mx-auto bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <span className="material-icons text-white text-3xl">psychology</span>
+            </div>
+            
+            <div className="space-y-4">
+              <CardTitle 
+                className="text-3xl font-medium text-gray-900"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                Unlock Your Skills Analysis
+              </CardTitle>
+              <CardDescription 
+                className="text-xl text-gray-600 leading-relaxed max-w-lg mx-auto"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Sign in to take AI-powered assessments, track your progress, and get personalized learning recommendations.
+              </CardDescription>
+            </div>
+          </CardHeader>
+
+          <CardContent className="space-y-8 p-12 pt-0">
+            {/* Skills Features */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 shadow-md">
+                  <span className="material-icons text-white text-lg">quiz</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    AI Skills Assessment
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Comprehensive evaluation of technical and soft skills
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-green-50 to-emerald-50 border border-green-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-green-500 to-green-600 shadow-md">
+                  <span className="material-icons text-white text-lg">bar_chart</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Visual Analytics
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Interactive charts and progress tracking
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 shadow-md">
+                  <span className="material-icons text-white text-lg">emoji_events</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Achievement Badges
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Earn XP and unlock badges for your progress
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4 p-4 rounded-2xl bg-gradient-to-r from-orange-50 to-yellow-50 border border-orange-100">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 shadow-md">
+                  <span className="material-icons text-white text-lg">menu_book</span>
+                </div>
+                <div>
+                  <h4 
+                    className="font-semibold text-gray-900 mb-1"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Learning Paths
+                  </h4>
+                  <p 
+                    className="text-sm text-gray-600"
+                    style={{ fontFamily: 'Roboto, sans-serif' }}
+                  >
+                    Personalized recommendations to improve skills
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Preview Assessment */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-gray-50 to-blue-50 border border-gray-200">
+              <div className="flex items-center space-x-3 mb-4">
+                <span className="material-icons text-green-600">preview</span>
+                <h4 
+                  className="font-semibold text-gray-900"
+                  style={{ fontFamily: 'Google Sans, sans-serif' }}
+                >
+                  What's Included in Your Assessment:
+                </h4>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                {[
+                  { label: "Technical Skills", icon: "code", color: "text-blue-600" },
+                  { label: "Soft Skills", icon: "people", color: "text-purple-600" },
+                  { label: "Industry Knowledge", icon: "business", color: "text-green-600" },
+                  { label: "Problem Solving", icon: "lightbulb", color: "text-orange-600" }
+                ].map((item, index) => (
+                  <div key={index} className="text-center">
+                    <span className={`material-icons text-2xl ${item.color} mb-2 block`}>
+                      {item.icon}
+                    </span>
+                    <span 
+                      className="text-sm text-gray-700 font-medium"
+                      style={{ fontFamily: 'Roboto, sans-serif' }}
+                    >
+                      {item.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Gamification Preview */}
+            <div className="p-6 rounded-2xl bg-gradient-to-r from-yellow-50 to-orange-50 border border-yellow-200">
+              <div className="flex items-center justify-between mb-4">
+                <div className="flex items-center space-x-3">
+                  <span className="material-icons text-yellow-600">emoji_events</span>
+                  <h4 
+                    className="font-semibold text-gray-900"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Level Up Your Skills
+                  </h4>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <span className="material-icons text-purple-500 text-lg">auto_awesome</span>
+                  <span 
+                    className="text-sm font-bold text-purple-600"
+                    style={{ fontFamily: 'Google Sans, sans-serif' }}
+                  >
+                    Earn XP & Badges
+                  </span>
+                </div>
+              </div>
+              <p 
+                className="text-sm text-gray-600 mb-4"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Complete assessments, improve skills, and unlock achievement badges to level up your profile!
+              </p>
+              <div className="flex space-x-2">
+                {['First Steps', 'Skill Master', 'Perfectionist', 'Tech Guru'].map((badge, index) => (
+                  <Badge key={index} variant="outline" className="text-xs bg-white border-gray-300">
+                    {badge}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                onClick={() => navigate('/sign-in')}
+                className="flex-1 h-14 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">login</span>
+                Sign In to Start Assessment
+              </Button>
+
+              <Button 
+                onClick={() => navigate('/sign-up')}
+                variant="outline"
+                className="flex-1 h-14 border-2 border-gray-300 hover:bg-gray-50 hover:border-gray-400 transition-all duration-200 rounded-2xl text-base font-medium"
+                style={{ fontFamily: 'Google Sans, sans-serif' }}
+              >
+                <span className="material-icons mr-3">person_add</span>
+                Create Account
+              </Button>
+            </div>
+
+            {/* Additional Info */}
+            <div className="text-center pt-4 border-t border-gray-200">
+              <p 
+                className="text-sm text-gray-500"
+                style={{ fontFamily: 'Roboto, sans-serif' }}
+              >
+                Join thousands of professionals who've improved their skills with our AI-powered assessments
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Google-style Feature Notice */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+          <div className="flex items-center space-x-2 text-sm text-gray-500 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-gray-200 shadow-sm">
+            <span className="material-icons text-green-500 text-sm">psychology</span>
+            <span style={{ fontFamily: 'Roboto, sans-serif' }}>
+              AI-powered skills analysis with machine learning insights
+            </span>
+          </div>
+        </div>
+      </section>
+    </>
+  );
+};
+
 const SkillsAnalysis = () => {
+  const { user, isAuthenticated, isLoading } = useAuth();
+  
   // State variables
   const [hasCompletedQuiz, setHasCompletedQuiz] = useState(false);
   const [isQuizLoading, setIsQuizLoading] = useState(false);
@@ -797,7 +1054,7 @@ const SkillsAnalysis = () => {
   const handleStartQuiz = async () => {
     setIsQuizLoading(true);
     setTimeout(() => {
-      console.log("Starting comprehensive skills assessment...");
+      console.log(`Starting comprehensive skills assessment for ${user?.firstName || user?.name || 'user'}...`);
       setIsQuizLoading(false);
       setTimeout(() => {
         handleQuizCompletion();
@@ -837,7 +1094,7 @@ const SkillsAnalysis = () => {
   };
 
   const handleCategoryQuiz = (categoryName) => {
-    console.log(`Starting ${categoryName} specific assessment...`);
+    console.log(`Starting ${categoryName} specific assessment for ${user?.firstName || user?.name || 'user'}...`);
   };
 
   const getStatusColor = (status) => {
@@ -869,6 +1126,49 @@ const SkillsAnalysis = () => {
     }
   };
 
+  // Show loading spinner while checking authentication
+  if (isLoading) {
+    return (
+      <>
+        <Header />
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 via-blue-50 to-white">
+          <div className="text-center">
+            <div className="google-loading-spinner mb-4"></div>
+            <p 
+              className="text-gray-600"
+              style={{ fontFamily: 'Roboto, sans-serif' }}
+            >
+              Loading skills analysis...
+            </p>
+          </div>
+        </div>
+        
+        <style>{`
+          .google-loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e0e0e0;
+            border-top: 3px solid #4285f4;
+            border-radius: 50%;
+            animation: google-spin 1s linear infinite;
+            margin: 0 auto;
+          }
+
+          @keyframes google-spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}</style>
+      </>
+    );
+  }
+
+  // Show authentication required screen if user is not authenticated
+  if (!isAuthenticated) {
+    return <AuthenticationRequired />;
+  }
+
+  // Show skills analysis if user is authenticated
   return (
     <>
       {/* Google Fonts Import */}
@@ -898,7 +1198,7 @@ const SkillsAnalysis = () => {
         )}
         
         <main className="pt-8">
-          {/* Google Material Hero Section */}
+          {/* Google Material Hero Section with personalized welcome */}
           <section className="py-20 lg:py-28 relative overflow-hidden">
             {/* Google-style Background Elements */}
             <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -924,11 +1224,11 @@ const SkillsAnalysis = () => {
 
             <div className="container px-6 lg:px-8 relative z-10">
               <div className="text-center space-y-8 max-w-4xl mx-auto">
-                {/* Google-style Badge */}
+                {/* Google-style Badge with personalization */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-white border border-blue-200 rounded-full text-sm font-medium text-blue-700 shadow-sm">
                   <span className="material-icons text-base">psychology</span>
                   <span style={{ fontFamily: 'Google Sans, sans-serif' }}>
-                    AI Skills Assessment
+                    Welcome back, {user?.firstName || user?.name?.split(' ')[0] || 'User'}! AI Skills Assessment
                   </span>
                 </div>
 
@@ -1009,8 +1309,8 @@ const SkillsAnalysis = () => {
                       style={{ fontFamily: 'Roboto, sans-serif' }}
                     >
                       {!hasCompletedQuiz 
-                        ? "Take our AI-powered assessment to analyze your skills across different categories."
-                        : "Based on your AI assessment, here's your comprehensive skills analysis."
+                        ? `${user?.firstName || 'Take'} our AI-powered assessment to analyze your skills across different categories.`
+                        : `Based on your AI assessment, here's your comprehensive skills analysis, ${user?.firstName || 'User'}.`
                       }
                     </p>
                   </div>
@@ -1078,7 +1378,7 @@ const SkillsAnalysis = () => {
                           {isQuizLoading ? (
                             <>
                               <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-3"></div>
-                              Preparing Quiz...
+                              Preparing Quiz for {user?.firstName || 'You'}...
                             </>
                           ) : (
                             <>
@@ -1108,7 +1408,7 @@ const SkillsAnalysis = () => {
                             className="text-3xl font-medium text-gray-900 mb-3"
                             style={{ fontFamily: 'Google Sans, sans-serif' }}
                           >
-                            Assessment Complete!
+                            Assessment Complete, {user?.firstName || 'User'}!
                           </CardTitle>
                           <CardDescription 
                             className="text-lg text-gray-600"
@@ -1577,7 +1877,7 @@ const SkillsAnalysis = () => {
                       className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed"
                       style={{ fontFamily: 'Roboto, sans-serif' }}
                     >
-                      AI-curated learning paths designed specifically to address your skill gaps and 
+                      AI-curated learning paths designed specifically for {user?.firstName || 'you'} to address your skill gaps and 
                       <span className="font-medium text-blue-600"> career goals</span>.
                     </p>
                   </div>
@@ -1685,7 +1985,7 @@ const SkillsAnalysis = () => {
                       className="text-3xl font-medium text-gray-900"
                       style={{ fontFamily: 'Google Sans, sans-serif' }}
                     >
-                      Ready to Bridge Your Skill Gaps?
+                      Ready to Bridge Your Skill Gaps, {user?.firstName || 'User'}?
                     </h3>
                     <p 
                       className="text-gray-600 max-w-2xl mx-auto leading-relaxed text-lg"
