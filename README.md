@@ -1,4 +1,4 @@
-# 🚀 ElevateAI – Google GenAI Hackathon Project
+# ElevateAI – Google GenAI Hackathon Project
 
 <!-- 🔹 Top Banner Image -->
 <p align="center">
@@ -10,11 +10,11 @@ It leverages Google Vertex AI, Generative AI models, and modern full-stack frame
 
 ---
 
-## 🧩 Problem Statement
+## Problem Statement
 Traditional AI applications are either too complex for end-users or lack real-world integration.  
 We wanted to create a system that simplifies access to Generative AI for learning, productivity, and innovation.
 
-## 💡 Our Solution
+## Our Solution
 - AI Agents that guide users through tasks  
 - Personalized learning roadmaps using GenAI  
 - Context-aware search & recommendations  
@@ -32,7 +32,7 @@ We wanted to create a system that simplifies access to Generative AI for learnin
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 **Backend:** Python, FastAPI  
 **AI/ML:** Google Vertex AI, LangChain, Scikit-learn, PyTorch  
 **Frontend/UI:** React.js, TailwindCSS  
@@ -41,7 +41,7 @@ We wanted to create a system that simplifies access to Generative AI for learnin
 
 ---
 
-## 🛠️ Installation
+## Installation
 ```bash
 # Clone the repo
 git clone https://github.com/pranao0609/ElevateAI.git
