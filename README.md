@@ -7,9 +7,8 @@
 ElevateAI is an advanced AI-powered platform designed to help students, developers, and professionals accelerate their learning and career growth.
 It leverages **Groq LLMs**, **Generative AI pipelines**, **intelligent agents**, and a modern **full-stack architecture** to deliver fast, accurate, and personalized guidance.
 
-👉 **Live Demo:** [https://student-advisor-portal.vercel.app/](https://student-advisor-portal.vercel.app/)
+**Live Demo:** [https://student-advisor-portal.vercel.app/](https://student-advisor-portal.vercel.app/)
 
----
 
 #  Vision
 
@@ -27,13 +26,13 @@ Today’s learners struggle with:
 
 #  What ElevateAI Does
 
-### ✔️ 1. **Career Recommender**
+###  1. **Career Recommender**
 
 * Recommends the best career tracks based on your skills, interests, and goals.
 * Generates detailed role descriptions, required skills, preparation timelines, and growth paths.
 * Supports domains like Software Engineering, AI/ML, Cybersecurity, Web Dev, Cloud, and more.
 
-### ✔️ 2. **AI Roadmap Generator**
+###  2. **AI Roadmap Generator**
 
 * Creates a full personalized roadmap for:
 
@@ -48,13 +47,13 @@ Today’s learners struggle with:
   * Cloud & DevOps
 * Roadmaps are structured with phases, timelines, topics, resources, and practice tasks.
 
-### ✔️ 3. **Practice Assessment Generator**
+###  3. **Practice Assessment Generator**
 
 * Auto-generates quizzes and assessments for any topic.
 * Supports MCQs, coding questions, theory questions, and skill-based tasks.
 * Helps track progress and identify weaknesses.
 
-### ✔️ 4. **AI Mentor**
+###  4. **AI Mentor**
 
 * Acts as a 24×7 mentor for:
 
@@ -65,13 +64,13 @@ Today’s learners struggle with:
   * Interview help
 * Uses Groq’s fast inference for real-time responses.
 
-### ✔️ 5. **Smart Chatbot**
+###  5. **Smart Chatbot**
 
 * Conversational interface to interact with all AI agents.
 * Context-aware answers, session memory, and structured outputs.
 * Handles Q&A, task planning, study doubts, and resource recommendations.
 
-### ✔️ 6. **Resource Curator**
+###  6. **Resource Curator**
 
 * Fetches the best:
 
@@ -81,7 +80,7 @@ Today’s learners struggle with:
   * Articles
 * Provides curated learning paths and explains how to use each resource.
 
-### ✔️ 7. **Dashboard**
+###  7. **Dashboard**
 
 * Clean, modern UI built with React + Tailwind.
 * Shows your recommended tracks, roadmaps, assessments, and AI conversations.
@@ -94,7 +93,7 @@ Today’s learners struggle with:
 
 ---
 
-# ⚙️ Tech Stack
+#  Tech Stack
 
 ###  **Backend**
 
@@ -132,7 +131,7 @@ Today’s learners struggle with:
 
 ---
 
-# 📦 Installation Guide
+#  Installation Guide
 
 ```bash
 # Clone the repository
@@ -155,10 +154,3 @@ cd frontend
 npm install
 npm run dev
 ```
-
----
-
-
-
-
-Just tell me!
